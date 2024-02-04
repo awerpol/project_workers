@@ -20,6 +20,7 @@ global $APPLICATION;
     <title><? $APPLICATION->ShowTitle() ?></title>
     <?
     $APPLICATION->ShowHead();
+    $APPLICATION->ShowHead();
     $APPLICATION->AddHeadString('<meta charset="UTF-8">');
     Asset::getInstance()->addCss(SITE_TEMPLATE_PATH."/assets/css/bootstrap.min.css");
     $APPLICATION->AddHeadString('<script type="text/javascript" src="'.SITE_TEMPLATE_PATH.'/moscow/js/jquery-3.5.1.min.js" data-skip-moving="true"></script>');
