@@ -6,13 +6,13 @@ $APPLICATION->SetTitle("Тичер");
 
 <div class="flex items-center py-5 lg:py-6">
     <div class="flex items-center space-x-1 mx-3">
-        <h2 class="text-xl font-medium text-slate-700 line-clamp-1 dark:text-navy-50 lg:text-2xl">Формируемые смены</h2>
+        <h2 class="text-xl font-medium text-slate-700 line-clamp-1 dark:text-navy-50 lg:text-2xl">Работники</h2>
     </div>
     <div class="flex items-center space-x-2 mx-3">
     <!-- Добавление смены - всплывающая форма -->
         <div x-data="{showModal:false}">
             <button @click="showModal = true" class="btn bg-info font-medium text-white hover:bg-info-focus hover:shadow-lg hover:shadow-info/50 focus:bg-info-focus focus:shadow-lg focus:shadow-info/50 active:bg-info-focus/90"> 
-                Добавить смену 
+                Добавить работника 
             </button>
                 <template x-teleport="#x-teleport-target">
                     <div
@@ -45,7 +45,7 @@ $APPLICATION->SetTitle("Тичер");
                             <div
                             class="flex justify-between rounded-t-lg bg-slate-200 px-4 py-3 dark:bg-navy-800 sm:px-5">
                                 <h3 class="text-base font-medium text-slate-700 dark:text-navy-100">
-                                    Добавление смены
+                                    Новый работник
                                 </h3>
                             <button @click="showModal = !showModal" class="btn -mr-1.5 h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
                                 <svg
@@ -66,11 +66,11 @@ $APPLICATION->SetTitle("Тичер");
                             </div>
                         <div class="px-4 py-4 sm:px-5">
                             <p>
-                                Для начала работы с новой сменой заполните данные из заказа.
+                                Данные на нового работника
                             </p>
                             <div class="mt-4 space-y-4">
                                 <label class="block">
-                                    <span>Заказчик:</span>
+                                    <span>ФИО:</span>
                                     <select class="form-select mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent">
                                         <option>Гурман</option>
                                         <option>Не Гурман</option>
@@ -201,121 +201,318 @@ $APPLICATION->SetTitle("Тичер");
           </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
-          
-          <!-- карточка -->
-            <div class="card grow items-center p-4 sm:p-5">
-                <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100"> Гурман </h3>
-                <p class="text-xs+">Пельменный цех</p>
-                <p class="mt-3 text-xl font-medium text-white">12:00 - 24:00</p>
-                <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
-            
-                <!-- блок с М/Ж-таблицей  -->
-                <div class="grow space-y-4">
-                    <table class="is-hoverable w-full text-center">
-                        <thead>
-                            <tr>
-                                <th class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                    М
-                                </th>
-                                <th class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                    Ж
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="dark:border-b-navy-500">
-                            <td class="whitespace-nowrap rounded-l-lg px-4 py-3 sm:px-5">
-                            <p class="text-xl font-semibold text-slate-700 dark:text-navy-100">
-                                19
-                            </p> 
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                            <p class="text-xl font-semibold text-slate-700 dark:text-navy-100">
-                                8
-                            </p>
-                            </td>
-                            </tr>
-                            <tr class="dark:border-b-navy-500">
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                            <p class="text-xl text-slate-700 dark:text-navy-100">
-                                4
-                            </p>
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                            <p class="text-xl text-slate-700 dark:text-navy-100">
-                                3
-                            </p>
-                            </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <!-- див с таблицей -->
+<div class="col-span-12 lg:col-span-5">
 
-                <button class="btn mt-5 space-x-2  bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-                <!-- втупую добавил ссылку для демо -->
-                <a href="http://45.8.145.101/tmp/constructor.php">
-                    <span>Подробно</span>
-                </a>
-                </button>
-            </div>
+      
 
-            <div class="card grow items-center p-4 sm:p-5">
-                <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-                    Клиент-2
-                </h3>
-                <p class="text-xs+">Булочная</p>
-                <p class="mt-3 text-xl font-medium text-white">00:00 - 12:00</p>
-                <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
-                <div class="grow space-y-4">
-                    <div class="is-scrollbar-hidden min-w-full overflow-x-auto">
-                        <table class="is-hoverable w-full text-center">
-                            <thead>
-                            <tr>
-                            <th class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                М
-                            </th>
-                            <th class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                Ж
-                            </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="dark:border-b-navy-500">
-                                <td class="whitespace-nowrap rounded-l-lg px-4 py-3 sm:px-5">
-                                <p class="text-xl font-semibold text-slate-700 dark:text-navy-100" align="center">
-                                    10
-                                </p> 
-                                </td>
-                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                <p class="text-xl font-semibold text-slate-700 dark:text-navy-100" align="center">
-                                    10
-                                </p>
-                                </td>
-                                </tr>
-                                <tr class="dark:border-b-navy-500">
-                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                <p class="text-xl text-slate-700 dark:text-navy-100">
-                                    1
-                                </p>
-                                </td>
-                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                <p class="text-xl text-slate-700 dark:text-navy-100">
-                                    0
-                                </p>
-                                </td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+    <!-- Таблица -->
+    <div class="card"
+      x-data
+        x-init="$el._x_grid =  new Gridjs.Grid({
+        from: $refs.table,
+        sort: true,
+        search: true,
+      }).render($refs.wrapper);"
+    >
+      <div class="is-scrollbar-hidden min-w-max overflow-x-auto overflow-y-auto max-h-80 mt-4">
+
+          <table x-ref="table" class="is-hoverable w-full text-left" >
+              <thead class="basis-full">
+              <tr>
+                  <th class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
+                      D
+                  </th>
+                  <th
+                      class="whitespace-nowrap bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4"
+                  >
+                      ФИО
+                  </th>
+
+                  <th
+                      class="whitespace-nowrap bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4"
+                  >
+                      Телефон
+                  </th>
+                  <th
+                      class="whitespace-nowrap bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4"
+                  >
+                      пол
+                  </th>                                 
+                  <th
+                      class="whitespace-nowrap bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4"
+                  > 
+                    Карма
+                  </th>
+                  <th class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
+                    Паспорт
+                  </th>
+                  <th class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
+                    Регистрация
+                  </th>
+                  <th class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
+                    Патент
+                  </th>
+                  <th class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
+                    Санкнижка
+                  </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500">
+
+                    <td class="whitespace-nowrap px-2 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-4">
+                        <span class="text-success">
+                            да
+                        </span> 
+                    </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="avatar h-9 w-9">
+                            <img
+                            class="rounded-full"
+                            src="to_del/avatar-19.jpg"
+                            alt="avatar"
+                            />
+                        </div>
+                        <a href="#" class="hover:underline focus:underline">
+                            Иван Иванов
+                        </a>
                     </div>
-                </div>
-            <button class="btn mt-5 space-x-2  bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-            <!-- втупую добавил ссылку для демо -->
-                <a href="http://45.8.145.101/tmp/constructor.php">
-                <span>Подробно</span>
-                </a>
-            </button>
-        </div>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      --
+                  </td>
+                  <td
+                      class="whitespace-nowrap px-2 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-4"
+                  >
+                      М
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      3
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      21 34 123456
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      10.01.2025
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      10.01.2025
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      нет
+                  </td>
+              </tr>
+              <tr
+                  class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+              >
+                    <td class="whitespace-nowrap px-2 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-4">
+                          <p class="text-error">
+                            нет
+                          </p>  
+                    </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="avatar h-9 w-9">
+                            <img
+                            class="rounded-full"
+                            src="to_del/avatar-11.jpg"
+                            alt="avatar"
+                            />
+                        </div>
+                        <a href="#" class="hover:underline focus:underline">
+                            Анна Иванова
+                        </a>
+                    </div>                      
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      +7 912 953 1324
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-4">
+                      Ж
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      2
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      21 34 654321
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      10.12.2025
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      10.01.2024
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      15.04.2024
+                  </td>
+              </tr>
+              <tr
+                  class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+              >
+                    <td class="whitespace-nowrap px-2 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-4">
+                        <span class="text-success">
+                            да
+                        </span> 
+                    </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="avatar h-9 w-9">
+                            <img
+                            class="rounded-full"
+                            src="to_del/avatar-11.jpg"
+                            alt="avatar"
+                            />
+                        </div>
+                        <a href="#" class="hover:underline focus:underline">
+                            Светлана Нечепуренко
+                        </a>
+                    </div>  
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      +7 912 953 1122
+                  </td>
+                  <td
+                      class="whitespace-nowrap px-2 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-4"
+                  >
+                      Ж
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      2
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      00 00 1230978
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      10.12.2025
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      10.12.2024
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      10.05.2024
+                  </td>
+              </tr>
+              <tr
+                  class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+              >
+                    <td class="whitespace-nowrap px-2 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-4">
+                        <span class="text-success">
+                            да
+                        </span>    
+                    </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="avatar h-9 w-9">
+                            <img
+                            class="rounded-full"
+                            src="to_del/avatar-5.jpg"
+                            alt="avatar"
+                            />
+                        </div>
+                        <a href="#" class="hover:underline focus:underline">
+                            Николай Федеров
+                        </a>
+                    </div>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      +7 912 953 3113
+                  </td>
+                  <td
+                      class="whitespace-nowrap px-2 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-4"
+                  >
+                      М
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      1
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      --
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      01.12.2025
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      --
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      нет
+                  </td>
+              </tr>
+              <tr
+                  class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+              >
+
+                    <td class="whitespace-nowrap px-2 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-4">
+                        <span class="text-error">
+                            нет
+                        </span>  
+                    </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="avatar h-9 w-9">
+                            <img
+                            class="rounded-full"
+                            src="to_del/avatar-18.jpg"
+                            alt="avatar"
+                            />
+                        </div>
+                        <a href="#" class="hover:underline focus:underline">
+                            Всеволод Дзержинский
+                        </a>
+                    </div>
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      +7 912 953 5675
+                  </td>
+                  <td
+                      class="whitespace-nowrap px-2 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-4"
+                  >
+                      М
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      0
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      --
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      нет
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      --
+                  </td>
+                  <td class="whitespace-nowrap px-2 py-3 sm:px-4">
+                      нет
+                  </td>
+              </tr>
+
+              
+              </tbody>
+          </table>
+      </div> 
+      <div>
+        <div x-ref="wrapper"></div>
+      </div>
+    
+
+
+
+    </div>
+    </div>
+
+
+
+  </div>
+</div>
+
+
+
+        
+        
+
 </div>
 
 
