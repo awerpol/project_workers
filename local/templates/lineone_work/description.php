@@ -1,7 +1,7 @@
 <?
 $arTemplate = array (
-  'NAME' => 'lineone_work',
-  'DESCRIPTION' => 'lineone_work',
+  'NAME' => 'Workers',
+  'DESCRIPTION' => 'Шаблон для ведения статей внутри компании',
   'SORT' => 1,
   'TYPE' => '',
 );
