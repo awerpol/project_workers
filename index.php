@@ -1,322 +1,397 @@
 <?
-require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
-$APPLICATION->SetTitle("Тичер");
+require($_SERVER[ "DOCUMENT_ROOT" ]."/bitrix/header.php");
+$APPLICATION->SetTitle("Новая страница"); ?><!-- test text for screen --> <?$APPLICATION->IncludeComponent(
+	"bitrix:catalog", 
+	"shift", 
+	array(
+		"ACTION_VARIABLE" => "action",
+		"ADD_ELEMENT_CHAIN" => "Y",
+		"ADD_PICT_PROP" => "-",
+		"ADD_PROPERTIES_TO_BASKET" => "Y",
+		"ADD_SECTIONS_CHAIN" => "Y",
+		"AJAX_MODE" => "N",
+		"AJAX_OPTION_ADDITIONAL" => "",
+		"AJAX_OPTION_HISTORY" => "Y",
+		"AJAX_OPTION_JUMP" => "N",
+		"AJAX_OPTION_STYLE" => "Y",
+		"BASKET_URL" => "/personal/basket.php",
+		"BIG_DATA_RCM_TYPE" => "personal",
+		"CACHE_FILTER" => "N",
+		"CACHE_GROUPS" => "Y",
+		"CACHE_TIME" => "36000000",
+		"CACHE_TYPE" => "A",
+		"COMMON_ADD_TO_BASKET_ACTION" => "ADD",
+		"COMMON_SHOW_CLOSE_POPUP" => "N",
+		"COMPATIBLE_MODE" => "N",
+		"COMPONENT_TEMPLATE" => "shift",
+		"CONVERT_CURRENCY" => "N",
+		"DETAIL_ADD_DETAIL_TO_SLIDER" => "N",
+		"DETAIL_ADD_TO_BASKET_ACTION" => array(
+			0 => "BUY",
+		),
+		"DETAIL_ADD_TO_BASKET_ACTION_PRIMARY" => array(
+			0 => "BUY",
+		),
+		"DETAIL_BACKGROUND_IMAGE" => "-",
+		"DETAIL_BRAND_USE" => "N",
+		"DETAIL_BROWSER_TITLE" => "NAME",
+		"DETAIL_CHECK_SECTION_ID_VARIABLE" => "N",
+		"DETAIL_DETAIL_PICTURE_MODE" => array(
+			0 => "POPUP",
+			1 => "MAGNIFIER",
+		),
+		"DETAIL_DISPLAY_NAME" => "Y",
+		"DETAIL_DISPLAY_PREVIEW_TEXT_MODE" => "E",
+		"DETAIL_IMAGE_RESOLUTION" => "16by9",
+		"DETAIL_MAIN_BLOCK_PROPERTY_CODE" => "",
+		"DETAIL_META_DESCRIPTION" => "WORKERS",
+		"DETAIL_META_KEYWORDS" => "SHIFT_START",
+		"DETAIL_PRODUCT_INFO_BLOCK_ORDER" => "sku,props",
+		"DETAIL_PRODUCT_PAY_BLOCK_ORDER" => "rating,price,priceRanges,quantityLimit,quantity,buttons",
+		"DETAIL_SET_CANONICAL_URL" => "N",
+		"DETAIL_SET_VIEWED_IN_COMPONENT" => "N",
+		"DETAIL_SHOW_POPULAR" => "Y",
+		"DETAIL_SHOW_SLIDER" => "N",
+		"DETAIL_SHOW_VIEWED" => "Y",
+		"DETAIL_STRICT_SECTION_CHECK" => "N",
+		"DETAIL_USE_COMMENTS" => "N",
+		"DETAIL_USE_VOTE_RATING" => "N",
+		"DISABLE_INIT_JS_IN_COMPONENT" => "N",
+		"DISPLAY_BOTTOM_PAGER" => "Y",
+		"DISPLAY_TOP_PAGER" => "N",
+		"ELEMENT_SORT_FIELD" => "timestamp_x",
+		"ELEMENT_SORT_FIELD2" => "id",
+		"ELEMENT_SORT_ORDER" => "desc",
+		"ELEMENT_SORT_ORDER2" => "desc",
+		"FILE_404" => "",
+		"FILTER_HIDE_ON_MOBILE" => "N",
+		"FILTER_VIEW_MODE" => "VERTICAL",
+		"GIFTS_DETAIL_BLOCK_TITLE" => "Выберите один из подарков",
+		"GIFTS_DETAIL_HIDE_BLOCK_TITLE" => "N",
+		"GIFTS_DETAIL_PAGE_ELEMENT_COUNT" => "4",
+		"GIFTS_DETAIL_TEXT_LABEL_GIFT" => "Подарок",
+		"GIFTS_MAIN_PRODUCT_DETAIL_BLOCK_TITLE" => "Выберите один из товаров, чтобы получить подарок",
+		"GIFTS_MAIN_PRODUCT_DETAIL_HIDE_BLOCK_TITLE" => "N",
+		"GIFTS_MAIN_PRODUCT_DETAIL_PAGE_ELEMENT_COUNT" => "4",
+		"GIFTS_MESS_BTN_BUY" => "Выбрать",
+		"GIFTS_SECTION_LIST_BLOCK_TITLE" => "Подарки к товарам этого раздела",
+		"GIFTS_SECTION_LIST_HIDE_BLOCK_TITLE" => "N",
+		"GIFTS_SECTION_LIST_PAGE_ELEMENT_COUNT" => "4",
+		"GIFTS_SECTION_LIST_TEXT_LABEL_GIFT" => "Подарок",
+		"GIFTS_SHOW_DISCOUNT_PERCENT" => "Y",
+		"GIFTS_SHOW_IMAGE" => "Y",
+		"GIFTS_SHOW_NAME" => "Y",
+		"GIFTS_SHOW_OLD_PRICE" => "Y",
+		"HIDE_NOT_AVAILABLE" => "N",
+		"HIDE_NOT_AVAILABLE_OFFERS" => "N",
+		"IBLOCK_ID" => "2",
+		"IBLOCK_TYPE" => "SHIFT_WORK",
+		"INCLUDE_SUBSECTIONS" => "Y",
+		"INSTANT_RELOAD" => "N",
+		"LABEL_PROP" => "",
+		"LAZY_LOAD" => "N",
+		"LINE_ELEMENT_COUNT" => "3",
+		"LINK_ELEMENTS_URL" => "link.php?PARENT_ELEMENT_ID=#ELEMENT_ID#",
+		"LINK_IBLOCK_ID" => "",
+		"LINK_IBLOCK_TYPE" => "",
+		"LINK_PROPERTY_SID" => "",
+		"LIST_BROWSER_TITLE" => "-",
+		"LIST_ENLARGE_PRODUCT" => "STRICT",
+		"LIST_META_DESCRIPTION" => "-",
+		"LIST_META_KEYWORDS" => "-",
+		"LIST_PRODUCT_BLOCKS_ORDER" => "props,price,sku,quantityLimit,quantity,buttons",
+		"LIST_PRODUCT_ROW_VARIANTS" => "[{'VARIANT':'3','BIG_DATA':false},{'VARIANT':'3','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false}]",
+		"LIST_PROPERTY_CODE_MOBILE" => "",
+		"LIST_SHOW_SLIDER" => "Y",
+		"LIST_SLIDER_INTERVAL" => "3000",
+		"LIST_SLIDER_PROGRESS" => "N",
+		"LOAD_ON_SCROLL" => "N",
+		"MESSAGE_404" => "",
+		"MESS_BTN_ADD_TO_BASKET" => "В корзину",
+		"MESS_BTN_BUY" => "Купить",
+		"MESS_BTN_COMPARE" => "Сравнение",
+		"MESS_BTN_DETAIL" => "Подробнее",
+		"MESS_BTN_LAZY_LOAD" => "Показать ещё",
+		"MESS_BTN_SUBSCRIBE" => "Подписаться на это",
+		"MESS_COMMENTS_TAB" => "Комментарии",
+		"MESS_DESCRIPTION_TAB" => "Описание",
+		"MESS_NOT_AVAILABLE" => "Нет в наличии",
+		"MESS_NOT_AVAILABLE_SERVICE" => "Недоступно",
+		"MESS_PRICE_RANGES_TITLE" => "Цены",
+		"MESS_PROPERTIES_TAB" => "Характеристики",
+		"PAGER_BASE_LINK_ENABLE" => "N",
+		"PAGER_DESC_NUMBERING" => "N",
+		"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+		"PAGER_SHOW_ALL" => "N",
+		"PAGER_SHOW_ALWAYS" => "N",
+		"PAGER_TEMPLATE" => ".default",
+		"PAGER_TITLE" => "Товары",
+		"PAGE_ELEMENT_COUNT" => "32",
+		"PARTIAL_PRODUCT_PROPERTIES" => "N",
+		"PRICE_CODE" => array(
+		),
+		"PRICE_VAT_INCLUDE" => "Y",
+		"PRICE_VAT_SHOW_VALUE" => "N",
+		"PRODUCT_ID_VARIABLE" => "id",
+		"PRODUCT_PROPS_VARIABLE" => "prop",
+		"PRODUCT_QUANTITY_VARIABLE" => "quantity",
+		"PRODUCT_SUBSCRIPTION" => "Y",
+		"SEARCH_CHECK_DATES" => "Y",
+		"SEARCH_NO_WORD_LOGIC" => "Y",
+		"SEARCH_PAGE_RESULT_COUNT" => "50",
+		"SEARCH_RESTART" => "N",
+		"SEARCH_USE_LANGUAGE_GUESS" => "Y",
+		"SEARCH_USE_SEARCH_RESULT_ORDER" => "N",
+		"SECTIONS_SHOW_PARENT_NAME" => "N",
+		"SECTIONS_VIEW_MODE" => "LIST",
+		"SECTION_ADD_TO_BASKET_ACTION" => "ADD",
+		"SECTION_BACKGROUND_IMAGE" => "-",
+		"SECTION_COUNT_ELEMENTS" => "Y",
+		"SECTION_ID_VARIABLE" => "SECTION_ID",
+		"SECTION_TOP_DEPTH" => "2",
+		"SEF_MODE" => "N",
+		"SET_LAST_MODIFIED" => "N",
+		"SET_STATUS_404" => "N",
+		"SET_TITLE" => "Y",
+		"SHOW_404" => "Y",
+		"SHOW_DEACTIVATED" => "N",
+		"SHOW_DISCOUNT_PERCENT" => "N",
+		"SHOW_MAX_QUANTITY" => "N",
+		"SHOW_OLD_PRICE" => "N",
+		"SHOW_PRICE_COUNT" => "1",
+		"SHOW_SKU_DESCRIPTION" => "N",
+		"SHOW_TOP_ELEMENTS" => "Y",
+		"SIDEBAR_DETAIL_POSITION" => "right",
+		"SIDEBAR_DETAIL_SHOW" => "N",
+		"SIDEBAR_PATH" => "",
+		"SIDEBAR_SECTION_POSITION" => "right",
+		"SIDEBAR_SECTION_SHOW" => "Y",
+		"TEMPLATE_THEME" => "blue",
+		"TOP_ADD_TO_BASKET_ACTION" => "ADD",
+		"TOP_ELEMENT_COUNT" => "9",
+		"TOP_ELEMENT_SORT_FIELD" => "sort",
+		"TOP_ELEMENT_SORT_FIELD2" => "id",
+		"TOP_ELEMENT_SORT_ORDER" => "asc",
+		"TOP_ELEMENT_SORT_ORDER2" => "desc",
+		"TOP_ENLARGE_PRODUCT" => "STRICT",
+		"TOP_LINE_ELEMENT_COUNT" => "3",
+		"TOP_PRODUCT_BLOCKS_ORDER" => "price,props,sku,quantityLimit,quantity,buttons",
+		"TOP_PRODUCT_ROW_VARIANTS" => "[{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false}]",
+		"TOP_SHOW_SLIDER" => "Y",
+		"TOP_SLIDER_INTERVAL" => "3000",
+		"TOP_SLIDER_PROGRESS" => "N",
+		"TOP_VIEW_MODE" => "SECTION",
+		"USER_CONSENT" => "N",
+		"USER_CONSENT_ID" => "0",
+		"USER_CONSENT_IS_CHECKED" => "Y",
+		"USER_CONSENT_IS_LOADED" => "N",
+		"USE_ALSO_BUY" => "N",
+		"USE_BIG_DATA" => "Y",
+		"USE_COMMON_SETTINGS_BASKET_POPUP" => "N",
+		"USE_COMPARE" => "N",
+		"USE_ELEMENT_COUNTER" => "Y",
+		"USE_ENHANCED_ECOMMERCE" => "N",
+		"USE_FILTER" => "N",
+		"USE_GIFTS_DETAIL" => "Y",
+		"USE_GIFTS_MAIN_PR_SECTION_LIST" => "Y",
+		"USE_GIFTS_SECTION" => "Y",
+		"USE_MAIN_ELEMENT_SECTION" => "N",
+		"USE_PRICE_COUNT" => "N",
+		"USE_PRODUCT_QUANTITY" => "N",
+		"USE_SALE_BESTSELLERS" => "Y",
+		"USE_STORE" => "N",
+		"VARIABLE_ALIASES" => array(
+			"ELEMENT_ID" => "ELEMENT_ID",
+			"SECTION_ID" => "SECTION_ID",
+		)
+	),
+	false
+);
 ?>
-
-
-<div class="flex items-center py-5 lg:py-6">
-    <div class="flex items-center space-x-1 mx-3">
-        <h2 class="text-xl font-medium text-slate-700 line-clamp-1 dark:text-navy-50 lg:text-2xl">Формируемые смены</h2>
-    </div>
-    <div class="flex items-center space-x-2 mx-3">
-    <!-- Добавление смены - всплывающая форма -->
-        <div x-data="{showModal:false}">
-            <button @click="showModal = true" class="btn bg-info font-medium text-white hover:bg-info-focus hover:shadow-lg hover:shadow-info/50 focus:bg-info-focus focus:shadow-lg focus:shadow-info/50 active:bg-info-focus/90"> 
-                Добавить смену 
-            </button>
-                <template x-teleport="#x-teleport-target">
-                    <div
-                        class="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden px-4 py-6 sm:px-5"
-                        x-show="showModal"
-                        role="dialog"
-                        @keydown.window.escape="showModal = false"
-                    >
-                        <div
-                            class="absolute inset-0 bg-slate-900/60 transition-opacity duration-300"
-                            @click="showModal = false"
-                            x-show="showModal"
-                            x-transition:enter="ease-out"
-                            x-transition:enter-start="opacity-0"
-                            x-transition:enter-end="opacity-100"
-                            x-transition:leave="ease-in"
-                            x-transition:leave-start="opacity-100"
-                            x-transition:leave-end="opacity-0"
-                        ></div>
-                        <div
-                        class="relative w-full max-w-lg origin-top rounded-lg bg-white transition-all duration-300 dark:bg-navy-700"
-                        x-show="showModal"
-                        x-transition:enter="easy-out"
-                        x-transition:enter-start="opacity-0 scale-95"
-                        x-transition:enter-end="opacity-100 scale-100"
-                        x-transition:leave="easy-in"
-                        x-transition:leave-start="opacity-100 scale-100"
-                        x-transition:leave-end="opacity-0 scale-95"
-                        >
-                            <div
-                            class="flex justify-between rounded-t-lg bg-slate-200 px-4 py-3 dark:bg-navy-800 sm:px-5">
-                                <h3 class="text-base font-medium text-slate-700 dark:text-navy-100">
-                                    Добавление смены
-                                </h3>
-                            <button @click="showModal = !showModal" class="btn -mr-1.5 h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4.5 w-4.5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    ></path>
-                                </svg>
-                            </button>
-                            </div>
-                        <div class="px-4 py-4 sm:px-5">
-                            <p>
-                                Для начала работы с новой сменой заполните данные из заказа.
-                            </p>
-                            <div class="mt-4 space-y-4">
-                                <label class="block">
-                                    <span>Заказчик:</span>
-                                    <select class="form-select mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent">
-                                        <option>Гурман</option>
-                                        <option>Не Гурман</option>
-                                        <option>ИП Пупкин</option>
-                                        <option>Другой</option>
-                                    </select>
-                                </label>
-                          <!-- <label class="block">
-                            <span>Адрес:</span>
-                            <input
-                              class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                              placeholder="(цех)"
-                              type="text"
-                            />
-                          </label> -->
-                                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">  
-                                    <label class="block">
-                                        <span>Дата:</span>
-                                            <?php
-                                                $today = new DateTime();
-                                                $formattedDate = $today->format('d.m.Y');
-                                            ?>
-                                        <input x-input-mask="{
-                                            date: true,
-                                            delimiter: '.',
-                                            datePattern: ['d', 'm','Y']
-                                            }"
-                                            value="<?php echo $formattedDate; ?>"
-                                            class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="<?php echo $formattedDate; ?>"
-                                            type="text"
-                                        />
-                                    </label>
-                                        <?php
-                                            $currentTime = date("H:i"); // текущее время
-                                            // Устанавливаем значение по умолчанию в зависимости от текущего времени
-                                            if ($currentTime < "12:00") {
-                                                $defaultValue = "20:00";
-                                            } else {
-                                                $defaultValue = "08:00";
-                                            }
-                                        ?>
-                                    <label class="block">
-                                        <span>Время начала:</span>
-                                        <input 
-                                            x-input-mask="{time: true,timePattern: ['h', 'm']}"
-                                            class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="00:00"
-                                            type="text"
-                                            value="<?php echo $defaultValue; ?>"
-                                        />
-                                    </label>
-                                    <label class="block">
-                                        <span>Длительность:</span>
-                                            <input 
-                                                x-input-mask="{numeral: true,}"
-                                                class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                                placeholder="12"
-                                                type="number"
-                                                inputmode="numeric"
-                                                min="0"
-                                                value="12"
-                                            />
-                                    </label>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">  
-                                    <label class="block">
-                                        <span>Мужчин:</span>
-                                        <input 
-                                            x-input-mask="{numeral: true,}"
-                                            class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="0"
-                                            type="number"
-                                            inputmode="numeric"
-                                            min="0"
-                                        />
-                                    </label>
-                                    <label class="block">
-                                        <span>Женщин:</span>
-                                        <input
-                                            x-input-mask="{numeral: true,}"
-                                            class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                                            placeholder="0"
-                                            type="number"
-                                            inputmode="numeric"
-                                            min="0"
-                                        />
-                                    </label>
-                                </div>
-
-                          <!-- <label class="block">
-                            <span>Описание:</span>
-                            <textarea
-                              rows="4"
-                              placeholder="Введите комментарий"
-                              class="form-textarea mt-1.5 w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-                            ></textarea>
-                          </label> -->
-
-                                <label class="inline-flex items-center space-x-2">
-                                    <input
-                                        class="form-switch is-outline h-5 w-10 rounded-full border border-slate-400/70 bg-transparent before:rounded-full before:bg-slate-300 checked:border-primary checked:before:bg-primary dark:border-navy-400 dark:before:bg-navy-300 dark:checked:border-accent dark:checked:before:bg-accent"
-                                        type="checkbox"
-                                        checked 
-                                    />
-                                    <span>Запустить набор</span>
-                                </label>
-                                <div class="space-x-2 text-right">
-                                    <button
-                                        @click="showModal = false"
-                                        class="btn min-w-[7rem] rounded-full border border-slate-300 font-medium text-slate-800 hover:bg-slate-150 focus:bg-slate-150 active:bg-slate-150/80 dark:border-navy-450 dark:text-navy-50 dark:hover:bg-navy-500 dark:focus:bg-navy-500 dark:active:bg-navy-500/90"
-                                    >
-                                        Отмена
-                                    </button>
-                                    <button
-                                        @click="showModal = false"
-                                        class="btn min-w-[7rem] rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
-                                    >
-                                        Создать
-                                    </button>
-                                </div>
-                        </div>
-                    </div>
-                    </div>
-                    </div>
-                </template>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
-          
-          <!-- карточка -->
-            <div class="card grow items-center p-4 sm:p-5">
-                <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100"> Гурман </h3>
-                <p class="text-xs+">Пельменный цех</p>
-                <p class="mt-3 text-xl font-medium text-white">12:00 - 24:00</p>
-                <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
-            
-                <!-- блок с М/Ж-таблицей  -->
-                <div class="grow space-y-4">
-                    <table class="is-hoverable w-full text-center">
-                        <thead>
-                            <tr>
-                                <th class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                    М
-                                </th>
-                                <th class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                    Ж
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="dark:border-b-navy-500">
-                            <td class="whitespace-nowrap rounded-l-lg px-4 py-3 sm:px-5">
-                            <p class="text-xl font-semibold text-slate-700 dark:text-navy-100">
-                                19
-                            </p> 
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                            <p class="text-xl font-semibold text-slate-700 dark:text-navy-100">
-                                8
-                            </p>
-                            </td>
-                            </tr>
-                            <tr class="dark:border-b-navy-500">
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                            <p class="text-xl text-slate-700 dark:text-navy-100">
-                                4
-                            </p>
-                            </td>
-                            <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                            <p class="text-xl text-slate-700 dark:text-navy-100">
-                                3
-                            </p>
-                            </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <button class="btn mt-5 space-x-2  bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-                <!-- втупую добавил ссылку для демо -->
-                <a href="http://45.8.145.101/tmp/constructor.php">
-                    <span>Подробно</span>
-                </a>
-                </button>
-            </div>
-
-            <div class="card grow items-center p-4 sm:p-5">
-                <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-                    Клиент-2
-                </h3>
-                <p class="text-xs+">Булочная</p>
-                <p class="mt-3 text-xl font-medium text-white">00:00 - 12:00</p>
-                <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
-                <div class="grow space-y-4">
-                    <div class="is-scrollbar-hidden min-w-full overflow-x-auto">
-                        <table class="is-hoverable w-full text-center">
-                            <thead>
-                            <tr>
-                            <th class="whitespace-nowrap rounded-l-lg bg-slate-200 px-3 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                М
-                            </th>
-                            <th class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5">
-                                Ж
-                            </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="dark:border-b-navy-500">
-                                <td class="whitespace-nowrap rounded-l-lg px-4 py-3 sm:px-5">
-                                <p class="text-xl font-semibold text-slate-700 dark:text-navy-100" align="center">
-                                    10
-                                </p> 
-                                </td>
-                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                <p class="text-xl font-semibold text-slate-700 dark:text-navy-100" align="center">
-                                    10
-                                </p>
-                                </td>
-                                </tr>
-                                <tr class="dark:border-b-navy-500">
-                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                <p class="text-xl text-slate-700 dark:text-navy-100">
-                                    1
-                                </p>
-                                </td>
-                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                                <p class="text-xl text-slate-700 dark:text-navy-100">
-                                    0
-                                </p>
-                                </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            <button class="btn mt-5 space-x-2  bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-            <!-- втупую добавил ссылку для демо -->
-                <a href="http://45.8.145.101/tmp/constructor.php">
-                <span>Подробно</span>
-                </a>
-            </button>
-        </div>
-</div>
-
-
-<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+<br>
+ <?$APPLICATION->IncludeComponent(
+	"bitrix:catalog",
+	"",
+	Array(
+		"ACTION_VARIABLE" => "action",
+		"ADD_ELEMENT_CHAIN" => "N",
+		"ADD_PICT_PROP" => "-",
+		"ADD_PROPERTIES_TO_BASKET" => "Y",
+		"ADD_SECTIONS_CHAIN" => "Y",
+		"AJAX_MODE" => "N",
+		"AJAX_OPTION_ADDITIONAL" => "",
+		"AJAX_OPTION_HISTORY" => "N",
+		"AJAX_OPTION_JUMP" => "N",
+		"AJAX_OPTION_STYLE" => "Y",
+		"BASKET_URL" => "/personal/basket.php",
+		"BIG_DATA_RCM_TYPE" => "personal",
+		"CACHE_FILTER" => "N",
+		"CACHE_GROUPS" => "Y",
+		"CACHE_TIME" => "36000000",
+		"CACHE_TYPE" => "A",
+		"COMMON_ADD_TO_BASKET_ACTION" => "ADD",
+		"COMMON_SHOW_CLOSE_POPUP" => "N",
+		"COMPATIBLE_MODE" => "N",
+		"CONVERT_CURRENCY" => "N",
+		"DETAIL_ADD_DETAIL_TO_SLIDER" => "N",
+		"DETAIL_ADD_TO_BASKET_ACTION" => array("BUY"),
+		"DETAIL_ADD_TO_BASKET_ACTION_PRIMARY" => array("BUY"),
+		"DETAIL_BACKGROUND_IMAGE" => "-",
+		"DETAIL_BRAND_USE" => "N",
+		"DETAIL_BROWSER_TITLE" => "-",
+		"DETAIL_CHECK_SECTION_ID_VARIABLE" => "N",
+		"DETAIL_DETAIL_PICTURE_MODE" => array("POPUP","MAGNIFIER"),
+		"DETAIL_DISPLAY_NAME" => "Y",
+		"DETAIL_DISPLAY_PREVIEW_TEXT_MODE" => "E",
+		"DETAIL_IMAGE_RESOLUTION" => "16by9",
+		"DETAIL_MAIN_BLOCK_PROPERTY_CODE" => array(),
+		"DETAIL_META_DESCRIPTION" => "-",
+		"DETAIL_META_KEYWORDS" => "-",
+		"DETAIL_PRODUCT_INFO_BLOCK_ORDER" => "sku,props",
+		"DETAIL_PRODUCT_PAY_BLOCK_ORDER" => "rating,price,priceRanges,quantityLimit,quantity,buttons",
+		"DETAIL_SET_CANONICAL_URL" => "N",
+		"DETAIL_SET_VIEWED_IN_COMPONENT" => "N",
+		"DETAIL_SHOW_POPULAR" => "Y",
+		"DETAIL_SHOW_SLIDER" => "N",
+		"DETAIL_SHOW_VIEWED" => "Y",
+		"DETAIL_STRICT_SECTION_CHECK" => "N",
+		"DETAIL_USE_COMMENTS" => "N",
+		"DETAIL_USE_VOTE_RATING" => "N",
+		"DISABLE_INIT_JS_IN_COMPONENT" => "N",
+		"DISPLAY_BOTTOM_PAGER" => "Y",
+		"DISPLAY_TOP_PAGER" => "N",
+		"ELEMENT_SORT_FIELD" => "sort",
+		"ELEMENT_SORT_FIELD2" => "id",
+		"ELEMENT_SORT_ORDER" => "asc",
+		"ELEMENT_SORT_ORDER2" => "desc",
+		"FILTER_HIDE_ON_MOBILE" => "N",
+		"FILTER_VIEW_MODE" => "VERTICAL",
+		"GIFTS_DETAIL_BLOCK_TITLE" => "Выберите один из подарков",
+		"GIFTS_DETAIL_HIDE_BLOCK_TITLE" => "N",
+		"GIFTS_DETAIL_PAGE_ELEMENT_COUNT" => "4",
+		"GIFTS_DETAIL_TEXT_LABEL_GIFT" => "Подарок",
+		"GIFTS_MAIN_PRODUCT_DETAIL_BLOCK_TITLE" => "Выберите один из товаров, чтобы получить подарок",
+		"GIFTS_MAIN_PRODUCT_DETAIL_HIDE_BLOCK_TITLE" => "N",
+		"GIFTS_MAIN_PRODUCT_DETAIL_PAGE_ELEMENT_COUNT" => "4",
+		"GIFTS_MESS_BTN_BUY" => "Выбрать",
+		"GIFTS_SECTION_LIST_BLOCK_TITLE" => "Подарки к товарам этого раздела",
+		"GIFTS_SECTION_LIST_HIDE_BLOCK_TITLE" => "N",
+		"GIFTS_SECTION_LIST_PAGE_ELEMENT_COUNT" => "4",
+		"GIFTS_SECTION_LIST_TEXT_LABEL_GIFT" => "Подарок",
+		"GIFTS_SHOW_DISCOUNT_PERCENT" => "Y",
+		"GIFTS_SHOW_IMAGE" => "Y",
+		"GIFTS_SHOW_NAME" => "Y",
+		"GIFTS_SHOW_OLD_PRICE" => "Y",
+		"HIDE_NOT_AVAILABLE" => "N",
+		"HIDE_NOT_AVAILABLE_OFFERS" => "N",
+		"IBLOCK_ID" => "2",
+		"IBLOCK_TYPE" => "SHIFT_WORK",
+		"INCLUDE_SUBSECTIONS" => "Y",
+		"INSTANT_RELOAD" => "N",
+		"LABEL_PROP" => array(),
+		"LAZY_LOAD" => "N",
+		"LINE_ELEMENT_COUNT" => "3",
+		"LINK_ELEMENTS_URL" => "link.php?PARENT_ELEMENT_ID=#ELEMENT_ID#",
+		"LINK_IBLOCK_ID" => "",
+		"LINK_IBLOCK_TYPE" => "",
+		"LINK_PROPERTY_SID" => "",
+		"LIST_BROWSER_TITLE" => "-",
+		"LIST_ENLARGE_PRODUCT" => "STRICT",
+		"LIST_META_DESCRIPTION" => "-",
+		"LIST_META_KEYWORDS" => "-",
+		"LIST_PRODUCT_BLOCKS_ORDER" => "price,props,sku,quantityLimit,quantity,buttons",
+		"LIST_PRODUCT_ROW_VARIANTS" => "[{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false},{'VARIANT':'2','BIG_DATA':false}]",
+		"LIST_PROPERTY_CODE_MOBILE" => array(),
+		"LIST_SHOW_SLIDER" => "Y",
+		"LIST_SLIDER_INTERVAL" => "3000",
+		"LIST_SLIDER_PROGRESS" => "N",
+		"LOAD_ON_SCROLL" => "N",
+		"MESSAGE_404" => "",
+		"MESS_BTN_ADD_TO_BASKET" => "В корзину",
+		"MESS_BTN_BUY" => "Купить",
+		"MESS_BTN_COMPARE" => "Сравнение",
+		"MESS_BTN_DETAIL" => "Подробнее",
+		"MESS_BTN_LAZY_LOAD" => "Показать ещё",
+		"MESS_BTN_SUBSCRIBE" => "Подписаться",
+		"MESS_COMMENTS_TAB" => "Комментарии",
+		"MESS_DESCRIPTION_TAB" => "Описание",
+		"MESS_NOT_AVAILABLE" => "Нет в наличии",
+		"MESS_NOT_AVAILABLE_SERVICE" => "Недоступно",
+		"MESS_PRICE_RANGES_TITLE" => "Цены",
+		"MESS_PROPERTIES_TAB" => "Характеристики",
+		"PAGER_BASE_LINK_ENABLE" => "N",
+		"PAGER_DESC_NUMBERING" => "N",
+		"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
+		"PAGER_SHOW_ALL" => "N",
+		"PAGER_SHOW_ALWAYS" => "N",
+		"PAGER_TEMPLATE" => ".default",
+		"PAGER_TITLE" => "Товары",
+		"PAGE_ELEMENT_COUNT" => "30",
+		"PARTIAL_PRODUCT_PROPERTIES" => "N",
+		"PRICE_CODE" => array(),
+		"PRICE_VAT_INCLUDE" => "Y",
+		"PRICE_VAT_SHOW_VALUE" => "N",
+		"PRODUCT_ID_VARIABLE" => "id",
+		"PRODUCT_PROPS_VARIABLE" => "prop",
+		"PRODUCT_QUANTITY_VARIABLE" => "quantity",
+		"PRODUCT_SUBSCRIPTION" => "Y",
+		"SEARCH_CHECK_DATES" => "Y",
+		"SEARCH_NO_WORD_LOGIC" => "Y",
+		"SEARCH_PAGE_RESULT_COUNT" => "50",
+		"SEARCH_RESTART" => "N",
+		"SEARCH_USE_LANGUAGE_GUESS" => "Y",
+		"SEARCH_USE_SEARCH_RESULT_ORDER" => "N",
+		"SECTIONS_SHOW_PARENT_NAME" => "Y",
+		"SECTIONS_VIEW_MODE" => "LIST",
+		"SECTION_ADD_TO_BASKET_ACTION" => "ADD",
+		"SECTION_BACKGROUND_IMAGE" => "-",
+		"SECTION_COUNT_ELEMENTS" => "Y",
+		"SECTION_ID_VARIABLE" => "SECTION_ID",
+		"SECTION_TOP_DEPTH" => "2",
+		"SEF_MODE" => "N",
+		"SET_LAST_MODIFIED" => "N",
+		"SET_STATUS_404" => "N",
+		"SET_TITLE" => "Y",
+		"SHOW_404" => "N",
+		"SHOW_DEACTIVATED" => "N",
+		"SHOW_DISCOUNT_PERCENT" => "N",
+		"SHOW_MAX_QUANTITY" => "N",
+		"SHOW_OLD_PRICE" => "N",
+		"SHOW_PRICE_COUNT" => "1",
+		"SHOW_SKU_DESCRIPTION" => "N",
+		"SHOW_TOP_ELEMENTS" => "Y",
+		"SIDEBAR_DETAIL_SHOW" => "N",
+		"SIDEBAR_PATH" => "",
+		"SIDEBAR_SECTION_SHOW" => "Y",
+		"TEMPLATE_THEME" => "blue",
+		"TOP_ADD_TO_BASKET_ACTION" => "ADD",
+		"TOP_ELEMENT_COUNT" => "9",
+		"TOP_ELEMENT_SORT_FIELD" => "sort",
+		"TOP_ELEMENT_SORT_FIELD2" => "id",
+		"TOP_ELEMENT_SORT_ORDER" => "asc",
+		"TOP_ELEMENT_SORT_ORDER2" => "desc",
+		"TOP_LINE_ELEMENT_COUNT" => "3",
+		"TOP_VIEW_MODE" => "SECTION",
+		"USER_CONSENT" => "N",
+		"USER_CONSENT_ID" => "0",
+		"USER_CONSENT_IS_CHECKED" => "Y",
+		"USER_CONSENT_IS_LOADED" => "N",
+		"USE_BIG_DATA" => "Y",
+		"USE_COMMON_SETTINGS_BASKET_POPUP" => "N",
+		"USE_COMPARE" => "N",
+		"USE_ELEMENT_COUNTER" => "Y",
+		"USE_ENHANCED_ECOMMERCE" => "N",
+		"USE_FILTER" => "N",
+		"USE_GIFTS_DETAIL" => "Y",
+		"USE_GIFTS_MAIN_PR_SECTION_LIST" => "Y",
+		"USE_GIFTS_SECTION" => "Y",
+		"USE_MAIN_ELEMENT_SECTION" => "N",
+		"USE_PRICE_COUNT" => "N",
+		"USE_PRODUCT_QUANTITY" => "N",
+		"USE_SALE_BESTSELLERS" => "Y",
+		"USE_STORE" => "N",
+		"VARIABLE_ALIASES" => Array("ELEMENT_ID"=>"ELEMENT_ID","SECTION_ID"=>"SECTION_ID")
+	)
+);?>
+<br>
+<? require($_SERVER[ "DOCUMENT_ROOT" ]."/bitrix/footer.php"); ?>

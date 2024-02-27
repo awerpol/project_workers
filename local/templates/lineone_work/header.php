@@ -30,7 +30,8 @@ global $APPLICATION;
     ?><!DOCTYPE html>
     <html lang="<?=LANGUAGE_ID?>">
     <head>
-        <title><?= $APPLICATION->ShowTitle() ?></title><?php
+        <? $APPLICATION->ShowPanel()?>
+        <title><?= $APPLICATION->ShowTitle() ?> </title><?php
 
         /* Meta tags */
         $APPLICATION->AddHeadString('<meta charset="UTF-8" />');
@@ -58,6 +59,7 @@ global $APPLICATION;
         ?>
     </head>
     <body x-data x-bind="$store.global.documentBody" class="is-sidebar-open is-header-blur navigation:sideblock">
+    
     <div class="app-preloader fixed z-50 grid h-full w-full place-content-center bg-slate-50 dark:bg-navy-900">
         <div class="app-preloader-inner relative inline-block h-48 w-48"></div>
     </div>
@@ -274,18 +276,17 @@ global $APPLICATION;
                 </div>
             </div>
             <main class="main-content w-full px-[var(--margin-x)] pb-8">
-                <? $APPLICATION->ShowPanel()?>
                 <?$APPLICATION->IncludeComponent(
-                "bitrix:breadcrumb",
-                "companyBook",
-                array(
-                "PATH" => "",
-                "SITE_ID" => SITE_ID,
-                "START_FROM" => "0",
-                "COMPONENT_TEMPLATE" => "companyBook"
-                ),
-                false
-                );?>
+	"bitrix:breadcrumb", 
+	"companyBook", 
+	array(
+		"PATH" => "",
+		"SITE_ID" => "s1",
+		"START_FROM" => "0",
+		"COMPONENT_TEMPLATE" => "companyBook"
+	),
+	false
+);?>
         <?php elseif(!$USER->IsAuthorized()): ?>
                 <main class="grid w-full grow grid-cols-1 place-items-center">
                     <?if($APPLICATION->GetCurPage(false) != "/auth/"){

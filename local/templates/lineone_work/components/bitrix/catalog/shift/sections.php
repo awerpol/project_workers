@@ -42,5 +42,5 @@ $APPLICATION->IncludeComponent(
     "",
     $sectionListParams,
     $component,
-    ($arParams[ "SHOW_TOP_ELEMENTS" ] !== "N" ? ["HIDE_ICONS" => "Y"] : [])
+    ($arParams[ "SHOW_TOP_ELEMENTS" ] !== "N" ? ["HIDE_ICONS" => "N"] : [])
 );

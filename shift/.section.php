@@ -1,5 +1,5 @@
 <?
-$sSectionName = "Список регламентов";
+$sSectionName = "Список смен";
 $arDirProperties = [
 
 ];
