@@ -185,6 +185,6 @@ if (isset($arParams[ 'USER_CONSENT_IS_LOADED' ])) {
     $componentElementParams[ 'USER_CONSENT_IS_LOADED' ] = $arParams[ 'USER_CONSENT_IS_LOADED' ];
 }
 
-$elementId = $APPLICATION->IncludeComponent('bitrix:catalog.element', '', $componentElementParams,
+$elementId = $APPLICATION->IncludeComponent('bitrix:catalog.element', 'shift', $componentElementParams,
     $component
 );
