@@ -5,6 +5,8 @@ $APPLICATION->SetTitle("Формирование смены");
 
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Catalog\ProductTable;
+use Bitrix\Main\Type\DateTime;
+
 
 /**
  * @global CMain $APPLICATION
@@ -36,6 +38,7 @@ $time_start = $arResult["PROPERTIES"]["SHIFT_START"]["VALUE"] ?
               date('H:i', strtotime($arResult["PROPERTIES"]["SHIFT_START"]["VALUE"])) : 
               " ";
 $time_end = $arResult["PROPERTIES"]["SHIFT_END"]["VALUE"] ? 
+            // echo new DateTime($arResult["PROPERTIES"]["SHIFT_END"]["VALUE"], "Y-m-d H:i:s") :
             date('H:i', strtotime($arResult["PROPERTIES"]["SHIFT_END"]["VALUE"])) : 
             " ";
 

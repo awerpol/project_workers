@@ -3,9 +3,9 @@
 namespace Sprint\Migration;
 
 
-class Version20240227144236 extends Version
+class IB20240228124631 extends Version
 {
-    protected $description = "";
+    protected $description = "28.02.2024 16.30";
 
     protected $moduleVersion = "4.6.1";
 
@@ -423,7 +423,7 @@ class Version20240227144236 extends Version
   'IS_REQUIRED' => 'N',
   'VERSION' => '2',
   'USER_TYPE' => NULL,
-  'USER_TYPE_SETTINGS' => 'a:0:{}',
+  'USER_TYPE_SETTINGS' => NULL,
   'HINT' => '',
   'VALUES' => 
   array (
