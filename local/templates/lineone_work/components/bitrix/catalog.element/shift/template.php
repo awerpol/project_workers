@@ -30,17 +30,17 @@ $this->setFrameMode(true);
 // ////////////////////////////////////////////
 
 
-// ID инфоблока
-// $iblockId = $arParams["IBLOCK_ID"];
-
 // время начала и окончания смены
-$time_start = $arResult["PROPERTIES"]["SHIFT_START"]["VALUE"] ? 
-              date('H:i', strtotime($arResult["PROPERTIES"]["SHIFT_START"]["VALUE"])) : 
-              " ";
-$time_end = $arResult["PROPERTIES"]["SHIFT_END"]["VALUE"] ? 
-            // echo new DateTime($arResult["PROPERTIES"]["SHIFT_END"]["VALUE"], "Y-m-d H:i:s") :
-            date('H:i', strtotime($arResult["PROPERTIES"]["SHIFT_END"]["VALUE"])) : 
-            " ";
+if ($arResult["PROPERTIES"]["SHIFT_START"]["VALUE"]) {
+  $time_start = new DateTime($arResult["PROPERTIES"]["SHIFT_START"]["VALUE"]);
+  $time_end = $arResult["PROPERTIES"]["SHIFT_END"]["VALUE"] ? 
+              new DateTime($arResult["PROPERTIES"]["SHIFT_END"]["VALUE"])  : 
+              $time_end;
+  $shift_period = $time_start->format("H:i") . " - " . $time_end->format("H:i");
+} else {
+  $shift_period = "время не задано";
+}
+
 
 // массив пользователей (для таблицы)
 if ($arUserIds = $arResult["PROPERTIES"]["WORKERS"]["VALUE"]) {
@@ -79,7 +79,7 @@ if ($arUserIds) {
             </h2>
         </div>
         <div class="flex items-center space-x-2">
-          <p><?=$time_start?> - <?= $time_end?></p>
+          <p><?=$shift_period?></p>
         </div>
         <div class="flex items-center space-x-2">
           <div>
