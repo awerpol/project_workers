@@ -45,7 +45,7 @@ global $APPLICATION;
 
         /* Javascript Assets */
         $APPLICATION->AddHeadString('<script src="' . SITE_TEMPLATE_PATH . '/src-template/dist/js/app.js" defer data-skip-moving="true"></script>');
-
+        $APPLICATION->AddHeadString('<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" data-skip-moving="true"></script>');
         /* Fonts */
         $APPLICATION->AddHeadString('<link rel="preconnect" href="https://fonts.googleapis.com" />');
         $APPLICATION->AddHeadString('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />');
@@ -60,11 +60,11 @@ global $APPLICATION;
     </head>
     <body x-data x-bind="$store.global.documentBody" class="is-sidebar-open is-header-blur navigation:sideblock">
     
-    <div class="app-preloader fixed z-50 grid h-full w-full place-content-center bg-slate-50 dark:bg-navy-900">
+    <!-- preloader -->
+    <!-- <div class="app-preloader fixed z-50 grid h-full w-full place-content-center bg-slate-50 dark:bg-navy-900">
         <div class="app-preloader-inner relative inline-block h-48 w-48"></div>
-    </div>
+    </div> -->
     <div id="root" class="min-h-100vh flex grow bg-slate-50 dark:bg-navy-900" x-cloak>
-
         <?if (defined('ERROR_404') && ERROR_404 == 'Y'):?>
             <main :style="$store.global.isDarkModeEnabled ? {backgroundImage : `url('.<?= SITE_TEMPLATE_PATH ?>/src-template/dist/images/illustrations/ufo-bg-dark.svg')`} :{backgroundImage : `url('.<?= SITE_TEMPLATE_PATH ?>/src-template/dist/images/illustrations/ufo-bg.svg')`}"
               class="grid w-full grow grid-cols-1 place-items-center bg-center">

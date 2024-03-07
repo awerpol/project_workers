@@ -4,7 +4,7 @@ $arUrlRewrite=array (
   array (
     'CONDITION' => '#^/shift/#',
     'RULE' => '',
-    'ID' => 'bitrix:catalog',
+    'ID' => 'bitrix:news',
     'PATH' => '/shift/index.php',
     'SORT' => 100,
   ),
