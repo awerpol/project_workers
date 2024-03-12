@@ -18,16 +18,8 @@ $oRequest = Context::getCurrent()->getRequest();
 if ($oRequest->isAjaxRequest()) {
 
     if ($oRequest->getPost('getUser') === 'Y') {
-
-        $filter = ['UF_RULES' => '1', '!=ID' => explode(',', $oRequest->getPost('listUser'))];
-        // проверить корректность условия
-        if($oRequest->getPost('needM') == false && $oRequest->getPost('needF') == true){
-            $filter['PERSONAL_GENDER'] = 'F';
-        } else {
-            $filter['PERSONAL_GENDER'] = 'M';
-        }
-
         $select = ['ID', 'NAME', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHONE', 'UF_RULES', 'UF_RATING'];
+        $filter = [];
         $res = UserTable::getList(['select' => $select, 'filter' => $filter]);
         $users = $res->fetchAll();
         $arResultUsers = [];
@@ -44,7 +36,6 @@ if ($oRequest->isAjaxRequest()) {
                 'RATING' => $user[ 'UF_RATING' ] ?? '0',
             ];
         }
-
 
         $aResult = [
             'message' => 'Успешно сформирован список пользователей!',

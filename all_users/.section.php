@@ -1,0 +1,6 @@
+<?
+$sSectionName = "Список сотрудников";
+$arDirProperties = [
+
+];
+?>
