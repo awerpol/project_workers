@@ -19,12 +19,21 @@ if ($oRequest->isAjaxRequest()) {
 
     if ($oRequest->getPost('getUser') === 'Y') {
 
-        $filter = ['UF_RULES' => '1', '!=ID' => explode(',', $oRequest->getPost('listUser'))];
-        // проверить корректность условия
-        if($oRequest->getPost('needM') == false && $oRequest->getPost('needF') == true){
-            $filter['PERSONAL_GENDER'] = 'F';
-        } else {
-            $filter['PERSONAL_GENDER'] = 'M';
+        $filter = ['UF_RULES' => '1',  '!=ID' => explode(',', $oRequest->getPost('listUser')), 'PERSONAL_GENDER' => [] ];
+        // если еще нужны М
+        // if ($oRequest->getPost('needM') == 'true') {
+        //     $filter['PERSONAL_GENDER'][] = 'M';
+        // }
+        if ($oRequest->getPost('needM') == 'true') {
+            $filter['PERSONAL_GENDER'][] = 'M';
+        }
+        // если еще нужны Ж
+        if ($oRequest->getPost('needF') == 'true') {
+            $filter['PERSONAL_GENDER'][] = 'F';
+        }
+        // если не нужны М/Ж
+        if (empty($filter['PERSONAL_GENDER'])) {
+            $filter['PERSONAL_GENDER'] = '';
         }
 
         $select = ['ID', 'NAME', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHONE', 'UF_RULES', 'UF_RATING'];
@@ -32,10 +41,15 @@ if ($oRequest->isAjaxRequest()) {
         $users = $res->fetchAll();
         $arResultUsers = [];
 
-        foreach ($users as $key => $user) {
-            //TODO: добавить подсчет кол-во Ж и М
-            $arResultUsers[ 'COUNT_GENDER_F' ] = 1;
-            $arResultUsers[ 'COUNT_GENDER_M' ] = 2;
+        $m=$f=0;
+        foreach ($users as $key => $user) {    
+            if ($user[ 'PERSONAL_GENDER' ] == "M") {
+                $m++;
+            } elseif ($user[ 'PERSONAL_GENDER' ] == "F") {
+                $f++;
+                $user[ 'PERSONAL_GENDER' ] = "Ж";
+            } 
+
             $arResultUsers[ 'USERS' ][] = [
                 'ID'     => $user[ 'ID' ],
                 'NAME'   => $user[ 'LAST_NAME' ].' '.$user[ 'NAME' ],
@@ -43,7 +57,11 @@ if ($oRequest->isAjaxRequest()) {
                 'PHONE'  => $user[ 'PERSONAL_PHONE' ],
                 'RATING' => $user[ 'UF_RATING' ] ?? '0',
             ];
+
         }
+
+        $arResultUsers[ 'COUNT_GENDER_M' ] = $m;
+        $arResultUsers[ 'COUNT_GENDER_F' ] = $f;
 
 
         $aResult = [
