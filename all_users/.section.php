@@ -1,6 +1,0 @@
-<?
-$sSectionName = "Список сотрудников";
-$arDirProperties = [
-
-];
-?>

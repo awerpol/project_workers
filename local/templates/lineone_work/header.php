@@ -61,9 +61,9 @@ global $APPLICATION;
     <body x-data x-bind="$store.global.documentBody" class="is-sidebar-open is-header-blur navigation:sideblock">
     
     <!-- preloader -->
-    <!-- <div class="app-preloader fixed z-50 grid h-full w-full place-content-center bg-slate-50 dark:bg-navy-900">
+    <div class="app-preloader fixed z-50 grid h-full w-full place-content-center bg-slate-50 dark:bg-navy-900">
         <div class="app-preloader-inner relative inline-block h-48 w-48"></div>
-    </div> -->
+    </div>
     <div id="root" class="min-h-100vh flex grow bg-slate-50 dark:bg-navy-900" x-cloak>
         <?if (defined('ERROR_404') && ERROR_404 == 'Y'):?>
             <main :style="$store.global.isDarkModeEnabled ? {backgroundImage : `url('.<?= SITE_TEMPLATE_PATH ?>/src-template/dist/images/illustrations/ufo-bg-dark.svg')`} :{backgroundImage : `url('.<?= SITE_TEMPLATE_PATH ?>/src-template/dist/images/illustrations/ufo-bg.svg')`}"
@@ -90,7 +90,7 @@ global $APPLICATION;
                     <div x-data="{expandedItem:'menu-item-3'}" class="mt-5 h-[calc(100%-4.5rem)] overflow-x-hidden pb-6" x-init="$el._x_simplebar = new SimpleBar($el);">
 
                         <ul class="flex flex-1 flex-col px-4 font-inter">
-                            <?php
+                            <!-- <?php 
 
                             $listIB = [];
                             $listNAME = [];
@@ -130,11 +130,36 @@ global $APPLICATION;
                                     <? } ?>
                                 </ul>
                             </li>
-                            <? } ?>
-                            
+                            <? } ?> -->
+
+
+                            <!-- Ручной переход на страницы -->
+                            <!-- Формируемые смены -->
+                            <a  href="/shift/" class="flex items-center justify-between py-2 text-xs+ tracking-wide text-slate-500 outline-none transition-[color,padding-left] duration-300 ease-in-out hover:text-slate-800 dark:text-navy-200 dark:hover:text-navy-50">
+                                <div class="flex items-center space-x-2">
+                                        <span>Формируемые смены</span>
+                                </div>
+                            </a>
+                            <!-- Архив смен -->
+                            <a  href="/shift_archive/" class="flex items-center justify-between py-2 text-xs+ tracking-wide text-slate-500 outline-none transition-[color,padding-left] duration-300 ease-in-out hover:text-slate-800 dark:text-navy-200 dark:hover:text-navy-50">
+                                <div class="flex items-center space-x-2">
+                                        <span>Архив смен</span>
+                                </div>
+                            </a>
+                            <!-- Работники -->
+                            <a  href="/all_workers/" class="flex items-center justify-between py-2 text-xs+ tracking-wide text-slate-500 outline-none transition-[color,padding-left] duration-300 ease-in-out hover:text-slate-800 dark:text-navy-200 dark:hover:text-navy-50">
+                                <div class="flex items-center space-x-2">
+                                        <span>Список работников</span>
+                                </div>
+                            </a>                           
+                            <!-- Заказчики -->
+                            <a  href="/clients/" class="flex items-center justify-between py-2 text-xs+ tracking-wide text-slate-500 outline-none transition-[color,padding-left] duration-300 ease-in-out hover:text-slate-800 dark:text-navy-200 dark:hover:text-navy-50">
+                                <div class="flex items-center space-x-2">
+                                        <span>Заказчики</span>
+                                </div>
+                            </a>    
 
                         </ul>
-
                         <div class="my-3 mx-4 h-px bg-slate-200 dark:bg-navy-500"></div>
 
                     </div>

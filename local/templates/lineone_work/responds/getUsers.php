@@ -21,9 +21,6 @@ if ($oRequest->isAjaxRequest()) {
 
         $filter = ['UF_RULES' => '1',  '!=ID' => explode(',', $oRequest->getPost('listUser')), 'PERSONAL_GENDER' => [] ];
         // если еще нужны М
-        // if ($oRequest->getPost('needM') == 'true') {
-        //     $filter['PERSONAL_GENDER'][] = 'M';
-        // }
         if ($oRequest->getPost('needM') == 'true') {
             $filter['PERSONAL_GENDER'][] = 'M';
         }

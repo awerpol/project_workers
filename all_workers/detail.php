@@ -1,5 +1,5 @@
 <? require($_SERVER[ "DOCUMENT_ROOT" ]."/bitrix/header.php");
-$APPLICATION->SetTitle("Список сотрудников"); ?>
+$APPLICATION->SetTitle("Список работников"); ?>
 
 <?
 /** @var array $arParams */
@@ -16,11 +16,32 @@ $APPLICATION->SetTitle("Список сотрудников"); ?>
 ?>
 
 Пользователь: <?= $_GET['id']?> <br>
+<?
+use Bitrix\Main\UserTable;
+$filter = ['ID' => $_GET['id']];  
+$select = ['ID', 'NAME', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHONE', 'PERSONAL_BIRTHDAY', 'UF_RULES', 'UF_RATING'];
+
+$res = UserTable::getList(['select' => $select, 'filter' => $filter]);
+
+$user = $res->fetchAll();
+
+// echo '<pre>';
+// var_dump($user);
+// echo '</pre>';
+?>
 
 его данные:<br>
+- имя: <?= $user[0]['NAME']; ?><br>
+- отчество: <?= $user[0]['SECOND_NAME']; ?><br>
+- Фамилия: <?= $user[0]['LAST_NAME']; ?><br>
+- пол: <?= $user[0]['PERSONAL_GENDER']; ?><br>
+- телефон <?= $user[0]['PERSONAL_PHONE']; ?><br>
+- д.р. <?= $user[0]['PERSONAL_BIRTHDAY']; ?><br>
+- допущен <?= $user[0]['UF_RULES']; ?><br>
+- рейтинг <?= $user[0]['UF_RATING']; ?><br>
 
 
-его карма вывод с инфоблока по фильтру<br>
+<!-- его карма вывод с инфоблока по фильтру<br> -->
 
 <? $APPLICATION->IncludeComponent(
     "bitrix:news.list",
@@ -92,7 +113,7 @@ $APPLICATION->SetTitle("Список сотрудников"); ?>
         "PERIOD_NEW_TAGS"                 => "",
         "PREVIEW_TRUNCATE_LEN"            => "",
         "REVIEW_AJAX_POST"                => "N",
-        "SEF_FOLDER"                      => "/shift/",
+        "SEF_FOLDER"                      => "/all_workers/",
         "SEF_MODE"                        => "Y",
         "SEF_URL_TEMPLATES"               => [
             "detail"  => "#ELEMENT_ID#/",
