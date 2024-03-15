@@ -1,5 +1,13 @@
 <?php
 $arUrlRewrite=array (
+  1 => 
+  array (
+    'CONDITION' => '#^/shift_archive/#',
+    'RULE' => '',
+    'ID' => 'bitrix:news',
+    'PATH' => '/shift_archive/index.php',
+    'SORT' => 100,
+  ),
   0 => 
   array (
     'CONDITION' => '#^/shift/#',
