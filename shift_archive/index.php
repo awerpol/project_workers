@@ -1,5 +1,5 @@
 <? require($_SERVER[ "DOCUMENT_ROOT" ]."/bitrix/header.php");
-$APPLICATION->SetTitle("Список смен"); ?>
+$APPLICATION->SetTitle("Архив смен"); ?>
 
 <? $APPLICATION->IncludeComponent(
 	"bitrix:news",
@@ -71,7 +71,7 @@ $APPLICATION->SetTitle("Список смен"); ?>
 		"PERIOD_NEW_TAGS"                 => "",
 		"PREVIEW_TRUNCATE_LEN"            => "",
 		"REVIEW_AJAX_POST"                => "N",
-		"SEF_FOLDER"                      => "/shift/",
+		"SEF_FOLDER"                      => "/shift_archive/",
 		"SEF_MODE"                        => "Y",
 		"SEF_URL_TEMPLATES"               => [
 			"detail"  => "#ELEMENT_ID#/",
