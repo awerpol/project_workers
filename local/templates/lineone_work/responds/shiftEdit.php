@@ -23,19 +23,17 @@ if ($oRequest->isAjaxRequest()) {
         $el = new CIBlockElement;
 
         $duration=$oRequest->getPost('duration');
-
-        $shiftName = $oRequest->getPost('date') . " " . $oRequest->getPost('startTime') . "/" . $duration . "ч"; 
         $shiftStart = $oRequest->getPost('date') . " " . $oRequest->getPost('startTime') . ":00";
         $shiftEnd = new DateTime($shiftStart);
         $shiftEnd->add($duration . ' hours');
 
+        $shiftName = $oRequest->getPost('date') . " " . $oRequest->getPost('startTime') . "/" . $duration . "ч"; 
         // $shiftName = $shiftEnd . "-". $duration;
 
-
         $arShiftPropeties = [
-            "IBLOCK_SECTION_ID" => false, // раздел 
-            "IBLOCK_ID" => 2, // ID инфоблока
-            "NAME" => $shiftName, // название смены
+            "IBLOCK_SECTION_ID" => false,   // нет разделов
+            "IBLOCK_ID" => 2,               // ID инфоблока
+            "NAME" => $shiftName,           // название смены
             "ACTIVE" => "Y",
             "PROPERTY_VALUES" => [
                 "SHIFT_IS_CTIVE"    => 5, // ID варианта Y
@@ -45,26 +43,23 @@ if ($oRequest->isAjaxRequest()) {
                 "SHIFT_COUNT_M"     => $oRequest->getPost('needM'),
                 "SHIFT_COUNT_F"     => $oRequest->getPost('needF'),
             ]
-            // ... другие свойства (если есть)
         ];
 
         $result = $el->Add($arShiftPropeties);
 
+        // обработка возможной ошибки
         if ($result) {
-        // элемент успешно создан
-        // ... 
+            $aResult = [
+                'success' => true,
+                'message' => 'Успешно добавлена Смена!',
+            ];
         } else {
-        // ошибка при создании элемента
-        // ... 
+            $aResult = [
+                'success' => false,
+                'message' => 'ошибка создания инфоблока',
+            ];
         }
 
-
-
-        $aResult = [
-            'message' => 'Успешно создан инфоблок Смена!',
-            'resultM' => $arResultUsers,
-            'success' => true,
-        ];
         die(json_encode($aResult));
     } else {
         die(json_encode([
