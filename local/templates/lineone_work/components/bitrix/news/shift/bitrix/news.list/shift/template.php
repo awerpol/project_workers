@@ -16,15 +16,23 @@ $this->setFrameMode(true);
 	<?=$arResult["NAV_STRING"]?><br />
 <?endif;?>
 
+<?
+// echo '<pre>';
+// var_dump($arParams['IS_ARCHIVE']);
+// echo '</pre>';
+?>
+
 <!-- шапка  -->
 <!-- <div class="flex items-center space-x-2 mx-3 py-5 lg:py-6" > -->
 <!-- Добавление смены - всплывающая форма -->
+	<?php if ($arParams['IS_ARCHIVE'] !== 'Y'): ?>
 	<div class="flex items-right space-x-2 " x-data="{showModal:false}" style="margin-bottom:10px;">
+	
 		<button @click="showModal = true" class="btn bg-info font-medium text-white hover:bg-info-focus hover:shadow-lg hover:shadow-info/50 focus:bg-info-focus focus:shadow-lg focus:shadow-info/50 active:bg-info-focus/90"> 
 			Добавить смену 
 		</button>
-			<template id="shiftCreateForm" x-teleport="#x-teleport-target">
-				<div
+			<template x-teleport="#x-teleport-target">
+				<div id="shiftCreateForm" 
 					class="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden px-4 py-6 sm:px-5"
 					x-show="showModal"
 					role="dialog"
@@ -81,10 +89,9 @@ $this->setFrameMode(true);
 							<label class="block">
 								<span>Заказчик:</span>
 								<select id="shiftCreateForm_client" class="form-select mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent">
-									<option>Гурман</option>
-									<option>Не Гурман</option>
-									<option>ИП Пупкин</option>
-									<option>Другой</option>
+									<?php foreach ($arResult["CLIENTS"] as $client): ?>
+										<option value="<?= $client['ID'] ?>"><?= htmlspecialcharsbx($client['NAME']) ?></option>
+									<?php endforeach; ?>
 								</select>
 							</label>
 						<!-- <label class="block">
@@ -179,21 +186,30 @@ $this->setFrameMode(true);
 						></textarea>
 						</label> -->
 
-							<label class="inline-flex items-center space-x-2">
+							<!-- <label class="inline-flex items-center space-x-2">
 								<input id="shiftCreateForm_startSetting"
 									class="form-switch is-outline h-5 w-10 rounded-full border border-slate-400/70 bg-transparent before:rounded-full before:bg-slate-300 checked:border-primary checked:before:bg-primary dark:border-navy-400 dark:before:bg-navy-300 dark:checked:border-accent dark:checked:before:bg-accent"
 									type="checkbox"
 									checked 
 								/>
 								<span>Запустить набор</span>
-							</label>
+							</label> -->
 							<div class="space-x-2 text-right">
 								<button @click="showModal = false" class="btn min-w-[7rem] rounded-full border border-slate-300 font-medium text-slate-800 hover:bg-slate-150 focus:bg-slate-150 active:bg-slate-150/80 dark:border-navy-450 dark:text-navy-50 dark:hover:bg-navy-500 dark:focus:bg-navy-500 dark:active:bg-navy-500/90">
 									Отмена
 								</button>
-								<button id="shiftCreateForm_createButton" @click="showModal = false" class="btn min-w-[7rem] rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-									Создать
+								<button 
+									id="shiftCreateForm_createButton" 
+									@click="showModal = false" 
+									class="btn min-w-[7rem] rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
+										Сохранить
 								</button>
+								<!-- <button 
+									id="shiftCreateForm_createButton" 
+									@click="saveShift"
+									class="btn min-w-[7rem] rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
+										Сохранить
+								</button> -->
 							</div>
 					</div>
 				</div>
@@ -201,6 +217,8 @@ $this->setFrameMode(true);
 				</div>
 			</template>
 	</div>
+	<?php endif; //($arParams['IS_ARCHIVE'] != 'Y') ?>
+
 <!-- </div> -->
 
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
@@ -208,12 +226,13 @@ $this->setFrameMode(true);
 		<!--  -->
 
 <?foreach($arResult["ITEMS"] as $arItem):?>
-	<?  if($arItem["PROPERTIES"]["SHIFT_IS_CTIVE"]["VALUE"]=="Y"): ?>
+	<?  if($arParams['IS_ARCHIVE'] == 'Y' || $arItem["PROPERTIES"]["SHIFT_IS_CTIVE"]["VALUE"] == "Y"): ?>
 	<?
 	$this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
 	$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
     ?>
     <div class="card grow items-center p-4 sm:p-5" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
+		<p class="text-xs+"><?= $arItem['ID'] ?></p>
         <a href="<?= $arItem["DETAIL_PAGE_URL"]?>" class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100"> <?= $arItem["NAME"]?> </a>
         <p class="text-xs+"><?= $arItem["SHIFT_DATE"] ?></p>
         <!-- <p class="text-xs+">Пельменный цех</p> -->
@@ -263,18 +282,16 @@ $this->setFrameMode(true);
             </table>
         </div>
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4"> 
-			<button class="btn mt-5 space-x-2 bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-				<a href="<?= $arItem["DETAIL_PAGE_URL"]?>">
-					<span>Подробно</span>
+				<a href="<?= $arItem["DETAIL_PAGE_URL"]?>" class="btn mt-5 space-x-2 bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
+					Подробно
 				</a>
-			</button>		
-
-				<button class="btn mt-5 space-x-2 border border-primary font-medium text-primary hover:bg-primary hover:text-white focus:bg-primary focus:text-white active:bg-success/90">
-				<a href="<?= $arItem["DETAIL_PAGE_URL"]?>">
-						<span>Редактировать</span>
-					</a>
+			<?  if($arItem["PROPERTIES"]["SHIFT_IS_CTIVE"]["VALUE"] == "Y"): ?>
+				<button @click="showModal = true"
+					class="btn mt-5 space-x-2 border border-primary font-medium text-primary hover:bg-primary hover:text-white focus:bg-primary focus:text-white active:bg-success/90 editButton" 
+					data-id="<?= $arItem['ID'] ?>">
+						Редактировать
 				</button>
-
+			<?endif;?>
 		</div>
     </div>
 	<?endif;?>
@@ -330,6 +347,11 @@ $this->setFrameMode(true);
 		});
 	});
  </script>
+
+<script>
+	// Редактирование Смены
+	// ????????????????
+</script>
 
 <?if($arParams["DISPLAY_BOTTOM_PAGER"]):?>
 	<br /><?=$arResult["NAV_STRING"]?>

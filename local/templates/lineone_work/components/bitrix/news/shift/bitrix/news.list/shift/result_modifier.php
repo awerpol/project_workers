@@ -23,7 +23,14 @@ foreach($arResult["ITEMS"] as $key => $arItem){
         $time_end = $arItem["PROPERTIES"]["SHIFT_END"]["VALUE"] ?
             new DateTime($arItem["PROPERTIES"]["SHIFT_END"]["VALUE"]) :
             $time_end;
-        $arResult["ITEMS"][$key]["SHIFT_PERIOD"] = $time_start->format("H:i") . " - " . $time_end->format("H:i");
+
+        // $arResult["ITEMS"][$key]["SHIFT_PERIOD"] = $time_start->format("H:i") . " - " . $time_end->format("H:i");
+        // меняем на день/ночь
+        if ((int)$time_start->format('H') >= 15) {
+            $arResult["ITEMS"][$key]["SHIFT_PERIOD"] = "ночь";
+        } else {
+            $arResult["ITEMS"][$key]["SHIFT_PERIOD"] = "день";
+        }
         $arResult["ITEMS"][$key]["SHIFT_DATE"] = $time_start->format("d.m.Y");
     } else {
         $arResult["ITEMS"][$key]["SHIFT_PERIOD"] = "время не задано";
@@ -55,7 +62,17 @@ foreach($arResult["ITEMS"] as $key => $arItem){
     // кол-во М/Ж
     $arResult["ITEMS"][$key]["MEN_COUNT"] = $men_qty;
     $arResult["ITEMS"][$key]["WOMEN_COUNT"] = $wemen_qty;
+}
 
+CModule::IncludeModule("iblock");
 
+// получаем всех клиентов (ID инфоблока в явном виде!!!)
+$rsClients = CIBlockElement::GetList(array(), array('IBLOCK_ID' => 4), false, false, array('ID', 'NAME'));
+$arResult["CLIENTS"] = array();
 
+while ($arClient = $rsClients->Fetch()) {
+    $arResult["CLIENTS"][] = array(
+        "ID" => $arClient['ID'],
+        "NAME" => $arClient['NAME']
+    );
 }

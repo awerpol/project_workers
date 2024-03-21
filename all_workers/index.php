@@ -1,7 +1,7 @@
 <? require($_SERVER[ "DOCUMENT_ROOT" ]."/bitrix/header.php");
-$APPLICATION->SetTitle("Список работников"); ?>
+$APPLICATION->SetTitle("Список работников");
+$APPLICATION->SetPageProperty('title', "Список работников");
 
-<?
 /** @var array $arParams */
 /** @var array $arResult */
 /** @global CMain $APPLICATION */

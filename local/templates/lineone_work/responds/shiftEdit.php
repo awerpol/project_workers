@@ -26,17 +26,24 @@ if ($oRequest->isAjaxRequest()) {
         $shiftStart = $oRequest->getPost('date') . " " . $oRequest->getPost('startTime') . ":00";
         $shiftEnd = new DateTime($shiftStart);
         $shiftEnd->add($duration . ' hours');
+        
+        // название клиента по id
+        $rsElement = CIBlockElement::GetByID($oRequest->getPost('client'));
+        if ($arElement = $rsElement->GetNext()) {
+            $client_name = $arElement['NAME'];
+        } else {
+            $client_name =  "Заказчик не найден";
+        }
 
-        $shiftName = $oRequest->getPost('date') . " " . $oRequest->getPost('startTime') . "/" . $duration . "ч"; 
-        // $shiftName = $shiftEnd . "-". $duration;
+        $shiftName = $client_name; 
 
         $arShiftPropeties = [
-            "IBLOCK_SECTION_ID" => false,   // нет разделов
-            "IBLOCK_ID" => 2,               // ID инфоблока
-            "NAME" => $shiftName,           // название смены
-            "ACTIVE" => "Y",
-            "PROPERTY_VALUES" => [
-                "SHIFT_IS_CTIVE"    => 5, // ID варианта Y
+            "IBLOCK_SECTION_ID" => false,         // нет разделов
+            "IBLOCK_ID"         => Trud\IBlock\InfoIblock::getIdByCode('SHIFT_BEING_FORMED'),
+            "NAME"              => $shiftName,    // название смены
+            "ACTIVE"            => "Y",
+            "PROPERTY_VALUES"   => [
+                "SHIFT_IS_CTIVE"    => 5,         // ID варианта 'Y'
                 "CLIENT"            => $oRequest->getPost('client'),
                 "SHIFT_START"       => $shiftStart,
                 "SHIFT_END"         => $shiftEnd,

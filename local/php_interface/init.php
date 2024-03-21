@@ -1,5 +1,5 @@
 <?php
-
+require_once( $_SERVER['DOCUMENT_ROOT'] . '/local/php_interface/autoload.php');
 
 AddEventHandler("main", "OnEndBufferContent", "deleteKernelJs");
 AddEventHandler("main", "OnEndBufferContent", "deleteKernelCss");
@@ -36,3 +36,4 @@ function deleteKernelCss(&$content) {
     $content = preg_replace($arPatternsToRemove, "", $content);
     $content = preg_replace("/\n{2,}/", "\n\n", $content);
 }
+

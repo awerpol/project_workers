@@ -28,6 +28,12 @@ $arTemplateParameters = array(
 		"DEFAULT" =>"N",
 		"REFRESH"=> "Y",
 	),
+	"IS_ARCHIVE" => Array(
+		"NAME" => "Архивная страница",
+		"TYPE" => "CHECKBOX",
+		"DEFAULT" => "N",
+		"REFRESH"=> "Y",
+	),
 );
 
 if (($arCurrentValues['USE_SHARE'] ?? 'N') === 'Y')

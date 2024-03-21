@@ -1,5 +1,6 @@
 <? require($_SERVER[ "DOCUMENT_ROOT" ]."/bitrix/header.php");
-$APPLICATION->SetTitle("Список смен"); ?>
+$APPLICATION->SetTitle("Список смен");
+$APPLICATION->SetPageProperty('title', "Список смен");?>
 
 <? $APPLICATION->IncludeComponent(
 	"bitrix:news",
@@ -102,7 +103,8 @@ $APPLICATION->SetTitle("Список смен"); ?>
 		"USE_RSS"                         => "N",
 		"USE_SEARCH"                      => "N",
 		"USE_SHARE"                       => "N",
-		"VOTE_NAMES"                      => [0 => "1", 1 => "2", 2 => "3", 3 => "4", 4 => "5", 5 => "",]
+		"VOTE_NAMES"                      => [0 => "1", 1 => "2", 2 => "3", 3 => "4", 4 => "5", 5 => "",],
+		"IS_ARCHIVE"                      => "N"
 	]
 ); ?>
 

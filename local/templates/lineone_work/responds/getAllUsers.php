@@ -43,11 +43,11 @@ if ($oRequest->isAjaxRequest()) {
                 } 
 
                 $arResultUsers[ 'USERS' ][] = [
-                    'ID'     => $user[ 'ID' ],
-                    'NAME'   => $user[ 'LAST_NAME' ].' '.$user[ 'NAME' ],
-                    'GENDER' => $user[ 'PERSONAL_GENDER' ],
-                    'PHONE'  => $user[ 'PERSONAL_PHONE' ],
-                    'RATING' => $user[ 'UF_RATING' ] ?? '0',
+                    'ID'         => $user[ 'ID' ],
+                    'NAME'       => $user[ 'LAST_NAME' ].' '.$user[ 'NAME' ],
+                    'GENDER'     => $user[ 'PERSONAL_GENDER' ],
+                    'PHONE'      => $user[ 'PERSONAL_PHONE' ],
+                    'RATING'     => $user[ 'UF_RATING' ] ?? '0',
                     'IS_ACTIVE'  => $user[ 'UF_RULES' ],
                 ];
         }

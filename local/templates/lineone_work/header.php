@@ -75,7 +75,7 @@ global $APPLICATION;
                         <!-- Application Logo -->
                         <div class="flex">
                             <a href="/">
-                                <img class="h-11 w-11 transition-transform duration-500 ease-in-out hover:rotate-[360deg]" src="<?= SITE_TEMPLATE_PATH ?>/images/app-logo.svg" alt="logo"/>
+                                <img class="h-22 w-22 transition-transform duration-500 ease-in-out hover:rotate-[360deg]" src="<?= SITE_TEMPLATE_PATH ?>/images/app-logo2.svg" alt="logo"/>
                             </a>
                         </div>
                         <button @click="$store.global.isSidebarExpanded = false" class="btn h-7 w-7 rounded-full p-0 text-primary hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:text-accent-light/80 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25 xl:hidden">

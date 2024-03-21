@@ -8,7 +8,7 @@ $arUrlRewrite=array (
     'PATH' => '/shift_archive/index.php',
     'SORT' => 100,
   ),
-  0 => 
+  2 => 
   array (
     'CONDITION' => '#^/shift/#',
     'RULE' => '',

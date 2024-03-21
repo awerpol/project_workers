@@ -3,8 +3,6 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
     die();
 }
 
-use Bitrix\Main\Application;
-
 /** @var array $arParams */
 /** @var array $arResult */
 /** @global CMain $APPLICATION */
@@ -18,16 +16,9 @@ use Bitrix\Main\Application;
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 
-// меняем шаблон, если мы на странице /shift_archive/
-$request = Application::getInstance()->getContext()->getRequest();
-$isShiftArchive = ($request->getRequestedPage() === '/shift_archive/index.php');
-
-$template = $isShiftArchive ? 'shift_archive' : 'shift';
-
-
 $APPLICATION->IncludeComponent(
     "bitrix:news.list",
-    $template,
+    "shift",
     [
         "IBLOCK_TYPE"                     => $arParams[ "IBLOCK_TYPE" ],
         "IBLOCK_ID"                       => $arParams[ "IBLOCK_ID" ],
@@ -74,6 +65,7 @@ $APPLICATION->IncludeComponent(
         "FILTER_NAME"                     => $arParams[ "FILTER_NAME" ],
         "HIDE_LINK_WHEN_NO_DETAIL"        => $arParams[ "HIDE_LINK_WHEN_NO_DETAIL" ],
         "CHECK_DATES"                     => $arParams[ "CHECK_DATES" ],
+        "IS_ARCHIVE"                      => $arParams[ "IS_ARCHIVE" ],
     ],
     $component,
     ['HIDE_ICONS' => 'Y']

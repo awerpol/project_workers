@@ -12,7 +12,8 @@
 /** @var string $templateFolder */
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
-//$this->setFrameMode(true);
+$this->setFrameMode(true);
+$APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
 ?>
 
 <div class="grid grid-cols-12 gap-4">
@@ -74,16 +75,16 @@
                     <thead class="basis-full">
                     <tr>
                         <th class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
-                            <label class="flex h-8 w-8 items-center justify-center" x-tooltip="'Select All'">
+                            <!-- <label class="flex h-8 w-8 items-center justify-center" x-tooltip="'Select All'">
                                 <input
                                         class="form-checkbox is-basic h-5 w-5 rounded border-slate-400/70 checked:border-primary checked:bg-primary hover:border-primary focus:border-primary dark:border-navy-400 dark:checked:border-accent dark:checked:bg-accent dark:hover:border-accent dark:focus:border-accent"
                                         type="checkbox"
                                 />
-                            </label>
+                            </label> -->
+                            
                         </th>
-                        <th
-                                class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4"
-                        >
+                       
+                        <th class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
                             #
                         </th>
                         <th
@@ -266,11 +267,11 @@
                                         <label class="block">
                                             <!-- <span>Оценка:</span> -->
                                             <select class="form-select mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent">
-                                                <option>Молодец!</option>
-                                                <option>Отличился</option>
-                                                <option>Опоздал</option>
-                                                <option>Накосячил</option>
-                                                <option>Прогулял</option>
+                                                <option>+2&nbsp; Молодец!</option>
+                                                <option>+1&nbsp; Отличился</option>
+                                                <option>-1&nbsp; Опоздал</option>
+                                                <option>-2&nbsp; Накосячил</option>
+                                                <option>-10 Прогулял</option>
                                             </select>
                                         </label>
 
@@ -341,18 +342,12 @@
                     <table x-ref="table" class="is-hoverable w-full text-left">
                         <thead class="basis-full">
                         <tr>
-                            <th
-                                    class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4"
-                            >
+                            <th class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
                             </th>
-                            <th
-                                    class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4"
-                            >
+                            <th class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
                                 #
                             </th>
-                            <th
-                                    class="whitespace-nowrap bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4"
-                            >
+                            <th class="whitespace-nowrap bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
                                 пол
                             </th>
                             <th class="whitespace-nowrap bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
@@ -362,10 +357,11 @@
                             <!-- <th class="whitespace-nowrap bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
                                 Телефон
                             </th> -->
-                            <th
-                                    class="whitespace-nowrap bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4"
-                            >
+                            <th class="whitespace-nowrap bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
                                 Рейтинг
+                            </th>
+                            <th class="whitespace-nowrap bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
+                                Карма
                             </th>
                         </tr>
                         </thead>

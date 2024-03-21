@@ -1,5 +1,7 @@
 <? require($_SERVER[ "DOCUMENT_ROOT" ]."/bitrix/header.php");
-$APPLICATION->SetTitle("Архив смен"); ?>
+$APPLICATION->SetTitle("Архив смен");
+$APPLICATION->SetPageProperty('title', 'Архив смен');
+?>
 
 <? $APPLICATION->IncludeComponent(
 	"bitrix:news",
@@ -66,7 +68,7 @@ $APPLICATION->SetTitle("Архив смен"); ?>
 		"PAGER_SHOW_ALL"                  => "N",
 		"PAGER_SHOW_ALWAYS"               => "N",
 		"PAGER_TEMPLATE"                  => ".default",
-		"PAGER_TITLE"                     => "Список смен",
+		"PAGER_TITLE"                     => "Архив смен",
 		"PATH_TO_SMILE"                   => "/bitrix/images/forum/smile/",
 		"PERIOD_NEW_TAGS"                 => "",
 		"PREVIEW_TRUNCATE_LEN"            => "",
@@ -102,7 +104,8 @@ $APPLICATION->SetTitle("Архив смен"); ?>
 		"USE_RSS"                         => "N",
 		"USE_SEARCH"                      => "N",
 		"USE_SHARE"                       => "N",
-		"VOTE_NAMES"                      => [0 => "1", 1 => "2", 2 => "3", 3 => "4", 4 => "5", 5 => "",]
+		"VOTE_NAMES"                      => [0 => "1", 1 => "2", 2 => "3", 3 => "4", 4 => "5", 5 => "",],
+		"IS_ARCHIVE"                      => "Y"
 	]
 ); ?>
 
