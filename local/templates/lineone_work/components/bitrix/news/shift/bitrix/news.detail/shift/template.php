@@ -152,7 +152,11 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
         </div>
     </div>
 
-    <? if ($arResult[ 'PROPERTIES' ][ 'SHIFT_IS_CTIVE' ][ 'VALUE' ] == 'Y'): ?>
+    <?  // if ($arResult[ 'PROPERTIES' ][ 'SHIFT_IS_CTIVE' ][ 'VALUE' ] == 'Y'): 
+        // кнопки только у ФОРМИРУЕМЫХ смен
+        if ($arResult[ 'PROPERTIES' ][ 'SHIFT_STAGE' ][ 'VALUE_XML_ID' ] == "FORMING"):
+    ?>
+        
         <!-- блок с кнопками посередине -->
         <div class="col-span-12 md:col-span-2 lg:col-span-2 ">
 

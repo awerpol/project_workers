@@ -16,6 +16,7 @@ $this->setFrameMode(true);
 	<?=$arResult["NAV_STRING"]?><br />
 <?endif;?>
 
+
 <?
 // echo '<pre>';
 // var_dump($arParams['IS_ARCHIVE']);
@@ -226,13 +227,26 @@ $this->setFrameMode(true);
 		<!--  -->
 
 <?foreach($arResult["ITEMS"] as $arItem):?>
-	<?  if($arParams['IS_ARCHIVE'] == 'Y' || $arItem["PROPERTIES"]["SHIFT_IS_CTIVE"]["VALUE"] == "Y"): ?>
+	<?php
+		// echo '<pre>';
+		// var_dump($arItem["PROPERTIES"]["SHIFT_STAGE"]);
+		// echo '</pre>';
+	?>
+
+	<?  if ($arParams['IS_ARCHIVE'] == 'Y' XOR $arItem["PROPERTIES"]["SHIFT_STAGE"]["VALUE_XML_ID"] == "FORMING"): ?>
 	<?
 	$this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
 	$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
     ?>
+	<!-- карточка смены -->
     <div class="card grow items-center p-4 sm:p-5" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
-		<p class="text-xs+"><?= $arItem['ID'] ?></p>
+		<div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 place-self-start">
+			<div class="text-xs+" ><?= $arItem['ID'] ?></div>
+			<!-- пометка "в работе" -->
+			<?  if($arItem["PROPERTIES"]["SHIFT_STAGE"]["VALUE_XML_ID"] == "IN_WORK"): ?>
+				<div class="text-right text-success">в работе</div>
+			<?endif;?>
+		</div>
         <a href="<?= $arItem["DETAIL_PAGE_URL"]?>" class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100"> <?= $arItem["NAME"]?> </a>
         <p class="text-xs+"><?= $arItem["SHIFT_DATE"] ?></p>
         <!-- <p class="text-xs+">Пельменный цех</p> -->
@@ -285,7 +299,10 @@ $this->setFrameMode(true);
 				<a href="<?= $arItem["DETAIL_PAGE_URL"]?>" class="btn mt-5 space-x-2 bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
 					Подробно
 				</a>
-			<?  if($arItem["PROPERTIES"]["SHIFT_IS_CTIVE"]["VALUE"] == "Y"): ?>
+			<?  // if($arItem["PROPERTIES"]["SHIFT_IS_CTIVE"]["VALUE"] == "Y"): // отказались от этого поля
+				// резактировать можно только ФОРМИРУЕМЫЕ смены
+				if ($arItem["PROPERTIES"]["SHIFT_STAGE"]["VALUE_XML_ID"] == "FORMING"):
+			?>
 				<button @click="showModal = true"
 					class="btn mt-5 space-x-2 border border-primary font-medium text-primary hover:bg-primary hover:text-white focus:bg-primary focus:text-white active:bg-success/90 editButton" 
 					data-id="<?= $arItem['ID'] ?>">

@@ -43,7 +43,9 @@ if ($oRequest->isAjaxRequest()) {
             "NAME"              => $shiftName,    // название смены
             "ACTIVE"            => "Y",
             "PROPERTY_VALUES"   => [
-                "SHIFT_IS_CTIVE"    => 5,         // ID варианта 'Y'
+                // "SHIFT_IS_CTIVE"    => 5,         // ID варианта 'Y' // больше не используем
+                // "SHIFT_STAGE"       => 6,         // ID варианта "Формируется"
+                "SHIFT_STAGE"       => Trud\IBlock\InfoIblock::getFieldIdByXML_ID('FORMING'),  // ID варианта "Формируется"
                 "CLIENT"            => $oRequest->getPost('client'),
                 "SHIFT_START"       => $shiftStart,
                 "SHIFT_END"         => $shiftEnd,

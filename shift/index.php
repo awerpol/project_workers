@@ -2,6 +2,20 @@
 $APPLICATION->SetTitle("Список смен");
 $APPLICATION->SetPageProperty('title', "Список смен");?>
 
+
+
+<?
+use Trud\Users\Carma;
+$elementId = 1; 
+$newShiftStage = 'IN_WORK'; // Замените на нужную новую стадию смены
+
+$result = Carma::countForUser($elementId);
+
+// echo '<pre>';
+// var_dump($result);
+echo '</pre>';
+?>
+
 <? $APPLICATION->IncludeComponent(
 	"bitrix:news",
 	"shift",
