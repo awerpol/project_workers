@@ -17,16 +17,17 @@ class Carma
         $iblockId = InfoIblock::getIdByCode('KARMA_ACT');
         $userId = intval($userId);
 
+        // элементы инфоблока KARMA_ACT для данного пользователя
         $filter         = ["IBLOCK_ID" => $iblockId, "PROPERTY_ID_WORKER" =>  $userId];
-        $arSelectFields = ["ID", "IBLOCK_ID", "NAME", "PROPERTY_ACT_SIGN", "PROPERTY_ID_WORKER"];
+        $arSelect = ["ID", "IBLOCK_ID", "NAME", "PROPERTY_ACT_SIGN", "PROPERTY_ID_WORKER"];
 
-        // Получаем список элементов из инфоблока с ID=3 для данного пользователя
+        // Получаем инфоблоки (элементы) Кармы по юзеру
         $dbItems = \CIBlockElement::GetList(
             [],
             $filter,
             false,
             false,
-            $arSelectFields 
+            $arSelect 
         );
 
         // Суммируем карму
