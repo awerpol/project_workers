@@ -33,9 +33,8 @@ class ShiftEdit
         $iblockId = InfoIblock::getIdByCode('SHIFT_BEING_FORMED');
 
         // получить пользователей из этого инфоблока и освободить;
-        $arWorkers = array();
-
         $rsProperties = CIBlockElement::GetProperty($iblockId, $shiftId);
+        
         while ($arProperty = $rsProperties->Fetch()) {
             if ($arProperty['CODE'] == 'WORKERS') { // Проверяем, что это нужное свойство
 

@@ -512,6 +512,7 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                     data: {
                         getUser: 'Y',
                         listUser: '<?=  implode(",", $arResult[ "LIST_USER_ID" ]) ?>',
+                        shiftID: <?= $arResult[ "ID" ] ?>,
                         needM: needM,
                         needF: needF
                     },
@@ -530,6 +531,7 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                                 '<td class="whitespace-nowrap px-2 py-3 sm:px-4">' + response.resultM['USERS'][i]['NAME'] + '</td>' +
                                 // '<td class="whitespace-nowrap px-2 py-3 sm:px-4">' + response.resultM['USERS'][i]['PHONE'] + '</td>' +
                                 '<td class="whitespace-nowrap px-2 py-3 sm:px-4">' + response.resultM['USERS'][i]['RATING'] + '</td>' +
+                                '<td class="whitespace-nowrap px-2 py-3 sm:px-4">' + response.resultM['USERS'][i]['CARMA'] + '</td>' +
                                 '</tr>';
                         }
                         $("#listFreeUser").html(inteUser);

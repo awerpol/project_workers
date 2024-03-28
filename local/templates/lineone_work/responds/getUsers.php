@@ -4,6 +4,9 @@
 use Bitrix\Main\Context;
 use Bitrix\Main\UserTable;
 
+use Trud\Shifts\ShiftInfo;
+use Trud\Helpers\Helper;
+
 require($_SERVER[ "DOCUMENT_ROOT" ]."/bitrix/modules/main/include/prolog_before.php");
 
 if (!$USER->IsAuthorized()) {
@@ -18,8 +21,18 @@ $oRequest = Context::getCurrent()->getRequest();
 if ($oRequest->isAjaxRequest()) {
 
     if ($oRequest->getPost('getUser') === 'Y') {
+        
+        $shiftID = $oRequest->getPost('shiftID');                // для черного списка
+        $clientID = ShiftInfo::getPropValue($shiftID, 'CLIENT'); // ID клиента черного списка
+        
+        // массив тех, кого НЕ включаем в правую таблицу
+        $exclude = array_unique(array_merge(
+            explode(',', $oRequest->getPost('listUser')),                   // те, кто в левой таблице
+            ShiftInfo::getPropValue($shiftID, 'BLACK_LIST_SHIFT'),          // кто в "черном списке" этой смены
+            Helper::getPropValue('CLIENTS', $clientID, 'BLACK_LIST_CLIENT') // кто в черном списке заказчика
+        ));
 
-        $filter = ['UF_RULES' => '1',  '!=ID' => explode(',', $oRequest->getPost('listUser')), 'PERSONAL_GENDER' => [] ];
+        $filter = ['UF_RULES' => '1',  '!=ID' => $exclude, 'PERSONAL_GENDER' => [], 'UF_BUSY' => 0 ];
         // если еще нужны М
         if ($oRequest->getPost('needM') == 'true') {
             $filter['PERSONAL_GENDER'][] = 'M';
@@ -33,7 +46,7 @@ if ($oRequest->isAjaxRequest()) {
             $filter['PERSONAL_GENDER'] = '';
         }
 
-        $select = ['ID', 'NAME', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHONE', 'UF_RULES', 'UF_RATING'];
+        $select = ['ID', 'NAME', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHONE', 'UF_RULES', 'UF_RATING', 'UF_CARMA_SUMM'];
         $res = UserTable::getList(['select' => $select, 'filter' => $filter]);
         $users = $res->fetchAll();
         $arResultUsers = [];
@@ -53,6 +66,7 @@ if ($oRequest->isAjaxRequest()) {
                 'GENDER' => $user[ 'PERSONAL_GENDER' ],
                 'PHONE'  => $user[ 'PERSONAL_PHONE' ],
                 'RATING' => $user[ 'UF_RATING' ] ?? '0',
+                'CARMA'  => $user[ 'UF_CARMA_SUMM' ] ?? '0',
             ];
 
         }
