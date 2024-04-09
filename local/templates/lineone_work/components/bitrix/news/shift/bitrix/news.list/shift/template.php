@@ -22,14 +22,19 @@ $this->setFrameMode(true);
 // var_dump($arParams['IS_ARCHIVE']);
 // echo '</pre>';
 ?>
+<div x-data="{showModal:false}">
 
 <!-- шапка  -->
 <!-- <div class="flex items-center space-x-2 mx-3 py-5 lg:py-6" > -->
 <!-- Добавление смены - всплывающая форма -->
 	<?php if ($arParams['IS_ARCHIVE'] !== 'Y'): ?>
-	<div class="flex items-right space-x-2 " x-data="{showModal:false}" style="margin-bottom:10px;">
+	<div class="flex items-right space-x-2 " style="margin-bottom:10px;">
+	<!-- <div class="flex items-right space-x-2 " x-data="{showModal:false}" style="margin-bottom:10px;"> -->
 	
-		<button @click="showModal = true" class="btn bg-info font-medium text-white hover:bg-info-focus hover:shadow-lg hover:shadow-info/50 focus:bg-info-focus focus:shadow-lg focus:shadow-info/50 active:bg-info-focus/90"> 
+		<button @click="showModal = true" 
+			class="editButton btn bg-info font-medium text-white hover:bg-info-focus hover:shadow-lg hover:shadow-info/50 focus:bg-info-focus focus:shadow-lg focus:shadow-info/50 active:bg-info-focus/90"
+			data-id="0"
+		> 
 			Добавить смену 
 		</button>
 			<template x-teleport="#x-teleport-target">
@@ -62,8 +67,8 @@ $this->setFrameMode(true);
 					>
 						<div
 						class="flex justify-between rounded-t-lg bg-slate-200 px-4 py-3 dark:bg-navy-800 sm:px-5">
-							<h3 class="text-base font-medium text-slate-700 dark:text-navy-100">
-								Добавление смены
+							<h3 id="shiftEditH" class="text-base font-medium text-slate-700 dark:text-navy-100">
+								Редактирование смены
 							</h3>
 						<button @click="showModal = !showModal" class="btn -mr-1.5 h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
 							<svg
@@ -178,14 +183,14 @@ $this->setFrameMode(true);
 								</label>
 							</div>
 
-						<!-- <label class="block">
-						<span>Описание:</span>
-						<textarea
-							rows="4"
-							placeholder="Введите комментарий"
-							class="form-textarea mt-1.5 w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
-						></textarea>
-						</label> -->
+<!-- <label class="block">
+<span>Описание:</span>
+<textarea id="shiftCreateForm_description"
+	rows="4"
+	placeholder="Введите комментарий"
+	class="form-textarea mt-1.5 w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+></textarea>
+</label> -->
 
 							<!-- <label class="inline-flex items-center space-x-2">
 								<input id="shiftCreateForm_startSetting"
@@ -195,22 +200,19 @@ $this->setFrameMode(true);
 								/>
 								<span>Запустить набор</span>
 							</label> -->
+							<input type="hidden" id="hiddenShiftId" value="0">
+
 							<div class="space-x-2 text-right">
 								<button @click="showModal = false" class="btn min-w-[7rem] rounded-full border border-slate-300 font-medium text-slate-800 hover:bg-slate-150 focus:bg-slate-150 active:bg-slate-150/80 dark:border-navy-450 dark:text-navy-50 dark:hover:bg-navy-500 dark:focus:bg-navy-500 dark:active:bg-navy-500/90">
 									Отмена
 								</button>
 								<button 
-									id="shiftCreateForm_createButton" 
+									id="shiftCreateForm_saveButton" 
 									@click="showModal = false" 
 									class="btn min-w-[7rem] rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
 										Сохранить
 								</button>
-								<!-- <button 
-									id="shiftCreateForm_createButton" 
-									@click="saveShift"
-									class="btn min-w-[7rem] rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-										Сохранить
-								</button> -->
+					
 							</div>
 					</div>
 				</div>
@@ -220,26 +222,25 @@ $this->setFrameMode(true);
 	</div>
 	<?php endif; //($arParams['IS_ARCHIVE'] != 'Y') ?>
 
-<!-- </div> -->
+
 
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
 
 		<!--  -->
 
 <?foreach($arResult["ITEMS"] as $arItem):?>
-	<?php
-		// echo '<pre>';
-		// var_dump($arItem["PROPERTIES"]["SHIFT_STAGE"]);
-		// echo '</pre>';
-	?>
-
+	
 	<?  if ($arParams['IS_ARCHIVE'] == 'Y' XOR $arItem["PROPERTIES"]["SHIFT_STAGE"]["VALUE_XML_ID"] == "FORMING"): ?>
 	<?
 	$this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_EDIT"));
 	$this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], CIBlock::GetArrayByID($arItem["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CT_BNL_ELEMENT_DELETE_CONFIRM')));
     ?>
 	<!-- карточка смены -->
-    <div class="card grow items-center p-4 sm:p-5" id="<?=$this->GetEditAreaId($arItem['ID']);?>">
+    <div 
+		class="Shift card grow items-center p-4 sm:p-5" 
+		id="<?=$this->GetEditAreaId($arItem['ID']);?>"
+		data-item="<?= htmlspecialchars(json_encode($arItem)) ?>"
+	>
 		<div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 place-self-start">
 			<div class="text-xs+" ><?= $arItem['ID'] ?></div>
 			<!-- пометка "в работе" -->
@@ -304,8 +305,9 @@ $this->setFrameMode(true);
 				if ($arItem["PROPERTIES"]["SHIFT_STAGE"]["VALUE_XML_ID"] == "FORMING"):
 			?>
 				<button @click="showModal = true"
-					class="btn mt-5 space-x-2 border border-primary font-medium text-primary hover:bg-primary hover:text-white focus:bg-primary focus:text-white active:bg-success/90 editButton" 
-					data-id="<?= $arItem['ID'] ?>">
+					class="editButton btn mt-5 space-x-2 border border-primary font-medium text-primary hover:bg-primary hover:text-white focus:bg-primary focus:text-white active:bg-success/90" 
+					data-id="<?= $arItem['ID'] ?>"
+					>
 						Редактировать
 				</button>
 			<?endif;?>
@@ -314,17 +316,117 @@ $this->setFrameMode(true);
 	<?endif;?>
 <?endforeach;?>
 
+</div> <!-- закрытие дива с x-data -->
+
+
+
+<script>
+	var arItems = <?= json_encode($arResult["ITEMS"]) ?>;
+</script>
+
 <?
 // echo '<pre>';
-// var_dump($arItem["PROPERTIES"]);
+// var_dump($arResult["ITEMS"][1]["PROPERTIES"]);
 // echo '</pre>';
 ?>
+
+
+
+<script>
+	// заполняем форму данными - из смены или по умолчанию
+	$(document).ready(function () {
+		$(".editButton").click(function () {
+
+			var itemId = $(this).data('id');
+
+			if (itemId == 0) {
+				var { startDate, startTime } = defaultStartTime();
+				var duration = 12;
+				var needM = 0;
+				var needF = 0;
+				var client = 28; // !!!! МАТЬ ЕГО ХАРДКОД
+
+			} else {
+				// Находим соответствующий элемент массива $arItem по ID
+				var foundItem = getArItemById(itemId);
+
+				var duration = foundItem["SHIFT_DURATION"];
+				var needM = foundItem["PROPERTIES"]["SHIFT_COUNT_M"]["VALUE"];
+				var needF = foundItem["PROPERTIES"]["SHIFT_COUNT_F"]["VALUE"];
+				var client = foundItem["PROPERTIES"]["CLIENT"]["VALUE"];
+				var shiftStart = foundItem["PROPERTIES"]["SHIFT_START"]["VALUE"];
+				var { startDate, startTime } = parseShiftDateTime(shiftStart);
+			}
+
+			// Устанавливаем значения в поля ввода
+			$('#shiftCreateForm_startTime').val(startTime);
+			$('#shiftCreateForm_date').val(startDate);
+			$('#shiftCreateForm_duration').val(duration);
+			$('#shiftCreateForm_needM').val(needM);
+			$('#shiftCreateForm_needF').val(needF);
+			$('#shiftCreateForm_client').val(client);
+			$('#hiddenShiftId').val(itemId);
+		
+
+			// потом закомментировать
+			// $('#shiftCreateForm_description').val(itemId);
+		});
+	});
+
+	// функция расчета даты-времени по умолчанию 
+	function defaultStartTime () {
+		// Получить текущую дату и время
+		var currentDate = new Date();
+
+		// Получить текущие часы
+		var currentHour = currentDate.getHours();
+
+		// Определить startTime и startDate
+		var startTime;
+		var startDate;
+
+		if (currentHour < 12) {
+			startTime = "20:00:00";
+			startDate = currentDate.toLocaleDateString('ru-RU', { year: 'numeric', month: 'numeric', day: 'numeric' });
+		} else {
+			startTime = "08:00:00";
+			// Добавить 1 день к текущей дате
+			startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1).toLocaleDateString('ru-RU', { year: 'numeric', month: 'numeric', day: 'numeric' });
+		}
+		return { startDate, startTime };
+	}
+
+	// функция парсинга даты начала
+	function parseShiftDateTime(shiftStart) {
+		var [day, month, year, hours, minutes, seconds] = shiftStart.split(/[\s.:]/).map(Number);
+		var startDateObject = new Date(year, month - 1, day, hours, minutes, seconds);
+		var startDate = startDateObject.toLocaleDateString('ru-RU', { year: 'numeric', month: 'numeric', day: 'numeric' });
+		var startTime = startDateObject.toLocaleTimeString('en-US', { hour12: false, hourCycle: 'h24' });
+		
+		return { startDate, startTime };
+	}
+
+	// Функция для поиска элемента массива $arItem по ID
+    function getArItemById(itemId) {
+        for (var i = 0; i < arItems.length; i++) {
+            if (arItems[i]['ID'] == itemId) {
+                return arItems[i];
+            }
+        }
+    }
+
+</script>
+
+
+
+
 
 <script>
 	// Создание Смены
 	$(document).ready(function () {
-		$("#shiftCreateForm_createButton").click(function () {
+		$("#shiftCreateForm_saveButton").click(function () {
 			// Получаем значения из полей формы
+			var id = $('#hiddenShiftId').val(); 
 			var client = $('#shiftCreateForm_client').val();
             var date = $('#shiftCreateForm_date').val();
             var startTime = $('#shiftCreateForm_startTime').val();
@@ -332,6 +434,8 @@ $this->setFrameMode(true);
             var needM = $('#shiftCreateForm_needM').val();
             var needF = $('#shiftCreateForm_needF').val();
 			var startSetting = $('#shiftCreateForm_startSetting').prop('checked'); // галочка
+			
+			var action =  (id != '0') ? 'editShift' : 'newShift';
 
 			var xhrEdit = null;
 			xhrEdit = $.ajax({
@@ -339,14 +443,15 @@ $this->setFrameMode(true);
 				url: '<?= SITE_TEMPLATE_PATH ?>/responds/shiftEdit.php',
 				dataType: 'json',
 				data: {
-					todo: 'newShift',
+					todo: action,
+					id: id,
 					client: client,
 					date: date,
 					startTime: startTime,
 					duration: duration,
 					needM: needM,
             		needF: needF,
-					startSetting: startSetting
+					startSetting: startSetting 
 				},
 				success: function (response) {
 					location.reload();
@@ -355,11 +460,6 @@ $this->setFrameMode(true);
 
 		});
 	});
-</script>
-
-<script>
-	// Редактирование Смены
-	// ????????????????
 </script>
 
 <?if($arParams["DISPLAY_BOTTOM_PAGER"]):?>

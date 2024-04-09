@@ -56,7 +56,12 @@ if ($oRequest->isAjaxRequest()) {
             ]
         ];
 
-        $result = $el->Add($arShiftPropeties);
+        // добавляем или изменяем
+        if($oRequest->getPost('todo') == 'newShift') {
+            $result = $el->Add($arShiftPropeties);
+        } elseif ($oRequest->getPost('todo') == 'editShift') {
+            $result = $el->Update($oRequest->getPost('id'), $arShiftPropeties);
+        }
 
         // обработка возможной ошибки
         if ($result) {

@@ -26,6 +26,12 @@ foreach($arResult["ITEMS"] as $key => $arItem){
             new DateTime($arItem["PROPERTIES"]["SHIFT_END"]["VALUE"]) :
             $time_end;
 
+        // Получаем разницу во времени между началом и окончанием смены
+        $interval = ( $time_end->getTimestamp() - $time_start->getTimestamp() ) / 3600;
+        // Получаем количество часов из разницы во времени
+        // $duration_hours = $interval->format('%h');
+        $arResult["ITEMS"][$key]["SHIFT_DURATION"] = $interval;
+
         // $arResult["ITEMS"][$key]["SHIFT_PERIOD"] = $time_start->format("H:i") . " - " . $time_end->format("H:i");
         // меняем на день/ночь
         if ((int)$time_start->format('H') >= 15) {
