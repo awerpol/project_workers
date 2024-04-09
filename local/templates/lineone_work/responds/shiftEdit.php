@@ -46,7 +46,6 @@ if ($oRequest->isAjaxRequest()) {
             "ACTIVE"            => "Y",
             "PROPERTY_VALUES"   => [
                 // "SHIFT_IS_CTIVE"    => 5,         // ID варианта 'Y' // больше не используем
-                // "SHIFT_STAGE"       => 6,         // ID варианта "Формируется"
                 "SHIFT_STAGE"       => Trud\IBlock\InfoIblock::getFieldIdByXML_ID('FORMING'),  // ID варианта "Формируется"
                 "CLIENT"            => $oRequest->getPost('client'),
                 "SHIFT_START"       => $shiftStart,
@@ -60,7 +59,10 @@ if ($oRequest->isAjaxRequest()) {
         if($oRequest->getPost('todo') == 'newShift') {
             $result = $el->Add($arShiftPropeties);
         } elseif ($oRequest->getPost('todo') == 'editShift') {
-            $result = $el->Update($oRequest->getPost('id'), $arShiftPropeties);
+  
+            $el->SetPropertyValuesEx($oRequest->getPost('id'), false, $arShiftPropeties["PROPERTY_VALUES"]);
+            $el->Update($oRequest->getPost('id'), array('NAME' => $shiftName));
+
         }
 
         // обработка возможной ошибки
