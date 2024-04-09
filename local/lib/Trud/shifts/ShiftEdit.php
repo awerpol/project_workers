@@ -6,9 +6,13 @@ use Bitrix\Main\Loader;
 use CIBlockElement;
 use Trud\IBlock\InfoIblock;
 
+use Trud\Shifts\ShiftInfo;
+use Trud\Users\Lists;
+
 
 class ShiftEdit
 {
+    // изменяем стадию смены
     public static function updateStage($shiftId, $newStage) 
     {
         Loader::includeModule('iblock');
@@ -21,29 +25,28 @@ class ShiftEdit
 
         // если в архив, то всех освободить
         if ($newStage == 'ARCHIVE') {
-            self::freeUsers($shiftId);
+            self::freeWorkers($shiftId);
         }
     }
 
-    public static function freeUsers($shiftId)
+    // высвобождаем рабочих из смены (например, при закрытии смены)
+    public static function freeWorkers($shiftId)
     {
-        // Loader::includeModule('iblock');
-        $user = new \CUser;
+        $workers = ShiftInfo::getPropValue($shiftId, 'WORKERS');
 
-        $iblockId = InfoIblock::getIdByCode('SHIFT_BEING_FORMED');
+        Lists::makeThemFree($workers); 
+    }
 
-        // получить пользователей из этого инфоблока и освободить;
-        $rsProperties = CIBlockElement::GetProperty($iblockId, $shiftId);
-        
-        while ($arProperty = $rsProperties->Fetch()) {
-            if ($arProperty['CODE'] == 'WORKERS') { // Проверяем, что это нужное свойство
+    // дополняем "черный список" смены
+    public static function addToBlackList($shiftId, $badWorkers) 
+    {
+        Loader::includeModule('iblock');
 
-                $userId = $arProperty['VALUE']; // Значение поля WORKERS
-                $user->Update($userId, ['UF_BUSY' => 0]);
-            }
-        }
+        $blackList = ShiftInfo::getPropValue($shiftId, 'BLACK_LIST_SHIFT'); // было 
+        $blackList = array_merge($badWorkers, $blackList);
 
-        // return $userUpdateResult;
+        $fields = ['BLACK_LIST_SHIFT' => $blackList];
+        CIBlockElement::SetPropertyValuesEx($shiftId, false, $fields);
     }
 }
 

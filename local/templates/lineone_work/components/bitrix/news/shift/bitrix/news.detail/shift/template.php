@@ -270,12 +270,12 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                                     <div class="mt-4 space-y-4">
                                         <label class="block">
                                             <!-- <span>Оценка:</span> -->
-                                            <select class="form-select mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent">
-                                                <option>+2&nbsp; Молодец!</option>
-                                                <option>+1&nbsp; Отличился</option>
-                                                <option>-1&nbsp; Опоздал</option>
-                                                <option>-2&nbsp; Накосячил</option>
-                                                <option>-10 Прогулял</option>
+                                            <select id="carmaSet" class="form-select mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent">
+                                                <?php foreach ($arResult["CARMA_CASES"] as $case): ?>
+										            <option value="<?= $case['VALUE'] ?>"  data-name="<?= htmlspecialcharsbx($case['NAME']) ?>">
+                                                        <?= ($case['NUM'] > 0 ? '+' : '') . htmlspecialcharsbx($case['NUM'])?>&nbsp;&nbsp;<?= htmlspecialcharsbx($case['NAME']) ?>
+                                                    </option>
+									            <?php endforeach; ?>
                                             </select>
                                         </label>
 
@@ -299,6 +299,7 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                                                 Отмена
                                             </button>
                                             <button
+                                                    id="rateThem"
                                                     @click="showModal = false"
                                                     class="btn min-w-[7rem] rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
                                             >
@@ -313,6 +314,14 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                 </div>
             </div>
         </div>
+
+
+<?
+//echo '<pre>';
+//var_dump($arResult["CARMA_CASES"]);
+//echo '</pre>';
+?>
+
 
         <!-- блок с таблицей справа -->
         <div class="col-span-12 lg:col-span-5">
@@ -538,6 +547,59 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                         $("#tablefreeuser").attr("x-data", "");
                         $("#tablefreeuser").attr("x-init", "$el._x_grid =  new Gridjs.Grid({from: $refs.table,sort: true,search: true,}).render($refs.wrapper);");
                     }
+                });
+            });
+        </script>
+
+
+
+<!-- НОВОЭ -->
+
+
+
+        <script>
+            // Оценка (карма)
+            $(document).ready(function () {
+                $("#rateThem").click(function () {
+                    var currentDate = new Date();
+                    var date = currentDate.toISOString().slice(0,10); // Получаем текущую дату в формате "YYYY-MM-DD"
+
+                    var selectedC = [];
+                    // сотрудники слева
+                    $('#tableListSelectedUsers .form-checkbox:checked').each(function () {
+                        selectedC.push($(this).attr('user-id'));
+                    });
+                    // сотрудники справа
+                    $('#tablefreeuser .form-checkbox:checked').each(function () {
+                        selectedC.push($(this).attr('user-id'));
+                    });
+
+
+                    // Получаем значение кармы из полей формы
+                    var carmaCase = $('#carmaSet').val();
+                    var carmaCaseName = $('#carmaSet option:selected').text().trim();
+
+
+                    // console.log('Карма значение:', carmaCase);
+                    // console.log('Карма имя:', carmaCaseName);
+
+                    var xhrEdit = null;
+                    xhrEdit = $.ajax({
+                        type: 'POST',
+                        url: '<?= SITE_TEMPLATE_PATH ?>/responds/carmaSet.php',
+                        dataType: 'json',
+                        data: {
+                            todo: 'rate',
+                            userList: selectedC,
+                            carmaAdd: carmaCase,
+                            name: carmaCaseName,
+                            date: date
+                        },
+                        success: function (response) {
+                            location.reload();
+                        }
+                    });
+
                 });
             });
         </script>

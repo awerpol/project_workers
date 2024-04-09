@@ -4,6 +4,8 @@
 use Bitrix\Main\Context;
 use Bitrix\Main\Type\DateTime;
 
+use Trud\IBlock\InfoIblock;
+
 require($_SERVER[ "DOCUMENT_ROOT" ]."/bitrix/modules/main/include/prolog_before.php");
 
 if (!$USER->IsAuthorized()) {

@@ -26,4 +26,5 @@ class ShiftInfo
 
         return $result;
     }
+
 }

@@ -5,6 +5,8 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Catalog\ProductTable;
 use Bitrix\Main\Type\DateTime;
 
+use Trud\IBlock\InfoIblock;
+
 /**
  * @global CMain $APPLICATION
  * @var array $arParams
@@ -66,8 +68,10 @@ foreach($arResult["ITEMS"] as $key => $arItem){
 
 CModule::IncludeModule("iblock");
 
-// получаем всех клиентов (ID инфоблока в явном виде!!!)
-$rsClients = CIBlockElement::GetList(array(), array('IBLOCK_ID' => 4), false, false, array('ID', 'NAME'));
+$iblockId = InfoIblock::getIdByCode('CLIENTS');
+
+// получаем всех клиентов
+$rsClients = CIBlockElement::GetList(array(), array('IBLOCK_ID' => $iblockId), false, false, array('ID', 'NAME'));
 $arResult["CLIENTS"] = array();
 
 while ($arClient = $rsClients->Fetch()) {

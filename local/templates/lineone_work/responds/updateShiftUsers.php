@@ -4,6 +4,11 @@
 use Bitrix\Main\Context;
 use Bitrix\Main\UserTable;
 
+use Trud\Users\Lists;
+use Trud\Shifts\ShiftInfo;
+use Trud\Shifts\ShiftEdit;
+use Trud\Helpers\Helper;
+
 /*
  * use Bitrix\Main\{Context, UserTable};
  * */
@@ -25,17 +30,33 @@ if ($oRequest->isAjaxRequest()) {
         CModule::IncludeModule('iblock');
 
         if($oRequest->getPost('todo') == 'addUser'){
-            $userList = array_merge($oRequest->getPost('userList'), explode(',', $oRequest->getPost('oldListUser')));
+            $startList = explode(',', $oRequest->getPost('oldListUser'));    // начальный список слева
+            $arToAdd =  Lists::getFreeUsers($oRequest->getPost('userList')); // добавляем выделенных, только свободных из них
+            
+            $userList = array_merge($arToAdd, $startList);  // итоговый массив
+            Lists::makeThemBusy($arToAdd);                  // помечаем, что добавленные заняты
 
         } elseif($oRequest->getPost('todo') == 'deleteUser'){
-            $usersToDelete = $oRequest->getPost('userList');
-            $userList = array_diff(explode(',', $oRequest->getPost('oldListUser')), $usersToDelete);
-            // добавляем удаленных юзеров в поле "черный список временный"
-            // CIBlockElement::SetPropertyValuesEx($oRequest->getPost('shiftID'), 2, ["BL_TMP" => $usersToDelete]);
-            // !!!!! Заменить 2 на id инфоблока SHIFT_BEING_FORMED
+            $startList = explode(',', $oRequest->getPost('oldListUser')); // начальный список слева
+            $arToDelete = $oRequest->getPost('userList');
+
+            $userList = array_diff($startList, $arToDelete); // итоговый массив
+
+            ShiftEdit::addToBlackList($oRequest->getPost('shiftID'), $arToDelete); // добавляем удаленных юзеров в поле "черный список временный"
+            Lists::makeThemFree($arToDelete);                  // помечаем, что удаленные свободны
 
         } elseif($oRequest->getPost('todo') == 'fillUsers'){
-            $userList = array_merge(fillUsers($oRequest), explode(',', $oRequest->getPost('oldListUser')));
+            $startList = explode(',', $oRequest->getPost('oldListUser')); // начальный список слева
+
+            $blackList = ShiftInfo::getPropValue($oRequest->getPost('shiftID'), 'BLACK_LIST_SHIFT'); // черный список смены
+            $arExcept = array_merge($startList, $blackList);  // список исключений
+
+            $getM = Helper::pickUpUsers($oRequest->getPost('needM'), 'M', $arExcept);
+            $getF = Helper::pickUpUsers($oRequest->getPost('needF'), 'F', $arExcept);
+            $arToAdd = array_merge($getM, $getF);
+
+            $userList = array_merge($arToAdd, $startList);  // итоговый массив
+            Lists::makeThemBusy($arToAdd);                  // помечаем, что добавленные заняты
         }
 
         $res = CIBlockElement::SetPropertyValueCode($oRequest->getPost('shiftID'), "WORKERS",$userList);
@@ -53,39 +74,3 @@ if ($oRequest->isAjaxRequest()) {
     }
 }
 
-function fillUsers($oRequest) {
-
-    $arResultUsers = [];
-
-    // исключить из общего списка юзеров тех, кто в списке "черный список временный" этой смены.
-    
-    if ($oRequest->getPost('needM') > 0) {
-        // доступные=1, кроме тех кто в левой таблице, Мужчины
-        $filterM = ['UF_RULES' => '1',  '!=ID' => explode(',', $oRequest->getPost('oldListUser')), 'PERSONAL_GENDER' => ['M'] ];
-        $limitM = $oRequest->getPost('needM');
-        $selectM = ['ID', 'NAME', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHONE', 'UF_RULES', 'UF_RATING'];
-
-        $resM = UserTable::getList(['select' => $selectM, 'filter' => $filterM, 'limit' => $limitM, 'order' => ['UF_RATING' => 'DESC'] ]);
-        $usersM = $resM->fetchAll();
-
-        foreach ($usersM as $key => $userM) {    
-            $arResultUsers[] = $userM[ 'ID' ];
-        }
-    }
-    
-    if ($oRequest->getPost('needF') > 0) {
-        // доступные=1, кроме тех кто в левой таблице, Женщины
-        $filterF = ['UF_RULES' => '1',  '!=ID' => explode(',', $oRequest->getPost('oldListUser')), 'PERSONAL_GENDER' => ['F'] ];
-        $limitF = $oRequest->getPost('needF');
-        $selectF = ['ID', 'NAME', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHONE', 'UF_RULES', 'UF_RATING'];
-
-        $resF = UserTable::getList(['select' => $selectF, 'filter' => $filterF, 'limit' => $limitF, 'order' => ['UF_RATING' => 'DESC'] ]);
-        $usersF = $resF->fetchAll();
-
-        foreach ($usersF as $key => $userF) {    
-            $arResultUsers[] = $userF[ 'ID' ];
-        }
-    }
-    
-    return $arResultUsers;
-}

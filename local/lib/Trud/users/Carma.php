@@ -37,7 +37,7 @@ class Carma
             $newCarma += $carmaValue;
         }
        
-        // добавляем пользователю его Карму
+        // обновляем пользователю его Карму
         $user = new \CUser;
         $userUpdateResult = $user->Update($userId, ['UF_CARMA_SUMM' => $newCarma]);
 

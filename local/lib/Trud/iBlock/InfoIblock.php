@@ -29,5 +29,31 @@ class InfoIblock
             default:        return null; 
         }
     }
+
+    public static function getCarmaCaseFielIdByXML_ID(string $code) : ?int 
+    {
+        Loader::includeModule('iblock');
+        /* получаем список вариантов оценки */
+        $iblockId = InfoIblock::getIdByCode('KARMA_ACT');
+
+        $arValues = [];
+
+        $rsEnum = \CIBlockPropertyEnum::GetList(
+            ['SORT' => 'ASC'],
+            ['IBLOCK_ID'     => $iblockId, 'PROPERTY_CODE' => 'CASE']
+        );
+        
+        while ($arEnum = $rsEnum->GetNext()) {
+            if ($arEnum['XML_ID'] == $code) {
+                $res = $arEnum['ID'];
+                break;
+            }
+
+        }
+
+        return $res;
+    }
+
+
 }
 

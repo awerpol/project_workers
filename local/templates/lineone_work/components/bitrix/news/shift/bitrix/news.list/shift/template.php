@@ -333,14 +333,6 @@ $this->setFrameMode(true);
             var needF = $('#shiftCreateForm_needF').val();
 			var startSetting = $('#shiftCreateForm_startSetting').prop('checked'); // галочка
 
-			// console.log('Заказчик:', client);
-			// console.log('Дата:', date);
-			// console.log('Время начала:', startTime);
-			// console.log('Длительность:', duration);
-			// console.log('Мужчин:', needM);
-			// console.log('Женщин:', needF);
-			// console.log('Состояние чекбокса:', startSetting);
-
 			var xhrEdit = null;
 			xhrEdit = $.ajax({
 				type: 'POST',
@@ -363,7 +355,7 @@ $this->setFrameMode(true);
 
 		});
 	});
- </script>
+</script>
 
 <script>
 	// Редактирование Смены
