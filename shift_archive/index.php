@@ -1,7 +1,7 @@
 <? require($_SERVER[ "DOCUMENT_ROOT" ]."/bitrix/header.php");
-$APPLICATION->SetTitle("Список смен");
-$APPLICATION->SetPageProperty('title', "Список смен");?>
-
+$APPLICATION->SetTitle("Архив смен");
+$APPLICATION->SetPageProperty('title', 'Архив смен');
+?>
 
 <? $APPLICATION->IncludeComponent(
 	"bitrix:news",
@@ -68,12 +68,12 @@ $APPLICATION->SetPageProperty('title', "Список смен");?>
 		"PAGER_SHOW_ALL"                  => "N",
 		"PAGER_SHOW_ALWAYS"               => "N",
 		"PAGER_TEMPLATE"                  => ".default",
-		"PAGER_TITLE"                     => "Список смен",
+		"PAGER_TITLE"                     => "Архив смен",
 		"PATH_TO_SMILE"                   => "/bitrix/images/forum/smile/",
 		"PERIOD_NEW_TAGS"                 => "",
 		"PREVIEW_TRUNCATE_LEN"            => "",
 		"REVIEW_AJAX_POST"                => "N",
-		"SEF_FOLDER"                      => "/shift/",
+		"SEF_FOLDER"                      => "/shift_archive/",
 		"SEF_MODE"                        => "Y",
 		"SEF_URL_TEMPLATES"               => [
 			"detail"  => "#ELEMENT_ID#/",
@@ -105,7 +105,7 @@ $APPLICATION->SetPageProperty('title', "Список смен");?>
 		"USE_SEARCH"                      => "N",
 		"USE_SHARE"                       => "N",
 		"VOTE_NAMES"                      => [0 => "1", 1 => "2", 2 => "3", 3 => "4", 4 => "5", 5 => "",],
-		"IS_ARCHIVE"                      => "N"
+		"IS_ARCHIVE"                      => "Y"
 	]
 ); ?>
 

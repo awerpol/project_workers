@@ -45,7 +45,7 @@ global $APPLICATION;
 
         /* Javascript Assets */
         $APPLICATION->AddHeadString('<script src="' . SITE_TEMPLATE_PATH . '/src-template/dist/js/app.js" defer data-skip-moving="true"></script>');
-
+        $APPLICATION->AddHeadString('<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" data-skip-moving="true"></script>');
         /* Fonts */
         $APPLICATION->AddHeadString('<link rel="preconnect" href="https://fonts.googleapis.com" />');
         $APPLICATION->AddHeadString('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />');
@@ -60,11 +60,11 @@ global $APPLICATION;
     </head>
     <body x-data x-bind="$store.global.documentBody" class="is-sidebar-open is-header-blur navigation:sideblock">
     
+    <!-- preloader -->
     <div class="app-preloader fixed z-50 grid h-full w-full place-content-center bg-slate-50 dark:bg-navy-900">
         <div class="app-preloader-inner relative inline-block h-48 w-48"></div>
     </div>
     <div id="root" class="min-h-100vh flex grow bg-slate-50 dark:bg-navy-900" x-cloak>
-
         <?if (defined('ERROR_404') && ERROR_404 == 'Y'):?>
             <main :style="$store.global.isDarkModeEnabled ? {backgroundImage : `url('.<?= SITE_TEMPLATE_PATH ?>/src-template/dist/images/illustrations/ufo-bg-dark.svg')`} :{backgroundImage : `url('.<?= SITE_TEMPLATE_PATH ?>/src-template/dist/images/illustrations/ufo-bg.svg')`}"
               class="grid w-full grow grid-cols-1 place-items-center bg-center">
@@ -75,7 +75,7 @@ global $APPLICATION;
                         <!-- Application Logo -->
                         <div class="flex">
                             <a href="/">
-                                <img class="h-11 w-11 transition-transform duration-500 ease-in-out hover:rotate-[360deg]" src="<?= SITE_TEMPLATE_PATH ?>/images/app-logo.svg" alt="logo"/>
+                                <img class="h-22 w-22 transition-transform duration-500 ease-in-out hover:rotate-[360deg]" src="<?= SITE_TEMPLATE_PATH ?>/images/app-logo2.svg" alt="logo"/>
                             </a>
                         </div>
                         <button @click="$store.global.isSidebarExpanded = false" class="btn h-7 w-7 rounded-full p-0 text-primary hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:text-accent-light/80 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25 xl:hidden">
@@ -90,7 +90,7 @@ global $APPLICATION;
                     <div x-data="{expandedItem:'menu-item-3'}" class="mt-5 h-[calc(100%-4.5rem)] overflow-x-hidden pb-6" x-init="$el._x_simplebar = new SimpleBar($el);">
 
                         <ul class="flex flex-1 flex-col px-4 font-inter">
-                            <?php
+                            <!-- <?php 
 
                             $listIB = [];
                             $listNAME = [];
@@ -130,11 +130,36 @@ global $APPLICATION;
                                     <? } ?>
                                 </ul>
                             </li>
-                            <? } ?>
-                            
+                            <? } ?> -->
+
+
+                            <!-- Ручной переход на страницы -->
+                            <!-- Формируемые смены -->
+                            <a  href="/shift/" class="flex items-center justify-between py-2 text-xs+ tracking-wide text-slate-500 outline-none transition-[color,padding-left] duration-300 ease-in-out hover:text-slate-800 dark:text-navy-200 dark:hover:text-navy-50">
+                                <div class="flex items-center space-x-2">
+                                        <span>Формируемые смены</span>
+                                </div>
+                            </a>
+                            <!-- Архив смен -->
+                            <a  href="/shift_archive/" class="flex items-center justify-between py-2 text-xs+ tracking-wide text-slate-500 outline-none transition-[color,padding-left] duration-300 ease-in-out hover:text-slate-800 dark:text-navy-200 dark:hover:text-navy-50">
+                                <div class="flex items-center space-x-2">
+                                        <span>Архив смен</span>
+                                </div>
+                            </a>
+                            <!-- Работники -->
+                            <a  href="/all_workers/" class="flex items-center justify-between py-2 text-xs+ tracking-wide text-slate-500 outline-none transition-[color,padding-left] duration-300 ease-in-out hover:text-slate-800 dark:text-navy-200 dark:hover:text-navy-50">
+                                <div class="flex items-center space-x-2">
+                                        <span>Список работников</span>
+                                </div>
+                            </a>                           
+                            <!-- Заказчики -->
+                            <a  href="/clients/" class="flex items-center justify-between py-2 text-xs+ tracking-wide text-slate-500 outline-none transition-[color,padding-left] duration-300 ease-in-out hover:text-slate-800 dark:text-navy-200 dark:hover:text-navy-50">
+                                <div class="flex items-center space-x-2">
+                                        <span>Заказчики</span>
+                                </div>
+                            </a>    
 
                         </ul>
-
                         <div class="my-3 mx-4 h-px bg-slate-200 dark:bg-navy-500"></div>
 
                     </div>

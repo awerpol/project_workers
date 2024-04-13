@@ -15,7 +15,7 @@ $strReturn = '';
 
 $strReturn .= '<div class="flex items-center space-x-4 py-5 lg:py-6">';
 $strReturn .= '<h2 class="text-xl font-medium text-slate-800 dark:text-navy-50 lg:text-2xl">';
-$strReturn .= CMain::GetTitle();
+$strReturn .= $APPLICATION->GetProperty("title");
 $strReturn .= '</h2>';
 $strReturn .= '<div class="hidden h-full py-1 sm:flex">';
 $strReturn .= '<div class="h-full w-px bg-slate-300 dark:bg-navy-600"></div>';
