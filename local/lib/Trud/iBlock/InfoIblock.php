@@ -19,13 +19,16 @@ class InfoIblock
         return $arIblock[ 'ID' ];
     }
 
-    // захардкодил
+    /* захардкодил 
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    Контент - ИБ - Типы ИБ - Работа смен - Смены - Свойства - "Стадия смены"  
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
     public static function getFieldIdByXML_ID(string $code): ?int
     {
         switch ($code) {
-            case "FORMING": return 6;
-            case "IN_WORK": return 7;
-            case "ARCHIVE": return 8;
+            case "FORMING": return 3;
+            case "IN_WORK": return 4;
+            case "ARCHIVE": return 5;
             default:        return null; 
         }
     }
