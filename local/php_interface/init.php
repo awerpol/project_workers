@@ -1,5 +1,6 @@
 <?php
 require_once( $_SERVER['DOCUMENT_ROOT'] . '/local/php_interface/autoload.php');
+require_once( $_SERVER['DOCUMENT_ROOT'] . '/local/vendor/autoload.php');
 
 AddEventHandler("main", "OnEndBufferContent", "deleteKernelJs");
 AddEventHandler("main", "OnEndBufferContent", "deleteKernelCss");

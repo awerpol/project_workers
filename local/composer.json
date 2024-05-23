@@ -1,0 +1,5 @@
+{
+    "require": {
+        "westacks/telebot": "^3.3"
+    }
+}

@@ -1,0 +1,33 @@
+1) для начала разработки бота нужен composer (
+    т.к. нужна билиотека TeleBot
+    ).
+
+взял инструкцию здесь:
+https://vadim24.ru/blog/bitrix/ustanovka-composer-v-vmbitrix/
+https://www.sng-it.ru/snippet/nastroyka-composer-na-bitrix.html
+https://dev.1c-bitrix.ru/community/webdev/user/137665/blog/8863/?commentId=48823
+
+Нужен нано (ставить из-под рута): 
+sudo yum install -y nano
+
+nano /etc/php.d/20-phar.ini
+переходим в файл и добавляем строку "extension = phar.so"
+
+возвращаемся в bitrix/www/local/
+
+установка composer:
+curl -sS https://getcomposer.org/installer | php
+
+2) создаем в local файл composer.json:
+{
+    "require": {
+        "westacks/telebot": "^3.3"
+    }
+}
+
+3)в папке local запускаем  php composer.phar install
+
+4) в php_interface/init.php добавляем:
+require_once( $_SERVER['DOCUMENT_ROOT'] . '/local/vendor/autoload.php');
+
+
