@@ -1,6 +1,4 @@
-1) для начала разработки бота нужен composer (
-    т.к. нужна билиотека TeleBot
-    ).
+1) для начала разработки бота нужен composer ( т.к. нужна билиотека TeleBot ).
 
 взял инструкцию здесь:
 https://vadim24.ru/blog/bitrix/ustanovka-composer-v-vmbitrix/
