@@ -1,0 +1,17 @@
+настроить гит:
+сделать git clone в папку битрикс (скачается папка project_workers)
+из нее все скопировать в www (вкл. .gitignore)
+
+/www/bitrix/.settings.php  - найти debug и включить true
+
+ssl-сертификат
+- сайт: default ((!) в примерах неправильно)
+(может быть можно обойтись без домена)
+
+composer - см bot-composer.txt
+
+Миграции - см migrations.txt
+
+в коде (хардкод), см:
+www/local/lib/Trud/iBlock/InfoIblock.php
+www/local/templates/lineone_work/responds/getAllUsers.php // Выбираем пользователей из группы "WORKERS" ['GROUP_ID'=> '6']

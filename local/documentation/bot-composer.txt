@@ -29,3 +29,31 @@ curl -sS https://getcomposer.org/installer | php
 require_once( $_SERVER['DOCUMENT_ROOT'] . '/local/vendor/autoload.php');
 
 
+============================
+
+Установка Composer на Bitrix Virtual Appliance (если не установлен)
+Если Composer не установлен, следуйте этим шагам для установки:
+
+Перейдите в домашний каталог пользователя Bitrix:
+cd /home/bitrix
+
+Скачайте установочный файл Composer:
+curl -sS https://getcomposer.org/installer -o composer-setup.php
+
+Запустите установку Composer:
+php composer-setup.php
+
+Переместите исполняемый файл Composer в глобальное расположение:
+sudo mv composer.phar /usr/local/bin/composer
+
+Проверьте установку:
+composer --version
+
+Шаг 3: Обновление зависимостей с помощью Composer
+После установки Composer обновите зависимости вашего проекта:
+
+Перейдите в каталог вашего проекта:
+cd /home/bitrix/www
+
+Обновите зависимости проекта:
+composer update
