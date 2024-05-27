@@ -108,6 +108,7 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                         >
                             <div class="h-7 w-7 flex items-center justify-center rounded-full bg-current text-primary dark:text-accent-light">
                                 <i class="fa-solid fa-paper-plane text-white text-xs"></i>
+                                
                             </div>
                         </th>
                     </tr>

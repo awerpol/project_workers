@@ -12,6 +12,11 @@ composer - см bot-composer.txt
 
 Миграции - см migrations.txt
 
+отключить кэш: в разделе Настройки>Настройки продукта>Автокеширование
+
 в коде (хардкод), см:
-www/local/lib/Trud/iBlock/InfoIblock.php
+www/local/lib/Trud/iBlock/InfoIblock.php // /* захардкодил 
 www/local/templates/lineone_work/responds/getAllUsers.php // Выбираем пользователей из группы "WORKERS" ['GROUP_ID'=> '6']
+www/shift/index.php                     // "IBLOCK_ID"  => "2",
+www/shift_archive/index.php             // "IBLOCK_ID"  => "2",
+www/local/templates/lineone_work/components/bitrix/news/shift/bitrix/news.list/shift/template.php // var client = 3;

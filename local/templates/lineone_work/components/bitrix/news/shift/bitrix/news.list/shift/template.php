@@ -19,7 +19,8 @@ $this->setFrameMode(true);
 
 <?
 // echo '<pre>';
-// var_dump($arParams['IS_ARCHIVE']);
+// // var_dump($arParams['IS_ARCHIVE']);
+// var_dump($arResult["ITEMS"]);
 // echo '</pre>';
 ?>
 <div x-data="{showModal:false}">
@@ -344,7 +345,7 @@ $this->setFrameMode(true);
 				var duration = 12;
 				var needM = 0;
 				var needF = 0;
-				var client = 28; // !!!! МАТЬ ЕГО ХАРДКОД
+				var client = 3; // !!!! МАТЬ ЕГО ХАРДКОД
 
 			} else {
 				// Находим соответствующий элемент массива $arItem по ID
