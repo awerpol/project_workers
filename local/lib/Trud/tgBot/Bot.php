@@ -52,10 +52,12 @@ class Bot
 
     public function sendTextMessage($chatId, $text)
     {
-        $this->bot->sendMessage([
+        $message = $this->bot->sendMessage([
             'chat_id' => $chatId,
             'text' => $text
         ]);
+
+		var_dump($message);
     }
 
 
