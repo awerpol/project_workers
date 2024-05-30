@@ -7,7 +7,8 @@ Bitrix\Main\Loader::registerAutoLoadClasses(null, [
     'Trud\Users\Carma'          => '/local/lib/Trud/users/Carma.php',
     'Trud\Users\Lists'          => '/local/lib/Trud/users/Lists.php',
     'Trud\Helpers\Helper'       => '/local/lib/Trud/helpers/Helper.php',
-    'Trud\TgBot\Bot'            => '/local/lib/Trud/tgBot/Bot.php'
+    'Trud\TgBot\Bot'            => '/local/lib/Trud/tgBot/Bot.php',
+    'Trud\TgBot\User'            => '/local/lib/Trud/tgBot/User.php'
 
 ]);
 
