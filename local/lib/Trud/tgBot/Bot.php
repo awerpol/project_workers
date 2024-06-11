@@ -227,7 +227,9 @@ class Bot
             'parse_mode'   => 'HTML'
         ];
         if ($keyboard) $params['reply_markup'] = $keyboard;
-        $this->bot->sendMessage($params);
+        $response = $this->bot->sendMessage($params);
+
+        return $response->message_id;
     }
 
     // тестируем - отправка сообщения из библиотеки
@@ -260,6 +262,22 @@ class Bot
                 'message_id' => $messageId
             ]);
             return $response;
+    }
+
+    // сбросить последнее приглашение
+    public function resetLastInvite($chatId) {
+        $messageId = BotLoger::getUserStatus ($chatId);
+        $resetText = "приглашение не актуально";
+
+        // if ($messageId) {
+        //     $this->editMessage($chatId, $messageId, $resetText, $keyboard = null);
+        // }
+
+        try {
+             $this->editMessage($chatId, $messageId, $resetText, $keyboard = null);
+        } catch (\Exception $e) {
+            
+        }
     }
 
 }

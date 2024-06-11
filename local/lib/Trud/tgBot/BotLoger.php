@@ -37,7 +37,7 @@ class BotLoger
     }
 
     public static function logChat ($tgId, $message) {
-        $logsFile    = $_SERVER['DOCUMENT_ROOT'] . '/local/logs/'. $tgId . '.log';
+        $logsFile    = $_SERVER['DOCUMENT_ROOT'] . '/local/logs/chats/'. $tgId . '.log';
         $logData     = date('d.m.Y H:i:s') . ' ' . $message;
         file_put_contents($logsFile, $logData . PHP_EOL, FILE_APPEND);
     }

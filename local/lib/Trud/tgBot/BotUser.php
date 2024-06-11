@@ -3,7 +3,8 @@
 namespace Trud\TgBot;
 
 use Bitrix\Main\UserTable;
-
+use Trud\TgBot\BotLoger;
+use Trud\TgBot\Bot;
 
 class BotUser
 {
@@ -125,4 +126,11 @@ class BotUser
         return $userInfo && !empty($userInfo['UF_TELEGRAM_ID']);
     }
 
+    // // получить телеграм-ид (по id битрикс)
+    // public static function getTelegramId($id_bx) {
+    //     $user = new \CUser;
+    //     $userInfo = $user->GetByID($id_bx)->Fetch();
+
+    //     return $userInfo['UF_TELEGRAM_ID'];
+    // }
 }
