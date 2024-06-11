@@ -20,3 +20,8 @@ www/local/templates/lineone_work/responds/getAllUsers.php // Выбираем п
 www/shift/index.php                     // "IBLOCK_ID"  => "2",
 www/shift_archive/index.php             // "IBLOCK_ID"  => "2",
 www/local/templates/lineone_work/components/bitrix/news/shift/bitrix/news.list/shift/template.php // var client = 3;
+
+cron
+Настроить задание shift_inspect.php - переводить смены в работу, в архив
+статья:
+https://www.acrit-studio.ru/pantry-programmer/bitrix-bitrix-environment-vm/crond-in-bitrix-vm/

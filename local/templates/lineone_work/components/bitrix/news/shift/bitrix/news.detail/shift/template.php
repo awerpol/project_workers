@@ -393,7 +393,7 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
         </div>
 
         <script>
-            // удаляем пользователя из левой таблицы
+            // удаляем пользователя из левой таблицы. Кнопка [> Убрать]
             $(document).ready(function () {
                 $("#deleteUsersInWork").click(function () {
                     var selectedD = [];
@@ -422,7 +422,7 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
         
         <script>
             // src='<?= SITE_TEMPLATE_PATH ?>/src-template/src/js/magics/notification.js';
-            // добавляем пользователя в левую таблицу
+            // добавляем пользователя в левую таблицу. Кнопка [< Добавить]
             $(document).ready(function () {
 
                 // ограничиваем чекбоксы, если выбирают больше, чем нужно
@@ -473,13 +473,12 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                             location.reload();
                         }
                     });
-
                 });
             });
         </script>
 
         <script>
-            // автоматически заполняем левую таблицу
+            // автоматически заполняем левую таблицу. Кнопка [<< Заполнить]
             $(document).ready(function () {
                 $("#fillUsersInWork").click(function () {
                     var needM = <?= $arResult["PROPERTIES"]["SHIFT_COUNT_M"]["VALUE"] ?> - <?= $arResult["MEN_COUNT"] ?>;
@@ -552,14 +551,8 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
             });
         </script>
 
-
-
-<!-- НОВОЭ -->
-
-
-
         <script>
-            // Оценка (карма)
+            // Оценка (карма). Кнопка [Ъ Оценить]
             $(document).ready(function () {
                 $("#rateThem").click(function () {
                     var currentDate = new Date();
@@ -604,6 +597,13 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                 });
             });
         </script>
+
+
+<!-- НОВОЭ -->
+
+
+
+
     <? endif; ?>
 </div>
 

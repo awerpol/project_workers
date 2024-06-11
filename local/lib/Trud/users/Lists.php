@@ -3,6 +3,8 @@
 namespace Trud\Users;
 
 use Bitrix\Main\Loader;
+use Bitrix\Main\UserTable;
+
 // use Trud\IBlock\InfoIblock;
 
 
@@ -45,6 +47,7 @@ class Lists
     // делаем "занятыми" пользователей
     public static function makeThemBusy($arUsers) { self::changeField($arUsers, 'UF_BUSY', 1); }
 
+    
     // Приватный метод для изменения поля пользователей
     private static function changeField($arUsers, $fieldName, $fieldValue)
     {
