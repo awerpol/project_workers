@@ -13,6 +13,7 @@ use Trud\TgBot\BotLoger;
 require_once $_SERVER['DOCUMENT_ROOT'] . '/local/lib/Trud/tgBot/botConfig.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/local/vendor/autoload.php';
 
+
 session_start();
 
 class Bot
@@ -22,13 +23,17 @@ class Bot
 	private $inited = false;
 	private $bot;
     private $userStates = [];
+    private $messages;
     
 	function __construct() {
 		global $botConfig;
+        // global $messages;
 
 		$this->TOKEN 	= $botConfig['token'];
 		$this->BOT_NAME = $botConfig['botName'];
+        $this->messages = include $_SERVER['DOCUMENT_ROOT'] . '/local/lib/Trud/tgBot/messages.php';
 		$this->init();
+
 	}
 	
     // инициализация
@@ -102,15 +107,10 @@ class Bot
         // если НЕ зарегистрирован
         if (!$botUser->isRegistered()) {
             BotLoger::addUserStatus($tgId, 'awaiting_phone');
-            
-            $welcomeMessage = "Нажмите на кнопку, чтобы отправить свой номер телефона 👇"; // <---------- TODO: перенести тексты в другое место, брать оттуда
-            $keyboard = [
-                'keyboard' => [[['text' => '📞 Отправить контакт','request_contact' => true]]],
-                'resize_keyboard' => true,
-                'one_time_keyboard' => true
-            ];
+            $welcomeMessage = $this->messages['start']['text'];
+            $keyboard       = $this->messages['start']['keyboard'];
         } else {
-            $welcomeMessage = "Вы уже зарегистрированы, $name. Ожидайте, с вами свяжутся";
+            $welcomeMessage = $name . $this->messages['welcome_registered'];
         }
         $this->sendMessage($chatId, $welcomeMessage, $keyboard);
     }
@@ -127,15 +127,15 @@ class Bot
             // Пытаемся зарегистрировать пользователя с номером телефона
             if ($botUser->registerUser($messageText)) {
                 $name = $botUser->getUserData()['NAME'];
-                $response = "Приветствую, $name! Ваш номер телефона $messageText. Вы успешно зарегистрированы. Ожидайте, с вами свяжутся"; // <---------- TODO: перенести тексты сообщения в другое место, брать оттуда
+                $response = $name . $this->messages['register_ok']; // TODO: нормально сделать получение текстов и сообщений
                 // TODO: добавить запись о регистрации в лог чата
             } else {
-                $response = "Ваш номер телефона $messageText. Похоже, вас нет в базе. Свяжитесь с куратором"; // <---------- TODO: перенести тексты сообщения в другое место, брать оттуда
+                $response = $this->messages['register_not_ok'] . $messageText; // TODO: нормально сделать получение текстов и сообщений
             }
             BotLoger::addUserStatus($tgId, 'default');
             $this->sendMessage($chatId, $response, ['remove_keyboard' => true]);
         } else {
-            // логика: удалять лишнее текстовое сообщение
+            // удаляем лишнее текстовое сообщение
             $this->deleteMessage($chatId, $messageId);
             // $this->sendMessage($chatId, "messageId = <i>$messageId</i> "."<b>Вы сказали:</b> " . $messageText); // дебуг
         }
@@ -151,7 +151,6 @@ class Bot
         $response = "messageId = <i>$messageId</i> "."<b>Вы нажали:</b> " . $pressed;
         $keyboard = null;
 
-/* ==========================================  ============================================= */
         //TODO: что-то делать с нажатыми кнопками: учитывать статус диалога, нажатую кнопку и т.д.
         //TODO: логировать ключевые действия
         //TODO: id сообщения - в статус - чтобы потом его загасить, когда неактуально будет
@@ -212,14 +211,13 @@ class Bot
         // $this->sendMessage($chatId, $response);
 
     }
+    // ============================== Тест-демонстрация ==============================
 
 
     // ============================== Отправка сообщений ==============================
     public function sendMessage($chatId, $text, $keyboard = null) {
 
         // TODO: убрать клавиатуры в отдельный файл (или в файл сообщений)
-
-    
         $removeKeyboard = ['remove_keyboard' => true];
         // $keyboard = $inlineKeyboard; 
 
@@ -229,6 +227,17 @@ class Bot
             'parse_mode'   => 'HTML'
         ];
         if ($keyboard) $params['reply_markup'] = $keyboard;
+        $this->bot->sendMessage($params);
+    }
+
+    // тестируем - отправка сообщения из библиотеки
+    public function sendLibMessage($chatId, $key) {
+        $params = [
+            'chat_id'      => $chatId,
+            'text'         => $this->messages[$key]['text'],
+            'parse_mode'   => 'HTML'
+        ];
+        if ($this->messages[$key]['keyboard']) $params['reply_markup'] = $this->messages[$key]['keyboard'];
         $this->bot->sendMessage($params);
     }
 
