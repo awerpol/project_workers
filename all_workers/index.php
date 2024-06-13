@@ -66,6 +66,9 @@ $APPLICATION->SetPageProperty('title', "Список работников");
                     <th class="whitespace-nowrap bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
                         Допущен
                     </th>
+                    <th class="whitespace-nowrap bg-slate-200 px-2 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-4">
+                        Telegram
+                    </th>
                 </tr>
                 </thead>
                 <tbody id="listFreeUser">
@@ -100,13 +103,15 @@ $APPLICATION->SetPageProperty('title', "Список работников");
                 for (var i = 0; i < keys.length; i++) {
                     inteUser += '<tr user-id="' + response.resultM['USERS'][i]['ID'] + '" class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500">' +
                     '<td class="whitespace-nowrap px-2 py-3 sm:px-4"><label class="flex h-8 w-8 items-center justify-center" x-tooltip="\'Select\'"><input user-id="' + response.resultM['USERS'][i]['ID'] + '" class="form-checkbox is-outline h-4.5 w-4.5 rounded border-slate-400/70 before:bg-primary checked:border-primary hover:border-primary focus:border-primary dark:border-navy-400 dark:before:bg-accent dark:checked:border-accent dark:hover:border-accent dark:focus:border-accent" type="checkbox"/></label></td>' +
-                    '<td class="whitespace-nowrap px-2 py-3 sm:px-4"><a href="/all_workers/detail.php?id=' + response.resultM['USERS'][i]['ID'] + '">' + response.resultM['USERS'][i]['ID'] + '</a></td>' +
+                    // '<td class="whitespace-nowrap px-2 py-3 sm:px-4"><a href="/all_workers/detail.php?id=' + response.resultM['USERS'][i]['ID'] + '">' + response.resultM['USERS'][i]['ID'] + '</a></td>' +
+                    '<td class="whitespace-nowrap px-2 py-3 sm:px-4">' + response.resultM['USERS'][i]['ID'] + '</a></td>' +
                     '<td class="whitespace-nowrap px-2 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-4">' + response.resultM['USERS'][i]['GENDER'] + '</td>' +
                     '<td class="whitespace-nowrap px-2 py-3 sm:px-4">' + response.resultM['USERS'][i]['NAME'] + '</td>' +
                     '<td class="whitespace-nowrap px-2 py-3 sm:px-4">' + response.resultM['USERS'][i]['PHONE'] + '</td>' +
                     '<td class="whitespace-nowrap px-2 py-3 sm:px-4">' + response.resultM['USERS'][i]['RATING'] + '</td>' +
                     '<td class="whitespace-nowrap px-2 py-3 sm:px-4">' + response.resultM['USERS'][i]['IS_ACTIVE'] + '</td>' +
-                    
+                    '<td class="whitespace-nowrap px-2 py-3 sm:px-4"><p class ="text-xs text-slate-400" style="font-size: 8px;">' + response.resultM['USERS'][i]['TELEGRAM'] + '</p></td>' +
+
                     '</tr>';
                 }
                 $("#listFreeUser").html(inteUser);

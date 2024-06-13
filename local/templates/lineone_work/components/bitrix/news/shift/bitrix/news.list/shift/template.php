@@ -57,7 +57,8 @@ $this->setFrameMode(true);
 						x-transition:leave-end="opacity-0"
 					></div>
 					<div
-					class="relative w-full max-w-lg origin-top rounded-lg bg-white transition-all duration-300 dark:bg-navy-700"
+					class="relative w-full max-w-lg max-h-full overflow-y-auto origin-top rounded-lg bg-white transition-all duration-300 dark:bg-navy-700"
+			
 					x-show="showModal"
 					x-transition:enter="easy-out"
 					x-transition:enter-start="opacity-0 scale-95"
@@ -203,7 +204,7 @@ $this->setFrameMode(true);
 							</label> -->
 							<input type="hidden" id="hiddenShiftId" value="0">
 
-							<div class="space-x-2 text-right">
+							<div class="flex justify-end p-4 sm:p-5 space-x-2 text-right">
 								<button @click="showModal = false" class="btn min-w-[7rem] rounded-full border border-slate-300 font-medium text-slate-800 hover:bg-slate-150 focus:bg-slate-150 active:bg-slate-150/80 dark:border-navy-450 dark:text-navy-50 dark:hover:bg-navy-500 dark:focus:bg-navy-500 dark:active:bg-navy-500/90">
 									Отмена
 								</button>

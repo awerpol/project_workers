@@ -68,6 +68,9 @@ if ($oRequest->isAjaxRequest()) {
             // вся инфа пользователя по ID
             // $arUser = CUser::GetByID($workerId)->Fetch();
 
+            // занулить последнее (предыдущее) соообщение
+            $bot->resetLastInvite($tg_id);
+
             // сборка и отправка сообщения
             // TODO: - куда-то убрать сообщения, собирать их отдельно с учетом языка
             $messageText = $name . ", вы приглашены на смену \n" .

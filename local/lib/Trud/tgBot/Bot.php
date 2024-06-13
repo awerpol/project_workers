@@ -163,6 +163,10 @@ class Bot
                     ['text' => '👣 Как добраться', 'callback_data' => 'address'],
                     ['text' => '👥 Кто идет', 'callback_data' => 'other_collegues'],
                 ]]];
+
+                $botUser->setState('confirmed');
+                BotLoger::logChat ($tgId, "подтвердил участие в смене");
+
                 break;
             case 'address': // <---------- DEMO
                 $response = "<b>Адрес:</b> ул. Станционная, 62/1
@@ -184,6 +188,10 @@ class Bot
                 break;
             case 'cancel': // <---------- DEMO
                 $response = "Ваш рейтинг понижен. Ждите другое приглашение";
+
+                $botUser->setState('refused');
+                BotLoger::logChat ($tgId, "отказался от участия в смене");
+
                 break;
         }
 
