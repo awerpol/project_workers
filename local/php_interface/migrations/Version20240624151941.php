@@ -3,9 +3,9 @@
 namespace Sprint\Migration;
 
 
-class IB20240228124631 extends Version
+class Version20240624151941 extends Version
 {
-    protected $description = "28.02.2024 16.30";
+    protected $description = "инфоблок - карма";
 
     protected $moduleVersion = "4.6.1";
 
@@ -17,8 +17,8 @@ class IB20240228124631 extends Version
     {
         $helper = $this->getHelperManager();
         $helper->Iblock()->saveIblockType(array (
-  'ID' => 'SHIFT_WORK',
-  'SECTIONS' => 'Y',
+  'ID' => 'KARMA',
+  'SECTIONS' => 'N',
   'EDIT_FILE_BEFORE' => '',
   'EDIT_FILE_AFTER' => '',
   'IN_RSS' => 'N',
@@ -27,33 +27,33 @@ class IB20240228124631 extends Version
   array (
     'ru' => 
     array (
-      'NAME' => 'Работа смен',
+      'NAME' => 'Карма',
       'SECTION_NAME' => '',
       'ELEMENT_NAME' => '',
     ),
     'en' => 
     array (
-      'NAME' => 'Работа смен',
+      'NAME' => 'Karma',
       'SECTION_NAME' => '',
       'ELEMENT_NAME' => '',
     ),
   ),
 ));
         $iblockId = $helper->Iblock()->saveIblock(array (
-  'IBLOCK_TYPE_ID' => 'SHIFT_WORK',
+  'IBLOCK_TYPE_ID' => 'KARMA',
   'LID' => 
   array (
     0 => 's1',
   ),
-  'CODE' => 'SHIFT_BEING_FORMED',
+  'CODE' => 'KARMA_ACT',
   'API_CODE' => NULL,
   'REST_ON' => 'N',
-  'NAME' => 'Формируемые смены ',
+  'NAME' => 'Персональная карма',
   'ACTIVE' => 'Y',
   'SORT' => '500',
-  'LIST_PAGE_URL' => '#SITE_DIR#/shift/',
-  'DETAIL_PAGE_URL' => '#SITE_DIR#/shift/#SECTION_CODE#/#ELEMENT_ID#/',
-  'SECTION_PAGE_URL' => '#SITE_DIR#/shift/#SECTION_CODE#/',
+  'LIST_PAGE_URL' => '#SITE_DIR#/KARMA/index.php?ID=#IBLOCK_ID#',
+  'DETAIL_PAGE_URL' => '#SITE_DIR#/KARMA/detail.php?ID=#ELEMENT_ID#',
+  'SECTION_PAGE_URL' => '#SITE_DIR#/KARMA/list.php?SECTION_ID=#SECTION_ID#',
   'CANONICAL_PAGE_URL' => '',
   'PICTURE' => NULL,
   'DESCRIPTION' => '',
@@ -64,7 +64,7 @@ class IB20240228124631 extends Version
   'RSS_FILE_LIMIT' => NULL,
   'RSS_FILE_DAYS' => NULL,
   'RSS_YANDEX_ACTIVE' => 'N',
-  'XML_ID' => '',
+  'XML_ID' => NULL,
   'INDEX_ELEMENT' => 'Y',
   'INDEX_SECTION' => 'Y',
   'WORKFLOW' => 'N',
@@ -73,7 +73,7 @@ class IB20240228124631 extends Version
   'LIST_MODE' => '',
   'RIGHTS_MODE' => 'S',
   'SECTION_PROPERTY' => 'Y',
-  'PROPERTY_INDEX' => 'I',
+  'PROPERTY_INDEX' => 'N',
   'VERSION' => '2',
   'LAST_CONV_ELEMENT' => '0',
   'SOCNET_GROUP_ID' => NULL,
@@ -81,16 +81,16 @@ class IB20240228124631 extends Version
   'EDIT_FILE_AFTER' => '',
   'SECTIONS_NAME' => 'Разделы',
   'SECTION_NAME' => 'Раздел',
-  'ELEMENTS_NAME' => 'Смены',
-  'ELEMENT_NAME' => 'Смена',
-  'EXTERNAL_ID' => '',
+  'ELEMENTS_NAME' => 'Оценки',
+  'ELEMENT_NAME' => 'Оценка',
+  'EXTERNAL_ID' => NULL,
   'LANG_DIR' => '/',
   'IPROPERTY_TEMPLATES' => 
   array (
   ),
-  'ELEMENT_ADD' => 'Добавить смену',
-  'ELEMENT_EDIT' => 'Изменить смену',
-  'ELEMENT_DELETE' => 'Удалить смену',
+  'ELEMENT_ADD' => 'Добавить оценку',
+  'ELEMENT_EDIT' => 'Изменить оценку',
+  'ELEMENT_DELETE' => 'Удалить оценку',
   'SECTION_ADD' => 'Добавить раздел',
   'SECTION_EDIT' => 'Изменить раздел',
   'SECTION_DELETE' => 'Удалить раздел',
@@ -150,11 +150,11 @@ class IB20240228124631 extends Version
       'FROM_DETAIL' => 'N',
       'UPDATE_WITH_DETAIL' => 'N',
       'DELETE_WITH_DETAIL' => 'N',
-      'SCALE' => 'Y',
-      'WIDTH' => 150,
-      'HEIGHT' => 150,
+      'SCALE' => 'N',
+      'WIDTH' => '',
+      'HEIGHT' => '',
       'IGNORE_ERRORS' => 'N',
-      'METHOD' => '',
+      'METHOD' => 'resample',
       'COMPRESSION' => 95,
       'USE_WATERMARK_TEXT' => 'N',
       'WATERMARK_TEXT' => '',
@@ -237,8 +237,8 @@ class IB20240228124631 extends Version
     'IS_REQUIRED' => 'N',
     'DEFAULT_VALUE' => 
     array (
-      'UNIQUE' => 'Y',
-      'TRANSLITERATION' => 'Y',
+      'UNIQUE' => 'N',
+      'TRANSLITERATION' => 'N',
       'TRANS_LEN' => 100,
       'TRANS_CASE' => 'L',
       'TRANS_SPACE' => '-',
@@ -344,8 +344,8 @@ class IB20240228124631 extends Version
     'IS_REQUIRED' => 'N',
     'DEFAULT_VALUE' => 
     array (
-      'UNIQUE' => 'Y',
-      'TRANSLITERATION' => 'Y',
+      'UNIQUE' => 'N',
+      'TRANSLITERATION' => 'N',
       'TRANS_LEN' => 100,
       'TRANS_CASE' => 'L',
       'TRANS_SPACE' => '-',
@@ -400,86 +400,19 @@ class IB20240228124631 extends Version
 ));
     $helper->Iblock()->saveGroupPermissions($iblockId, array (
   'administrators' => 'X',
-  'everyone' => 'R',
 ));
         $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Активность сбора смены',
+  'NAME' => 'ID сотрудника',
   'ACTIVE' => 'Y',
   'SORT' => '500',
-  'CODE' => 'SHIFT_IS_CTIVE',
-  'DEFAULT_VALUE' => '',
-  'PROPERTY_TYPE' => 'L',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
-  'XML_ID' => '',
-  'FILE_TYPE' => '',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'N',
-  'SEARCHABLE' => 'Y',
-  'FILTRABLE' => 'Y',
-  'IS_REQUIRED' => 'N',
-  'VERSION' => '2',
-  'USER_TYPE' => NULL,
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-  'VALUES' => 
-  array (
-    0 => 
-    array (
-      'VALUE' => 'ДА',
-      'DEF' => 'N',
-      'SORT' => '100',
-      'XML_ID' => 'Y',
-    ),
-    1 => 
-    array (
-      'VALUE' => 'НЕТ',
-      'DEF' => 'N',
-      'SORT' => '200',
-      'XML_ID' => 'N',
-    ),
-  ),
-  'FEATURES' => 
-  array (
-    0 => 
-    array (
-      'MODULE_ID' => 'catalog',
-      'FEATURE_ID' => 'IN_BASKET',
-      'IS_ENABLED' => 'Y',
-    ),
-    1 => 
-    array (
-      'MODULE_ID' => 'iblock',
-      'FEATURE_ID' => 'DETAIL_PAGE_SHOW',
-      'IS_ENABLED' => 'Y',
-    ),
-    2 => 
-    array (
-      'MODULE_ID' => 'iblock',
-      'FEATURE_ID' => 'LIST_PAGE_SHOW',
-      'IS_ENABLED' => 'Y',
-    ),
-  ),
-  'SMART_FILTER' => 'N',
-  'DISPLAY_TYPE' => 'F',
-  'DISPLAY_EXPANDED' => 'N',
-  'FILTER_HINT' => '',
-));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Сотрудники',
-  'ACTIVE' => 'Y',
-  'SORT' => '500',
-  'CODE' => 'WORKERS',
+  'CODE' => 'ID_WORKER',
   'DEFAULT_VALUE' => '',
   'PROPERTY_TYPE' => 'S',
   'ROW_COUNT' => '1',
   'COL_COUNT' => '30',
   'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'Y',
-  'XML_ID' => '',
+  'MULTIPLE' => 'N',
+  'XML_ID' => NULL,
   'FILE_TYPE' => '',
   'MULTIPLE_CNT' => '5',
   'LINK_IBLOCK_ID' => '0',
@@ -495,49 +428,43 @@ class IB20240228124631 extends Version
   array (
     0 => 
     array (
-      'MODULE_ID' => 'catalog',
-      'FEATURE_ID' => 'IN_BASKET',
-      'IS_ENABLED' => 'Y',
-    ),
-    1 => 
-    array (
       'MODULE_ID' => 'iblock',
       'FEATURE_ID' => 'DETAIL_PAGE_SHOW',
       'IS_ENABLED' => 'Y',
     ),
-    2 => 
+    1 => 
     array (
       'MODULE_ID' => 'iblock',
       'FEATURE_ID' => 'LIST_PAGE_SHOW',
       'IS_ENABLED' => 'Y',
     ),
   ),
-  'SMART_FILTER' => 'Y',
-  'DISPLAY_TYPE' => 'F',
-  'DISPLAY_EXPANDED' => 'Y',
-  'FILTER_HINT' => '',
+  'SMART_FILTER' => NULL,
+  'DISPLAY_TYPE' => NULL,
+  'DISPLAY_EXPANDED' => NULL,
+  'FILTER_HINT' => NULL,
 ));
             $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Начало смены',
+  'NAME' => 'Дата поступка',
   'ACTIVE' => 'Y',
   'SORT' => '500',
-  'CODE' => 'SHIFT_START',
+  'CODE' => 'ACT_DATA',
   'DEFAULT_VALUE' => NULL,
   'PROPERTY_TYPE' => 'S',
   'ROW_COUNT' => '1',
   'COL_COUNT' => '30',
   'LIST_TYPE' => 'L',
   'MULTIPLE' => 'N',
-  'XML_ID' => '',
+  'XML_ID' => NULL,
   'FILE_TYPE' => '',
   'MULTIPLE_CNT' => '5',
   'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'N',
+  'WITH_DESCRIPTION' => 'Y',
   'SEARCHABLE' => 'Y',
   'FILTRABLE' => 'Y',
   'IS_REQUIRED' => 'N',
   'VERSION' => '2',
-  'USER_TYPE' => 'DateTime',
+  'USER_TYPE' => 'Date',
   'USER_TYPE_SETTINGS' => NULL,
   'HINT' => '',
   'FEATURES' => 
@@ -555,32 +482,32 @@ class IB20240228124631 extends Version
       'IS_ENABLED' => 'Y',
     ),
   ),
-  'SMART_FILTER' => 'N',
-  'DISPLAY_TYPE' => 'U',
-  'DISPLAY_EXPANDED' => 'N',
-  'FILTER_HINT' => '',
+  'SMART_FILTER' => NULL,
+  'DISPLAY_TYPE' => NULL,
+  'DISPLAY_EXPANDED' => NULL,
+  'FILTER_HINT' => NULL,
 ));
             $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Окончание смены',
+  'NAME' => 'Поступок',
   'ACTIVE' => 'Y',
   'SORT' => '500',
-  'CODE' => 'SHIFT_END',
-  'DEFAULT_VALUE' => NULL,
+  'CODE' => 'THE_ACT',
+  'DEFAULT_VALUE' => '',
   'PROPERTY_TYPE' => 'S',
   'ROW_COUNT' => '1',
   'COL_COUNT' => '30',
   'LIST_TYPE' => 'L',
   'MULTIPLE' => 'N',
-  'XML_ID' => '',
+  'XML_ID' => NULL,
   'FILE_TYPE' => '',
   'MULTIPLE_CNT' => '5',
   'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'N',
+  'WITH_DESCRIPTION' => 'Y',
   'SEARCHABLE' => 'Y',
   'FILTRABLE' => 'Y',
   'IS_REQUIRED' => 'N',
   'VERSION' => '2',
-  'USER_TYPE' => 'DateTime',
+  'USER_TYPE' => NULL,
   'USER_TYPE_SETTINGS' => NULL,
   'HINT' => '',
   'FEATURES' => 
@@ -598,43 +525,68 @@ class IB20240228124631 extends Version
       'IS_ENABLED' => 'Y',
     ),
   ),
-  'SMART_FILTER' => 'N',
-  'DISPLAY_TYPE' => 'U',
-  'DISPLAY_EXPANDED' => 'N',
-  'FILTER_HINT' => '',
+  'SMART_FILTER' => NULL,
+  'DISPLAY_TYPE' => NULL,
+  'DISPLAY_EXPANDED' => NULL,
+  'FILTER_HINT' => NULL,
 ));
-            $helper->UserOptions()->saveElementForm($iblockId, array (
-  'Параметры|edit1' => 
+            $helper->Iblock()->saveProperty($iblockId, array (
+  'NAME' => 'Влияние на карму',
+  'ACTIVE' => 'Y',
+  'SORT' => '500',
+  'CODE' => 'ACT_SIGN',
+  'DEFAULT_VALUE' => '',
+  'PROPERTY_TYPE' => 'N',
+  'ROW_COUNT' => '1',
+  'COL_COUNT' => '30',
+  'LIST_TYPE' => 'L',
+  'MULTIPLE' => 'N',
+  'XML_ID' => NULL,
+  'FILE_TYPE' => '',
+  'MULTIPLE_CNT' => '5',
+  'LINK_IBLOCK_ID' => '0',
+  'WITH_DESCRIPTION' => 'Y',
+  'SEARCHABLE' => 'Y',
+  'FILTRABLE' => 'Y',
+  'IS_REQUIRED' => 'N',
+  'VERSION' => '2',
+  'USER_TYPE' => NULL,
+  'USER_TYPE_SETTINGS' => NULL,
+  'HINT' => '',
+  'FEATURES' => 
   array (
-    'ID' => 'ID',
-    'NAME' => 'Название',
-    'XML_ID' => 'Внешний код',
-    'IBLOCK_ELEMENT_PROPERTY' => 'Значения свойств',
-    'IBLOCK_ELEMENT_PROP_VALUE' => 'Значения свойств',
-    'PROPERTY_SHIFT_IS_CTIVE' => 'Активность сбора смены',
-    'PROPERTY_SHIFT_START' => 'Начало смены',
-    'PROPERTY_SHIFT_END' => 'Окончание смены',
-    'PROPERTY_WORKERS' => 'Сотрудники',
-    'CATALOG' => 'Торговый каталог',
+    0 => 
+    array (
+      'MODULE_ID' => 'iblock',
+      'FEATURE_ID' => 'DETAIL_PAGE_SHOW',
+      'IS_ENABLED' => 'Y',
+    ),
+    1 => 
+    array (
+      'MODULE_ID' => 'iblock',
+      'FEATURE_ID' => 'LIST_PAGE_SHOW',
+      'IS_ENABLED' => 'Y',
+    ),
   ),
-  'Подробно|edit6' => 
-  array (
-    'DETAIL_PICTURE' => 'Детальная картинка',
-    'DETAIL_TEXT' => 'Детальное описание',
-  ),
-  'Разделы|edit2' => 
-  array (
-    'SECTIONS' => 'Разделы',
-  ),
+  'SMART_FILTER' => NULL,
+  'DISPLAY_TYPE' => NULL,
+  'DISPLAY_EXPANDED' => NULL,
+  'FILTER_HINT' => NULL,
 ));
-    $helper->UserOptions()->saveElementGrid($iblockId, array (
+        $helper->UserOptions()->saveElementGrid($iblockId, array (
   'views' => 
   array (
     'default' => 
     array (
       'columns' => 
       array (
-        0 => '',
+        0 => 'NAME',
+        1 => 'ACTIVE',
+        2 => 'SORT',
+        3 => 'TIMESTAMP_X',
+        4 => 'ID',
+        5 => 'PROPERTY_ID_WORKER',
+        6 => 'PROPERTY_ACT_SIGN',
       ),
       'columns_sizes' => 
       array (

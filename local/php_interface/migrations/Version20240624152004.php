@@ -3,9 +3,9 @@
 namespace Sprint\Migration;
 
 
-class Version20240328183951 extends Version
+class Version20240624152004 extends Version
 {
-    protected $description = "Инфоблоки: для инфоблока Смены";
+    protected $description = "инфоблок - смены";
 
     protected $moduleVersion = "4.6.1";
 
@@ -401,6 +401,7 @@ class Version20240328183951 extends Version
     $helper->Iblock()->saveGroupPermissions($iblockId, array (
   'administrators' => 'X',
   'everyone' => 'R',
+  'RATING_VOTE' => 'W',
 ));
         $helper->Iblock()->saveProperty($iblockId, array (
   'NAME' => 'Стадия смены',
@@ -843,10 +844,11 @@ class Version20240328183951 extends Version
         1 => 'ACTIVE',
         2 => 'SORT',
         3 => 'TIMESTAMP_X',
-        4 => 'ID',
-        5 => 'PROPERTY_SHIFT_STAGE',
-        6 => 'PROPERTY_SHIFT_IS_CTIVE',
-        7 => 'PROPERTY_CLIENT',
+        4 => 'DATE_CREATE',
+        5 => 'ID',
+        6 => 'PROPERTY_SHIFT_STAGE',
+        7 => 'PROPERTY_SHIFT_IS_CTIVE',
+        8 => 'PROPERTY_CLIENT',
       ),
       'columns_sizes' => 
       array (
