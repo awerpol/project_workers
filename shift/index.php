@@ -49,7 +49,7 @@ $APPLICATION->SetPageProperty('title', "Список смен");?>
 		"FORUM_ID"                        => "1",
 		"GROUP_PERMISSIONS"               => [0 => "1",],
 		"HIDE_LINK_WHEN_NO_DETAIL"        => "N",
-		"IBLOCK_ID"                       => "1",
+		"IBLOCK_ID"                       => "3",
 		"IBLOCK_TYPE"                     => "SHIFT_WORK",
 		"INCLUDE_IBLOCK_INTO_CHAIN"       => "N",
 		"LIST_ACTIVE_DATE_FORMAT"         => "d.m.Y",

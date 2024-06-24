@@ -25,7 +25,7 @@ if ($oRequest->isAjaxRequest()) {
         // $filter = [];
         // $res = UserTable::getList(['select' => $select, 'filter' => $filter]);
 
-        // Выбираем пользователей из группы "WORKERS" ['GROUP_ID'=> '6']
+        // Выбираем пользователей из группы "WORKERS" ['GROUP_ID'=> '5']
         $select = [
             'ID'                => 'USER_ID',
             'NAME'              =>'USER.NAME',
@@ -36,7 +36,7 @@ if ($oRequest->isAjaxRequest()) {
             'UF_TELEGRAM_ID'    =>'USER.UF_TELEGRAM_ID',
             'UF_RATING'         =>'USER.UF_RATING'
         ];
-        $filter = ['GROUP_ID'=> '6'];
+        $filter = ['GROUP_ID'=> '5'];
         $res = UserGroupTable::getList(['select' => $select, 'filter' => $filter]);
         
         $users = $res->fetchAll();

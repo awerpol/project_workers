@@ -4,15 +4,12 @@
 
 /www/bitrix/.settings.php  - найти debug и включить true
 
-ssl-сертификат
-- сайт: default ((!) в примерах неправильно)
-(может быть можно обойтись без домена)
-
-composer - см bot-composer.txt
-
 Миграции - см migrations.txt
 
 отключить кэш: в разделе Настройки>Настройки продукта>Автокеширование
+
+Подключить шаблон:
+Настройки - Сайты - Список сайтов - s1 - (внизу)Шаблон сайта - Workers
 
 в коде (хардкод), см:
 www/local/lib/Trud/iBlock/InfoIblock.php // /* захардкодил 
@@ -25,3 +22,10 @@ cron
 Настроить задание shift_inspect.php - переводить смены в работу, в архив
 статья:
 https://www.acrit-studio.ru/pantry-programmer/bitrix-bitrix-environment-vm/crond-in-bitrix-vm/
+
+
+ssl-сертификат
+- сайт: default ((!) в примерах неправильно)
+(может быть можно обойтись без домена)
+
+composer - см bot-composer.txt

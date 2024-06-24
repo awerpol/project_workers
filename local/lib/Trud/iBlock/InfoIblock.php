@@ -26,9 +26,9 @@ class InfoIblock
     public static function getFieldIdByXML_ID(string $code): ?int
     {
         switch ($code) {
-            case "FORMING": return 3;
-            case "IN_WORK": return 4;
-            case "ARCHIVE": return 5;
+            case "FORMING": return 1;
+            case "IN_WORK": return 2;
+            case "ARCHIVE": return 3;
             default:        return null; 
         }
     }

@@ -346,7 +346,7 @@ $this->setFrameMode(true);
 				var duration = 12;
 				var needM = 0;
 				var needF = 0;
-				var client = 3; // !!!! МАТЬ ЕГО ХАРДКОД
+				var client = 1; // !!!! МАТЬ ЕГО ХАРДКОД
 
 			} else {
 				// Находим соответствующий элемент массива $arItem по ID
