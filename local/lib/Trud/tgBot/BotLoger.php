@@ -7,12 +7,23 @@ class BotLoger
     public static function logUpdate ($update) {
         $logsFile    = $_SERVER['DOCUMENT_ROOT'] . '/local/logs/botLogs.log';
         $currentTime = date('d.m.Y H:i:s');
+
+        if (isset($update['callback_query'])) {
+            $chatId = $update['callback_query']['message']['chat']['id'];
+            $from = 'unknown';
+            $text = "pressed: " . $update['callback_query']['data']; 
+        } elseif (isset($update['message'])) {
+            $chatId = $update['message']['chat']['id'];
+            $from = $update['message']['from']['username'];
+            $text = "text: " .  $update['message']['text'];
+        }
+
         $logData     = sprintf (
-            '%s chat: %s, user: %s, text: %s',
+            '%s chat: %s, user: %s, %s',
             $currentTime,
-            $update['message']['chat']['id'] ?? 'unknown',
-            $update['message']['from']['username'] ?? 'unknown',
-            $update['message']['text'] ?? 'no text'
+            $chatId ?? 'unknown',
+            $from ?? 'unknown',
+            $text ?? 'no text',
         );
 
                 /* -------- */

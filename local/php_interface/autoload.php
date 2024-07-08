@@ -9,7 +9,8 @@ Bitrix\Main\Loader::registerAutoLoadClasses(null, [
     'Trud\Helpers\Helper'       => '/local/lib/Trud/helpers/Helper.php',
     'Trud\TgBot\Bot'            => '/local/lib/Trud/tgBot/Bot.php',
     'Trud\TgBot\BotUser'        => '/local/lib/Trud/tgBot/BotUser.php',
-    'Trud\TgBot\BotLoger'      => '/local/lib/Trud/tgBot/BotLoger.php'
+    'Trud\TgBot\BotLoger'       => '/local/lib/Trud/tgBot/BotLoger.php',
+    'Trud\TgBot\MessageBuilder' => '/local/lib/Trud/tgBot/MessageBuilder.php'
 
 ]);
 

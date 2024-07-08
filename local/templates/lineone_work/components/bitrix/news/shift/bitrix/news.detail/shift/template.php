@@ -611,8 +611,8 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                         selectedN.push($(this).attr('user-id'));
                     });
 
-                    var xhrDelete = null;
-                    xhrDelete = $.ajax({
+                    var xhrNotify = null;
+                    xhrNotify = $.ajax({
                         type: 'POST',
                         url: '<?= SITE_TEMPLATE_PATH ?>/responds/notifyUsers.php',
                         dataType: 'json',

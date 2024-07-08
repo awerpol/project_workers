@@ -8,8 +8,12 @@ https://dev.1c-bitrix.ru/community/webdev/user/137665/blog/8863/?commentId=48823
 Нужен нано (ставить из-под рута): 
 sudo yum install -y nano
 
+mv /etc/php.d/20-phar.ini.disabled /etc/php.d/20-phar.ini
+(чтобы .disabled не осталось)
+
 nano /etc/php.d/20-phar.ini
 переходим в файл и добавляем строку "extension = phar.so"
+
 
 возвращаемся в bitrix/www/local/
 
@@ -28,7 +32,7 @@ curl -sS https://getcomposer.org/installer | php
 4) в php_interface/init.php добавляем:
 require_once( $_SERVER['DOCUMENT_ROOT'] . '/local/vendor/autoload.php');
 
-
+(не забыть проставить токен!)
 ============================
 
 Установка Composer на Bitrix Virtual Appliance (если не установлен)

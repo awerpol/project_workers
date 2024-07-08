@@ -35,6 +35,7 @@ class ShiftEdit
         $workers = ShiftInfo::getPropValue($shiftId, 'WORKERS');
 
         Lists::makeThemFree($workers); 
+        // TODO: заменить на новый функционал (работа с UF_WHERE_ENGAGED)
     }
 
     // дополняем "черный список" смены

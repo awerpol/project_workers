@@ -31,10 +31,11 @@ if ($oRequest->isAjaxRequest()) {
 
         if($oRequest->getPost('todo') == 'addUser'){
             $startList = explode(',', $oRequest->getPost('oldListUser'));    // начальный список слева
-            $arToAdd =  Lists::getFreeUsers($oRequest->getPost('userList')); // добавляем выделенных, только свободных из них
+            $arToAdd =  Lists::getFreeUsers($oRequest->getPost('userList')); // добавляем выделенных, только свободных из них (СТАРЫЙ ФУНКЦИОНАЛ)
             
-            $userList = array_merge($arToAdd, $startList);  // итоговый массив
-            Lists::makeThemBusy($arToAdd);                  // помечаем, что добавленные заняты
+            $userList = array_merge($arToAdd, $startList);                   // итоговый массив
+            Lists::makeThemBusy($arToAdd);                                   // помечаем, что добавленные заняты (СТАРЫЙ ФУНКЦИОНАЛ)
+            // Lists::addShiftToUsers($arToAdd, $oRequest->getPost('shiftID')); // добавить юзерам, что они заняты в этой смене (НОВЫЙ ФУНКЦИОНАЛ)
 
         } elseif($oRequest->getPost('todo') == 'deleteUser'){
             $startList = explode(',', $oRequest->getPost('oldListUser')); // начальный список слева
@@ -43,7 +44,9 @@ if ($oRequest->isAjaxRequest()) {
             $userList = array_diff($startList, $arToDelete); // итоговый массив
 
             ShiftEdit::addToBlackList($oRequest->getPost('shiftID'), $arToDelete); // добавляем удаленных юзеров в поле "черный список временный"
-            Lists::makeThemFree($arToDelete);                  // помечаем, что удаленные свободны
+            Lists::makeThemFree($arToDelete);                  // помечаем, что удаленные свободны (СТАРЫЙ ФУНКЦИОНАЛ)
+            // Lists::removeShiftFromUsers($arToDelete, $oRequest->getPost('shiftID')); // убрать у юзеров занятость в этой смене (НОВЫЙ ФУНКЦИОНАЛ)
+
 
         } elseif($oRequest->getPost('todo') == 'fillUsers'){
             $startList = explode(',', $oRequest->getPost('oldListUser')); // начальный список слева
@@ -51,12 +54,14 @@ if ($oRequest->isAjaxRequest()) {
             $blackList = ShiftInfo::getPropValue($oRequest->getPost('shiftID'), 'BLACK_LIST_SHIFT'); // черный список смены
             $arExcept = array_merge($startList, $blackList);  // список исключений
 
-            $getM = Helper::pickUpUsers($oRequest->getPost('needM'), 'M', $arExcept);
-            $getF = Helper::pickUpUsers($oRequest->getPost('needF'), 'F', $arExcept);
+            $getM = Helper::pickUpUsers($oRequest->getPost('needM'), 'M', $arExcept, $oRequest->getPost('shiftID'));
+            $getF = Helper::pickUpUsers($oRequest->getPost('needF'), 'F', $arExcept, $oRequest->getPost('shiftID'));
             $arToAdd = array_merge($getM, $getF);
 
             $userList = array_merge($arToAdd, $startList);  // итоговый массив
-            Lists::makeThemBusy($arToAdd);                  // помечаем, что добавленные заняты
+            Lists::makeThemBusy($arToAdd);                  // помечаем, что добавленные заняты (СТАРЫЙ ФУНКЦИОНАЛ)
+            // Lists::addShiftToUsers($arToAdd, $oRequest->getPost('shiftID')); // добавить юзерам, что они заняты в этой смене (НОВЫЙ ФУНКЦИОНАЛ)
+
         }
 
         $res = CIBlockElement::SetPropertyValueCode($oRequest->getPost('shiftID'), "WORKERS",$userList);

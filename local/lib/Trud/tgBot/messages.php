@@ -2,6 +2,7 @@
 
 $messages = [];
 
+
 // это можно брать из инфоблоков
 
 /* ==== тексты кнопок ==== */
@@ -29,12 +30,14 @@ $messages['test'] = [
 ];
 
 $messages['start'] = [
-    'text' => "Нажмите на кнопку, чтобы отправить свой номер телефона 👇",
-    'keyboard' => [
-        'keyboard' => [[['text' => '📞 Отправить контакт','request_contact' => true]]],
-        'resize_keyboard' => true,
-        'one_time_keyboard' => true
-    ]
+    'text' => "Для окончания регистрации отправьте свой номер телефона",
+    // 'text' => "Нажмите на кнопку, чтобы отправить свой номер телефона 👇",
+    'keyboard' => null
+    // 'keyboard' => [
+    //     'keyboard' => [[['text' => '📞 Отправить контакт','request_contact' => true]]],
+    //     'resize_keyboard' => true,
+    //     'one_time_keyboard' => true
+    // ]
 ];
 
 

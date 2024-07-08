@@ -7,6 +7,7 @@ use WeStacks\TeleBot\TeleBot;
 use WeStacks\TeleBot\Objects\Keyboard;
 use Trud\TgBot\BotUser;
 use Trud\TgBot\BotLoger;
+use Trud\TgBot\MessageBuilder;
 
 // use WeStacks\TeleBot\Handlers\CommandHandler;
 
@@ -59,13 +60,6 @@ class Bot
     // обработка обновлений
 	public function processUpdate($update) {
 
-        // /* ---дебуг--- */
-        // ob_start(); // Начать буферизацию вывода
-        // var_dump($update);
-        // $res = ob_get_clean(); 
-        // $this->sendMessage($update['message']['chat']['id'], $res);
-        // /* ---дебуг--- */
-
         // текстовые сообщения (не кнопки)
         if (isset($update['message']['text'])) {  
             $tgId      = $update['message']['from']['id']; 
@@ -94,7 +88,6 @@ class Bot
             $update['message']['text'] = $update['message']['contact']['phone_number']; // а дальше как текстовое сообщение
             $this->handleMessage($botUser, $update['message']); 
         }   
-
     }
 
     // ============================== Обработка входящих сообщений ==============================
@@ -148,54 +141,35 @@ class Bot
         $messageId  = $update['callback_query']['message']['message_id'];
         $tgId       = $update['callback_query']['from']['id'];
 
-        $response = "messageId = <i>$messageId</i> "."<b>Вы нажали:</b> " . $pressed;
-        $keyboard = null;
+        $response['text'] = "messageId = <i>$messageId</i> "."<b>Вы нажали:</b> " . $pressed;
+        $response['keyboard'] = null;
 
+        $parts = explode('_', $pressed);
+        $pressed = $parts[0];
+        $shiftId = $parts[1];
         //TODO: что-то делать с нажатыми кнопками: учитывать статус диалога, нажатую кнопку и т.д.
-        //TODO: логировать ключевые действия
         //TODO: id сообщения - в статус - чтобы потом его загасить, когда неактуально будет
         switch ($pressed) {
-            case 'yes_i_go': // <---------- DEMO
-                $tomorrow       = date('d.m.Y', strtotime('+1 day'));
-                $response = "Ждем вас в Гурмане 
-                $tomorrow в 8:00";
-                $keyboard = [ 'inline_keyboard' => [[
-                    ['text' => '👣 Как добраться', 'callback_data' => 'address'],
-                    ['text' => '👥 Кто идет', 'callback_data' => 'other_collegues'],
-                ]]];
-
-                $botUser->setState('confirmed');
-                BotLoger::logChat ($tgId, "подтвердил участие в смене");
-
+            case 'yesigo': // подтверждение участия в смене
+                $response = MessageBuilder::workerConfirmed($shiftId);
+                $botUser->setState('confirmed'); // статус диалога
+                BotLoger::logChat ($tgId, "подтвердил участие в смене"); // лог диалога
                 break;
-            case 'address': // <---------- DEMO
-                $response = "<b>Адрес:</b> ул. Станционная, 62/1
-<b>Автобусы:</b> 145, 8
-<b>Маршрутки:</b> 1145, 1298
-Проходная слева от здания";
-                $keyboard = [ 'inline_keyboard' => [[
-                    ['text' => '🔙 Назад', 'callback_data' => 'yes_i_go'],
-                ]]];
+            // case 'info': // TODO: сделать сообщение-прокладку с информацией, чтобы нивелировать ГЛЮК.
+            case 'address': // запрос адреса (схемы проезда)
+                $response = MessageBuilder::getAddress($shiftId);
                 break;
-            case 'other_collegues': // <---------- DEMO
-                $response = "Петров
-Иванов
-Сидоров
-Кузнецов";
-                $keyboard = [ 'inline_keyboard' => [[
-                    ['text' => '🔙 Назад', 'callback_data' => 'yes_i_go'],
-                ]]];
+            case 'collegues': // запрос списка тех, кто тоже идет
+                $response = MessageBuilder::getCollegues($shiftId);
                 break;
-            case 'cancel': // <---------- DEMO
-                $response = "Ваш рейтинг понижен. Ждите другое приглашение";
-
-                $botUser->setState('refused');
+            case 'cancel': // отказ 
+                $response['text'] = "Ваш рейтинг понижен. Ждите другое приглашение";
+                $botUser->setState('refused'); // ГЛЮК: если в другой копии сообщения нажал "назад", то статус меняется на  "подтвердил"
                 BotLoger::logChat ($tgId, "отказался от участия в смене");
-
                 break;
         }
 
-        $this->editMessage($chatId, $messageId, $response, $keyboard);
+        $this->editMessage($chatId, $messageId, $response['text'], $response['keyboard']);
     }
 
     // ============================== Тест-демонстрация ==============================

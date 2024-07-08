@@ -18,14 +18,18 @@ www/shift/index.php                     // "IBLOCK_ID"  => "2",
 www/shift_archive/index.php             // "IBLOCK_ID"  => "2",
 www/local/templates/lineone_work/components/bitrix/news/shift/bitrix/news.list/shift/template.php // var client = 3;
 
+(должен работать, но если нужна переустановка)
+composer - см bot-composer.txt
+
 cron
-Настроить задание shift_inspect.php - переводить смены в работу, в архив
+Настроить задание shift_inspect.php 
+(переводить смены в работу, в архив)
 статья:
 https://www.acrit-studio.ru/pantry-programmer/bitrix-bitrix-environment-vm/crond-in-bitrix-vm/
 
 
 ssl-сертификат
-- сайт: default ((!) в примерах неправильно)
-(может быть можно обойтись без домена)
+см ssl-certificate.txt
 
-composer - см bot-composer.txt
+перерегистировать адрес веб-хука для tg-бота
+

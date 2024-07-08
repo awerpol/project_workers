@@ -8,7 +8,7 @@ use Trud\IBlock\InfoIblock;
 use Trud\Shifts\ShiftInfo;
 use Trud\TgBot\Bot;
 use Trud\TgBot\BotLoger;
-
+use Trud\TgBot\MessageBuilder;
 
 require($_SERVER[ "DOCUMENT_ROOT" ]."/bitrix/modules/main/include/prolog_before.php");
 
@@ -32,7 +32,7 @@ if ($oRequest->isAjaxRequest()) {
             $userList = explode(',', $oRequest->getPost('oldListUser'));
         }
 
-        // TODO: если совсем пустой массив, прервать
+        // если совсем пустой массив, прервать
         if (empty($userList)) {
             $aResult = [
                 'success' => false,
@@ -65,25 +65,15 @@ if ($oRequest->isAjaxRequest()) {
             if (!$tg_id) continue; // если не зареган в телеграме
 
             $name   = $worker['NAME'];
-            // вся инфа пользователя по ID
-            // $arUser = CUser::GetByID($workerId)->Fetch();
 
             // занулить последнее (предыдущее) соообщение
-            $bot->resetLastInvite($tg_id);
+            // $bot->resetLastInvite($tg_id);
 
             // сборка и отправка сообщения
-            // TODO: - куда-то убрать сообщения, собирать их отдельно с учетом языка
-            $messageText = $name . ", вы приглашены на смену \n" .
-                "в <b>" . $clienName . "</b>\n" .
-                "начало: <b>" . $startDate . "</b>\n" .
-                "<b>Подтвердите, что идете</b>";
-            $keyboard = [ 'inline_keyboard' => [[
-                    ['text' => '✅ иду',    'callback_data' => 'yes_i_go'],
-                    ['text' => '❌ не иду', 'callback_data' => 'cancel'],
-                ]]];
-            $messageID = $bot->sendMessage($tg_id, $messageText, $keyboard);
+            $message = MessageBuilder::workersNotification($name, $shiftId);
+            $messageID = $bot->sendMessage($tg_id, $message['text'], $message['keyboard']);
 
-            // меняем статус, что отправлено сообщение
+            // меняем статус у пользователя, что отправлено сообщение
             $user = new \CUser;
             $user->Update($worker['ID'], ['UF_TG_DIALOG_STATUS' => 'invited']);
             
