@@ -33,6 +33,55 @@ class MessageBuilder
         return $message;
     }
 
+    // Уведомление за 2 ча до смены
+    public static function notification2h($name, $shiftId) {
+        $shift  = ShiftInfo::getAllInfo($shiftId);
+
+        $startDate = $shift["SHIFT_START"];
+        $clientID  = $shift["CLIENT"];
+        // имя заказчика
+        $clienName = self::getClientName($clientID);
+
+        $message['text'] = "Cмена начнется через 2 часа \n" .
+        "в <b>" . $clienName . "</b>\n" .
+        "начало: <b>" . $startDate . "</b>\n" .
+        "<b>Подтвердите, что идете</b>";
+
+        $message['keyboard'] = [ 'inline_keyboard' => [[
+            ['text' => '✅ иду',    'callback_data' => 'yesigo_'.$shiftId],
+            ['text' => '❌ не иду', 'callback_data' => 'cancel_'.$shiftId],
+        ]]];
+
+        return $message;
+    }
+    
+    // Уведомление за 1.5 часа до смены (только администратору)
+    public static function notification90m($name, $shiftId) {
+        $shift  = ShiftInfo::getAllInfo($shiftId);
+
+        $startDate = $shift["SHIFT_START"];
+        $clientID  = $shift["CLIENT"];
+        $clienName = self::getClientName($clientID); // имя заказчика
+        $workers = $shift["WORKERS"];
+        $names = Lists::getNames($workers);
+        
+        $workersList = self::whoIsComing($names);
+
+        $message['text'] = "Cмена через 1,5 часа: \n" .
+        "<b>" . $clienName . "</b>\n" .
+        "начало: <b>" . $startDate . "</b>\n" .
+        "<b>Список работников:</b>\n" . $workersList;
+
+        // $message['keyboard'] = null;
+        $message['keyboard'] = [ 'inline_keyboard' => [[
+        //     ['text' => '✅ иду',    'callback_data' => 'yesigo_'.$shiftId],
+        //     ['text' => '❌ не иду', 'callback_data' => 'cancel_'.$shiftId],
+            ['text' => 'Перейти на сайт', 'url' => "https://trud.awerpol.ru/shift/$shiftId/"]
+        ]]];
+
+        return $message;
+    }
+
     // Сообщение, когда подтвердил участие
     public static function workerConfirmed($shiftId) {
         $shift  = ShiftInfo::getAllInfo($shiftId);
@@ -74,7 +123,16 @@ class MessageBuilder
         $workers = $shift["WORKERS"];
 
         $names = Lists::getNames($workers);
+        $workersList = self::whoIsComing($names);
 
+        $message['text'] = "<b>Кто идет:</b>\n" . $workersList;
+        $message['keyboard'] = [ 'inline_keyboard' => [[
+            ['text' => '🔙 Назад', 'callback_data' => 'yesigo_'.$shiftId],
+        ]]];
+        return $message;
+    }
+
+    private static function whoIsComing($names) {
         // Группировка по статусам
         $groupedNames = [
             // 'default' => [],
@@ -97,9 +155,7 @@ class MessageBuilder
             
         // $names = implode("\n", $names);
 
-        $message['text'] = "Кто идет: \n" .
-
-        "<u>Не ответили:\n</u><b>" .
+        $text = "<u>Не ответили:\n</u><b>" .
         implode("\n", $groupedNames['other']) .
         "</b>\n" .
         "<u>отказались:\n</u><b>" .
@@ -109,10 +165,7 @@ class MessageBuilder
         implode("\n", $groupedNames['confirmed']) .
         "</b>";
 
-        $message['keyboard'] = [ 'inline_keyboard' => [[
-            ['text' => '🔙 Назад', 'callback_data' => 'yesigo_'.$shiftId],
-        ]]];
-        return $message;
+        return $text;
     }
 
     private static function getClientName($clientID) {

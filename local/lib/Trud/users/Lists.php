@@ -5,7 +5,11 @@ namespace Trud\Users;
 use Bitrix\Main\Loader;
 use Bitrix\Main\UserTable;
 use Trud\TgBot\Bot;
-
+use Bitrix\Main\UserGroupTable;
+use Bitrix\Main\Type\DateTime;
+use Trud\TgBot\MessageBuilder;
+use Trud\Helpers\Helper;
+use Trud\TgBot\Notifier;
 
 // use Trud\IBlock\InfoIblock;
 
@@ -170,5 +174,176 @@ class Lists
             $bot->resetLastInvite($userInfo['UF_TELEGRAM_ID']);
         }
     }
+
+    public static function checkDatesOfDocuments(){
+
+        // // Выбираем пользователей из группы "WORKERS" ['GROUP_ID'=> '5']
+        $select = [
+            'ID'                        => 'USER_ID',
+            'NAME'                      =>'USER.NAME',
+            'LAST_NAME'                 =>'USER.LAST_NAME', 
+            'PERSONAL_GENDER'           =>'USER.PERSONAL_GENDER',
+            'PERSONAL_PHONE'            =>'USER.PERSONAL_PHONE', 
+            'UF_RULES'                  =>'USER.UF_RULES', 
+            'UF_TELEGRAM_ID'            =>'USER.UF_TELEGRAM_ID',
+            'UF_RATING'                 =>'USER.UF_RATING',
+            'PASSPORT_EXPIRATION'       =>'USER.UF_PASSPORT_EXPIRATION',
+            'REGISTRATION_EXPIRATION'   =>'USER.UF_REGISTRATION_EXPIRATION',
+            'SANITARY_EXPIRATION'       =>'USER.UF_SANITARY_EXPIRATION'
+        ];
+
+        $filter = ['GROUP_ID'=> '5'];
+        $res = UserGroupTable::getList(['select' => $select, 'filter' => $filter]);
+        $users = $res->fetchAll();
+
+        $currentTime = (new DateTime())->getTimestamp();
+        $badUsers = [];
+        
+        foreach ($users as $user) {
+            $userIssues = ['user' => $user, 'documents' => []];
+    
+            foreach (['PASSPORT_EXPIRATION', 'REGISTRATION_EXPIRATION', 'SANITARY_EXPIRATION'] as $field) {
+                $expirationDate = $user[$field] ? new DateTime($user[$field]) : null;
+                $expirationTimestamp = $expirationDate ? $expirationDate->getTimestamp() : null;
+                $daysLeft = $expirationTimestamp ? ($expirationTimestamp - $currentTime) / 86400 : null;
+                $type = strtolower(explode('_', $field)[0]);
+    
+                // Определяем статус документа
+                if (!$expirationDate) {
+                    $userIssues['documents'][$type] = 'empty';
+                } elseif ($daysLeft <= 0) {
+                    $userIssues['documents'][$type] = 'expired';
+                } elseif ($daysLeft <= 3) {
+                    $userIssues['documents'][$type] = '3_days';
+                } elseif ($daysLeft <= 7) {
+                    $userIssues['documents'][$type] = '7_days';
+                }
+            }
+    
+            // Если у пользователя есть документы с проблемами, добавляем его в $badUsers
+            if (!empty($userIssues['documents'])) {
+                $badUsers[] = $userIssues;
+
+                // Уведомляем каждого пользователя о проблемных документах
+                if ($user['UF_TELEGRAM_ID'] != null){
+                    // self::notifyBadUser($user, $userIssues);
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    // !!!!!!!!! раскоментировать после заполнения !!!!!!!!!!!!!!!!!!!!!!
+                    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                }   
+            }
+        }
+    
+        // отправить уведомление Модератору
+        self::sendReportToManager($badUsers); 
+
+        return $badUsers;
+    }
+
+    // Уведомляем каждого пользователя о проблемных документах
+    public static function notifyBadUser ($user, $userIssues){
+        $message = "${user['NAME']}, выходит срок действия твоих документов:\n";
+        // $message['keyboard'] = null;
+        $keyboard = null;
+
+        // Сопоставление кодов документов с их русскими названиями
+        $documentNames = [
+            'sanitary'     => 'санитарная книжка',
+            'passport'     => 'патент',
+            'registration' => 'прописка'
+        ];
+
+        // Формируем строки для каждого проблемного документа
+        foreach ($userIssues['documents'] as $document => $status) {
+            $documentName = $documentNames[$document] ?? $document;
+
+            $statusMessage = match ($status) {
+                'empty' => "не заполнен",
+                '7_days' => "истекает через 7 дней",
+                '3_days' => "истекает через 3 дня",
+                'expired' => "уже истёк"
+            };
+
+            // Добавляем строку о каждом документе в сообщение
+            $message .= "- Документ $documentName $statusMessage\n";
+        }
+// echo "<pre>";
+// var_dump($message);
+// echo "</pre>";
+            $tg_id = $user['UF_TELEGRAM_ID'];
+            Notifier::sendMessageToOne($tg_id, $message, $keyboard);
+    }
+
+    // отправить уведомление Модератору о проблемах с документами
+    public static function sendReportToManager($badUsers)
+    {
+        $reportText = "Отчёт по истекающим и отсутствующим документам сотрудников:\n\n";
+    
+        // Сопоставление кодов документов с их русскими названиями
+        $documentNames = [
+            'sanitary'     => 'санитарная книжка',
+            'passport'     => 'патент',
+            'registration' => 'прописка'
+        ];
+
+        foreach ($badUsers as $userIssue) {
+            $user = $userIssue['user'];
+            $reportText .= "{$user['ID']}. {$user['LAST_NAME']} {$user['NAME']}:\n";
+    
+            foreach ($userIssue['documents'] as $document => $status) {
+                // Получаем русское название документа
+                $documentName = $documentNames[$document] ?? $document;
+
+                $statusMessage = match ($status) {
+                    'empty'   => "не заполнен",
+                    '7_days'  => "до истечения меньше <b>7</b> дней",
+                    '3_days'  => "до истечения меньше <b>3</b> дня",
+                    'expired' => "уже истёк"
+                };
+                $reportText .= "- <b>$documentName</b> $statusMessage\n";
+            }
+    
+            $reportText .= "\n";
+        }
+
+        if (!empty($reportText)) {
+
+            /* разбивка сообщения на строки, т.к. лимит 4096 байт */
+            // Разбиваем сообщение по строкам и отправляем порциями
+            $maxLength = 4000;
+            $messageParts = [];
+            $currentPart = "";
+
+            foreach (explode("\n", $reportText) as $line) {
+                // Добавляем строку к текущей части, если она не превышает максимальную длину
+                if (mb_strlen($currentPart . $line . "\n") < $maxLength) {
+                    $currentPart .= $line . "\n";
+                } else {
+                    // Если превышает, сохраняем текущую часть и начинаем новую
+                    $messageParts[] = $currentPart;
+                    $currentPart = $line . "\n";
+                }
+            }
+
+            // Добавляем последний остаток сообщения, если он не пуст
+            if (!empty(trim($currentPart))) {
+                $messageParts[] = $currentPart;
+            }
+
+            /* разбивка сообщения на строки, т.к. лимит 4096 байт */
+
+            // Отправляем отчёт руководителю
+                $moderators = Helper::whoModerators();
+                foreach ($messageParts as $messagePart) {
+                    $message['text'] = $messagePart;
+// echo  '<pre>';
+// var_dump ($messagePart);
+// echo  '</pre>';
+
+                   Notifier::informModerator (0, $message, '', $moderators);
+                }
+            }
+    }
+
 
 }

@@ -83,17 +83,6 @@ if ($oRequest->isAjaxRequest()) {
 
             // номер сообщения - в json-статус диалога 
             BotLoger::addUserStatus($tg_id, $messageID);
-
-            // ============ дебуг ============= //
-            // $tgId = 'button_debug';
-            // BotLoger::logChat ($tgId, $logMessage);
-
-            // ob_start(); // Начать буферизацию вывода
-            // var_dump($worker); 
-            // $message = ob_get_clean(); // очистить буфер
-            // $tgId = 'button_debug';
-            // BotLoger::logChat ($tgId, $message);
-            // ================================ 
         }
 
         $aResult = [

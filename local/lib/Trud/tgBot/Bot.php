@@ -209,9 +209,14 @@ class Bot
             'parse_mode'   => 'HTML'
         ];
         if ($keyboard) $params['reply_markup'] = $keyboard;
-        $response = $this->bot->sendMessage($params);
 
-        return $response->message_id;
+        try {
+            $response = $this->bot->sendMessage($params);
+            return $response->message_id;
+        } catch (\Exception $e) {
+            // error_log("Telegram API error: " . $e->getMessage());
+            return false;
+        }
     }
 
     // тестируем - отправка сообщения из библиотеки
