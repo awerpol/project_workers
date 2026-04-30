@@ -1,0 +1,19 @@
+https://dev.1c-bitrix.ru/learning/course/index.php?COURSE_ID=37&LESSON_ID=11451
+- сайт: default (в примерах неочевидно)
+(без домена не работает)
+
+
+
+Перейти в меню 8. Manage pool web servers > 3. Configure certificates
+
+Выбрать пункт меню 1. Configure "Let's encrypt" certificate и ввести:
+
+site name   – default (и/или <sitename>.ru)
+dns name(s) - (все домены данного сайта - не путать: не DNS-серверы)
+email for LE notifications
+
+и подтвердить ввод
+
+
+
+установка занимает некоторое время

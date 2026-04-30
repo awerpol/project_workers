@@ -3,9 +3,9 @@
 namespace Sprint\Migration;
 
 
-class Version20240328183929 extends Version
+class Version20240624151908 extends Version
 {
-    protected $description = "Инфоблоки: для инфоблока Карма";
+    protected $description = "инфоблоки - заказчики";
 
     protected $moduleVersion = "4.6.1";
 
@@ -17,8 +17,8 @@ class Version20240328183929 extends Version
     {
         $helper = $this->getHelperManager();
         $helper->Iblock()->saveIblockType(array (
-  'ID' => 'KARMA',
-  'SECTIONS' => 'N',
+  'ID' => 'CONTRAGENTS',
+  'SECTIONS' => 'Y',
   'EDIT_FILE_BEFORE' => '',
   'EDIT_FILE_AFTER' => '',
   'IN_RSS' => 'N',
@@ -27,33 +27,33 @@ class Version20240328183929 extends Version
   array (
     'ru' => 
     array (
-      'NAME' => 'Карма',
+      'NAME' => 'Контрагенты',
       'SECTION_NAME' => '',
       'ELEMENT_NAME' => '',
     ),
     'en' => 
     array (
-      'NAME' => 'Karma',
+      'NAME' => 'Контрагенты',
       'SECTION_NAME' => '',
       'ELEMENT_NAME' => '',
     ),
   ),
 ));
         $iblockId = $helper->Iblock()->saveIblock(array (
-  'IBLOCK_TYPE_ID' => 'KARMA',
+  'IBLOCK_TYPE_ID' => 'CONTRAGENTS',
   'LID' => 
   array (
     0 => 's1',
   ),
-  'CODE' => 'KARMA_ACT',
+  'CODE' => 'CLIENTS',
   'API_CODE' => NULL,
   'REST_ON' => 'N',
-  'NAME' => 'Персональная карма',
+  'NAME' => 'Заказчики',
   'ACTIVE' => 'Y',
   'SORT' => '500',
-  'LIST_PAGE_URL' => '#SITE_DIR#/KARMA/index.php?ID=#IBLOCK_ID#',
-  'DETAIL_PAGE_URL' => '#SITE_DIR#/KARMA/detail.php?ID=#ELEMENT_ID#',
-  'SECTION_PAGE_URL' => '#SITE_DIR#/KARMA/list.php?SECTION_ID=#SECTION_ID#',
+  'LIST_PAGE_URL' => '#SITE_DIR#/CONTRAGENTS/',
+  'DETAIL_PAGE_URL' => '#SITE_DIR#/CONTRAGENTS/#SECTION_CODE#/#ELEMENT_ID#/',
+  'SECTION_PAGE_URL' => '#SITE_DIR#/CONTRAGENTS/#SECTION_CODE#/',
   'CANONICAL_PAGE_URL' => '',
   'PICTURE' => NULL,
   'DESCRIPTION' => '',
@@ -72,25 +72,25 @@ class Version20240328183929 extends Version
   'SECTION_CHOOSER' => 'L',
   'LIST_MODE' => '',
   'RIGHTS_MODE' => 'S',
-  'SECTION_PROPERTY' => 'N',
+  'SECTION_PROPERTY' => 'Y',
   'PROPERTY_INDEX' => 'N',
-  'VERSION' => '2',
+  'VERSION' => '1',
   'LAST_CONV_ELEMENT' => '0',
   'SOCNET_GROUP_ID' => NULL,
   'EDIT_FILE_BEFORE' => '',
   'EDIT_FILE_AFTER' => '',
   'SECTIONS_NAME' => 'Разделы',
   'SECTION_NAME' => 'Раздел',
-  'ELEMENTS_NAME' => 'Оценки',
-  'ELEMENT_NAME' => 'Оценка',
+  'ELEMENTS_NAME' => 'Элементы',
+  'ELEMENT_NAME' => 'Элемент',
   'EXTERNAL_ID' => NULL,
   'LANG_DIR' => '/',
   'IPROPERTY_TEMPLATES' => 
   array (
   ),
-  'ELEMENT_ADD' => 'Добавить оценку',
-  'ELEMENT_EDIT' => 'Изменить оценку',
-  'ELEMENT_DELETE' => 'Удалить оценку',
+  'ELEMENT_ADD' => 'Добавить элемент',
+  'ELEMENT_EDIT' => 'Изменить элемент',
+  'ELEMENT_DELETE' => 'Удалить элемент',
   'SECTION_ADD' => 'Добавить раздел',
   'SECTION_EDIT' => 'Изменить раздел',
   'SECTION_DELETE' => 'Удалить раздел',
@@ -402,16 +402,16 @@ class Version20240328183929 extends Version
   'administrators' => 'X',
 ));
         $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'ID сотрудника',
+  'NAME' => 'Черный список',
   'ACTIVE' => 'Y',
   'SORT' => '500',
-  'CODE' => 'ID_WORKER',
+  'CODE' => 'BLACK_LIST_CLIENT',
   'DEFAULT_VALUE' => '',
   'PROPERTY_TYPE' => 'S',
   'ROW_COUNT' => '1',
   'COL_COUNT' => '30',
   'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
+  'MULTIPLE' => 'Y',
   'XML_ID' => NULL,
   'FILE_TYPE' => '',
   'MULTIPLE_CNT' => '5',
@@ -420,7 +420,7 @@ class Version20240328183929 extends Version
   'SEARCHABLE' => 'Y',
   'FILTRABLE' => 'Y',
   'IS_REQUIRED' => 'N',
-  'VERSION' => '2',
+  'VERSION' => '1',
   'USER_TYPE' => 'UserID',
   'USER_TYPE_SETTINGS' => NULL,
   'HINT' => '',
@@ -439,123 +439,10 @@ class Version20240328183929 extends Version
       'IS_ENABLED' => 'Y',
     ),
   ),
-));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Дата поступка',
-  'ACTIVE' => 'Y',
-  'SORT' => '500',
-  'CODE' => 'ACT_DATA',
-  'DEFAULT_VALUE' => NULL,
-  'PROPERTY_TYPE' => 'S',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => '',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'Y',
-  'SEARCHABLE' => 'Y',
-  'FILTRABLE' => 'Y',
-  'IS_REQUIRED' => 'N',
-  'VERSION' => '2',
-  'USER_TYPE' => 'Date',
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-  'FEATURES' => 
-  array (
-    0 => 
-    array (
-      'MODULE_ID' => 'iblock',
-      'FEATURE_ID' => 'DETAIL_PAGE_SHOW',
-      'IS_ENABLED' => 'Y',
-    ),
-    1 => 
-    array (
-      'MODULE_ID' => 'iblock',
-      'FEATURE_ID' => 'LIST_PAGE_SHOW',
-      'IS_ENABLED' => 'Y',
-    ),
-  ),
-));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Поступок',
-  'ACTIVE' => 'Y',
-  'SORT' => '500',
-  'CODE' => 'THE_ACT',
-  'DEFAULT_VALUE' => '',
-  'PROPERTY_TYPE' => 'S',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => '',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'Y',
-  'SEARCHABLE' => 'Y',
-  'FILTRABLE' => 'Y',
-  'IS_REQUIRED' => 'N',
-  'VERSION' => '2',
-  'USER_TYPE' => NULL,
-  'USER_TYPE_SETTINGS' => 'a:0:{}',
-  'HINT' => '',
-  'FEATURES' => 
-  array (
-    0 => 
-    array (
-      'MODULE_ID' => 'iblock',
-      'FEATURE_ID' => 'DETAIL_PAGE_SHOW',
-      'IS_ENABLED' => 'Y',
-    ),
-    1 => 
-    array (
-      'MODULE_ID' => 'iblock',
-      'FEATURE_ID' => 'LIST_PAGE_SHOW',
-      'IS_ENABLED' => 'Y',
-    ),
-  ),
-));
-            $helper->Iblock()->saveProperty($iblockId, array (
-  'NAME' => 'Влияние на карму',
-  'ACTIVE' => 'Y',
-  'SORT' => '500',
-  'CODE' => 'ACT_SIGN',
-  'DEFAULT_VALUE' => '',
-  'PROPERTY_TYPE' => 'N',
-  'ROW_COUNT' => '1',
-  'COL_COUNT' => '30',
-  'LIST_TYPE' => 'L',
-  'MULTIPLE' => 'N',
-  'XML_ID' => NULL,
-  'FILE_TYPE' => '',
-  'MULTIPLE_CNT' => '5',
-  'LINK_IBLOCK_ID' => '0',
-  'WITH_DESCRIPTION' => 'Y',
-  'SEARCHABLE' => 'Y',
-  'FILTRABLE' => 'Y',
-  'IS_REQUIRED' => 'N',
-  'VERSION' => '2',
-  'USER_TYPE' => NULL,
-  'USER_TYPE_SETTINGS' => NULL,
-  'HINT' => '',
-  'FEATURES' => 
-  array (
-    0 => 
-    array (
-      'MODULE_ID' => 'iblock',
-      'FEATURE_ID' => 'DETAIL_PAGE_SHOW',
-      'IS_ENABLED' => 'Y',
-    ),
-    1 => 
-    array (
-      'MODULE_ID' => 'iblock',
-      'FEATURE_ID' => 'LIST_PAGE_SHOW',
-      'IS_ENABLED' => 'Y',
-    ),
-  ),
+  'SMART_FILTER' => NULL,
+  'DISPLAY_TYPE' => NULL,
+  'DISPLAY_EXPANDED' => NULL,
+  'FILTER_HINT' => NULL,
 ));
         $helper->UserOptions()->saveElementGrid($iblockId, array (
   'views' => 
@@ -564,13 +451,7 @@ class Version20240328183929 extends Version
     array (
       'columns' => 
       array (
-        0 => 'NAME',
-        1 => 'ACTIVE',
-        2 => 'SORT',
-        3 => 'TIMESTAMP_X',
-        4 => 'ID',
-        5 => 'PROPERTY_ID_WORKER',
-        6 => 'PROPERTY_ACT_SIGN',
+        0 => '',
       ),
       'columns_sizes' => 
       array (

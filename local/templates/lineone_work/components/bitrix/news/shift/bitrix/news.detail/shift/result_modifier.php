@@ -37,6 +37,23 @@ if ($arUserIds = $arResult["PROPERTIES"]["WORKERS"]["VALUE"]) {
                 $arUser["PERSONAL_GENDER"] = "-";
             }
 
+            // цвет кружка статуса телеграм в таблице
+            switch ($arUser["UF_TG_DIALOG_STATUS"]) {
+                case 'invited':
+                    $arUser["TG_STATUS"] = "bg-warning"; // приглашение отправлено
+                    break;
+                case 'confirmed':
+                    $arUser["TG_STATUS"] = "bg-success"; // подтвердил участие
+                    break;
+                case 'refused':
+                    $arUser["TG_STATUS"] = "bg-error"; // отказался
+                    break;
+                default:
+                    $arUser["TG_STATUS"] = "bg-current"; // по умолчанию синий
+                    break;
+            }
+            if (!$arUser["UF_TELEGRAM_ID"]) $arUser["TG_STATUS"] = "bg-slate-500"; // нет id_телеграмм
+
             $arResult["WORKERS"][] = $arUser;
     }
 }

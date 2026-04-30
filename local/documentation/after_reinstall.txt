@@ -1,0 +1,43 @@
+настроить гит:
+сделать git clone в папку битрикс (скачается папка project_workers)
+из нее все скопировать в www (вкл. .gitignore)
+
+/www/bitrix/.settings.php  - найти debug и включить true
+
+Миграции - см migrations.txt
+
+отключить кэш: в разделе Настройки>Настройки продукта>Автокеширование
+
+Подключить шаблон:
+Настройки - Сайты - Список сайтов - s1 - (внизу)Шаблон сайта - Workers
+
+в коде (хардкод), см:
+www/local/lib/Trud/iBlock/InfoIblock.php // /* захардкодил 
+www/local/templates/lineone_work/responds/getAllUsers.php // Выбираем пользователей из группы "WORKERS" ['GROUP_ID'=> '6']
+www/local/lib/Trud/users/Lists.php // Выбираем пользователей из группы "WORKERS" ['GROUP_ID'=> '6']
+www/shift/index.php                     // "IBLOCK_ID"  => "2",
+www/shift_archive/index.php             // "IBLOCK_ID"  => "2",
+www/local/templates/lineone_work/components/bitrix/news/shift/bitrix/news.list/shift/template.php // var client = 3;
+www/local/lib/Trud/helpers/Helper.php   // администраторы/модераторы (кому отправлять алярмы о работниках)
+www/local/lib/Trud/helpers/Helper.php   // ($notificationStatus < 1) &&  // эти статусы: 1-2ч, 2-1.5ч
+
+
+(должен работать, но если нужна переустановка)
+composer - см bot-composer.txt
+
+cron
+Настроить задание shift_inspect.php 
+(переводить смены в работу, в архив)
+статья:
+https://www.acrit-studio.ru/pantry-programmer/bitrix-bitrix-environment-vm/crond-in-bitrix-vm/
+https://dev.1c-bitrix.ru/learning/course/?COURSE_ID=43&LESSON_ID=2943&ysclid=luid443818467132236
+1. зайти под root
+2. crontab -u bitrix -e
+
+
+
+ssl-сертификат
+см ssl-certificate.txt
+
+перерегистировать адрес веб-хука для tg-бота
+

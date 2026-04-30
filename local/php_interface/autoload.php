@@ -6,7 +6,12 @@ Bitrix\Main\Loader::registerAutoLoadClasses(null, [
     'Trud\Shifts\ShiftInfo'     => '/local/lib/Trud/shifts/ShiftInfo.php',
     'Trud\Users\Carma'          => '/local/lib/Trud/users/Carma.php',
     'Trud\Users\Lists'          => '/local/lib/Trud/users/Lists.php',
-    'Trud\Helpers\Helper'       => '/local/lib/Trud/helpers/Helper.php'
+    'Trud\Helpers\Helper'       => '/local/lib/Trud/helpers/Helper.php',
+    'Trud\TgBot\Bot'            => '/local/lib/Trud/tgBot/Bot.php',
+    'Trud\TgBot\BotUser'        => '/local/lib/Trud/tgBot/BotUser.php',
+    'Trud\TgBot\BotLoger'       => '/local/lib/Trud/tgBot/BotLoger.php',
+    'Trud\TgBot\MessageBuilder' => '/local/lib/Trud/tgBot/MessageBuilder.php',
+    'Trud\TgBot\Notifier'       => '/local/lib/Trud/tgBot/Notifier.php'
 
 ]);
 

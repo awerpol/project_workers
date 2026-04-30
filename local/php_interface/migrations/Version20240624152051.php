@@ -2,9 +2,9 @@
 
 namespace Sprint\Migration;
 
-class Version20240328184051 extends Version
+class Version20240624152051 extends Version
 {
-    protected $description   = "Инфоблоки: перенести элементы - Заказчики";
+    protected $description   = "элементы инфоблоков - заказчики";
     protected $moduleVersion = "4.6.1";
 
     /**

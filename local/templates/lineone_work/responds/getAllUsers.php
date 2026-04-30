@@ -25,9 +25,18 @@ if ($oRequest->isAjaxRequest()) {
         // $filter = [];
         // $res = UserTable::getList(['select' => $select, 'filter' => $filter]);
 
-        // Выбираем пользователей из группы "WORKERS" ['GROUP_ID'=> '6']
-        $select = ['ID' => 'USER_ID','NAME'=>'USER.NAME','LAST_NAME'=>'USER.LAST_NAME', 'PERSONAL_GENDER'=>'USER.PERSONAL_GENDER','PERSONAL_PHONE'=>'USER.PERSONAL_PHONE', 'UF_RULES'=>'USER.UF_RULES', 'UF_RATING'=>'USER.UF_RATING'];
-        $filter = ['GROUP_ID'=> '6'];
+        // Выбираем пользователей из группы "WORKERS" ['GROUP_ID'=> '5']
+        $select = [
+            'ID'                => 'USER_ID',
+            'NAME'              =>'USER.NAME',
+            'LAST_NAME'         =>'USER.LAST_NAME', 
+            'PERSONAL_GENDER'   =>'USER.PERSONAL_GENDER',
+            'PERSONAL_PHONE'    =>'USER.PERSONAL_PHONE', 
+            'UF_RULES'          =>'USER.UF_RULES', 
+            'UF_TELEGRAM_ID'    =>'USER.UF_TELEGRAM_ID',
+            'UF_RATING'         =>'USER.UF_RATING'
+        ];
+        $filter = ['GROUP_ID'=> '5'];
         $res = UserGroupTable::getList(['select' => $select, 'filter' => $filter]);
         
         $users = $res->fetchAll();
@@ -49,6 +58,7 @@ if ($oRequest->isAjaxRequest()) {
                     'PHONE'      => $user[ 'PERSONAL_PHONE' ],
                     'RATING'     => $user[ 'UF_RATING' ] ?? '0',
                     'IS_ACTIVE'  => $user[ 'UF_RULES' ],
+                    'TELEGRAM'   => $user[ 'UF_TELEGRAM_ID' ] ?? '',
                 ];
         }
 

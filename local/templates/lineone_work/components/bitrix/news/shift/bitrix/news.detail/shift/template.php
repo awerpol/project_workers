@@ -108,6 +108,7 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                         >
                             <div class="h-7 w-7 flex items-center justify-center rounded-full bg-current text-primary dark:text-accent-light">
                                 <i class="fa-solid fa-paper-plane text-white text-xs"></i>
+                                
                             </div>
                         </th>
                     </tr>
@@ -141,7 +142,7 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                                 <div
                                         class="badge space-x-2.5 px-0 text-primary dark:text-accent-light"
                                 >
-                                    <div class="h-3 w-3 rounded-full bg-current"></div>
+                                    <div class="h-3 w-3 rounded-full <?= $arUser[ "TG_STATUS" ] ?>"></div>
                                 </div>
                             </td>
                         </tr>
@@ -179,7 +180,8 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                 </div>
                 <!-- Кнопка Уведомить -->
                 <div class="flex  items-center w-full p-1 my-1">
-                    <button class="w-full btn border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90">
+                    <button id="notifyUsers"
+                            class="w-full btn border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90">
                         <div class="h-5 w-5 flex items-center justify-center rounded-full bg-current text-primary dark:text-accent-light">
                             <i class="fa-solid fa-paper-plane text-white text-xs"></i>
                         </div>
@@ -392,7 +394,7 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
         </div>
 
         <script>
-            // удаляем пользователя из левой таблицы
+            // удаляем пользователя из левой таблицы. Кнопка [> Убрать]
             $(document).ready(function () {
                 $("#deleteUsersInWork").click(function () {
                     var selectedD = [];
@@ -421,7 +423,7 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
         
         <script>
             // src='<?= SITE_TEMPLATE_PATH ?>/src-template/src/js/magics/notification.js';
-            // добавляем пользователя в левую таблицу
+            // добавляем пользователя в левую таблицу. Кнопка [< Добавить]
             $(document).ready(function () {
 
                 // ограничиваем чекбоксы, если выбирают больше, чем нужно
@@ -472,13 +474,12 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                             location.reload();
                         }
                     });
-
                 });
             });
         </script>
 
         <script>
-            // автоматически заполняем левую таблицу
+            // автоматически заполняем левую таблицу. Кнопка [<< Заполнить]
             $(document).ready(function () {
                 $("#fillUsersInWork").click(function () {
                     var needM = <?= $arResult["PROPERTIES"]["SHIFT_COUNT_M"]["VALUE"] ?> - <?= $arResult["MEN_COUNT"] ?>;
@@ -551,14 +552,8 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
             });
         </script>
 
-
-
-<!-- НОВОЭ -->
-
-
-
         <script>
-            // Оценка (карма)
+            // Оценка (карма). Кнопка [Ъ Оценить]
             $(document).ready(function () {
                 $("#rateThem").click(function () {
                     var currentDate = new Date();
@@ -603,6 +598,41 @@ $APPLICATION->SetPageProperty('title', $arResult[ "NAME" ]);
                 });
             });
         </script>
+
+
+<!-- НОВОЭ -->
+        <script>
+            // Уведомление пользователей. Кнопка [^ Уведомить]
+            $(document).ready(function () {
+                $("#notifyUsers").click(function () {
+
+                    var selectedN = [];
+                    $('#tableListSelectedUsers .form-checkbox:checked').each(function () {
+                        selectedN.push($(this).attr('user-id'));
+                    });
+
+                    var xhrNotify = null;
+                    xhrNotify = $.ajax({
+                        type: 'POST',
+                        url: '<?= SITE_TEMPLATE_PATH ?>/responds/notifyUsers.php',
+                        dataType: 'json',
+                        data: {
+                            todo: 'send',
+                            userList: selectedN,
+                            shiftID: <?= $arResult[ "ID" ] ?>,
+                            oldListUser: '<?= implode(",", $arResult[ "LIST_USER_ID" ]) ?>'
+                        },
+                        success: function (response) {
+                            location.reload();
+                        }
+                    });
+
+                });
+            });
+        </script>
+
+
+
     <? endif; ?>
 </div>
 

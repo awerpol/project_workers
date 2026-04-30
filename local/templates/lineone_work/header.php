@@ -30,7 +30,8 @@ global $APPLICATION;
     ?><!DOCTYPE html>
     <html lang="<?=LANGUAGE_ID?>">
     <head>
-        <? $APPLICATION->ShowPanel()?>
+        <!-- панель разработчика -->
+        <? //$APPLICATION->ShowPanel()?>
         <title><?= $APPLICATION->ShowTitle() ?> </title><?php
 
         /* Meta tags */
@@ -190,15 +191,15 @@ global $APPLICATION;
                                 </svg>
                             </button>
 
-                            <!-- <?php if($USER->IsAdmin()){?>
+                            <?php if($USER->IsAdmin()){?>
                                 <a href="/bitrix/" target="_blank" class="btn bg-primary/10 font-medium text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-accent-light/10 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25">
                                     Администрирование
                                 </a>
-                            <?php }?> -->
+                            <?php }?>
 
-                            <a href="/" target="_blank" class="btn bg-info/10 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25">
+                            <!-- <a href="/" target="_blank" class="btn bg-info/10 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25">
                                 CRM
-                            </a>
+                            </a> -->
 
                             <!-- Dark Mode Toggle -->
                             <button @click="$store.global.isDarkModeEnabled = !$store.global.isDarkModeEnabled"
@@ -228,12 +229,12 @@ global $APPLICATION;
 
                             <!-- Settings -->
 
-                            <a href="" class="btn h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
+                            <!-- <a href="" class="btn h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25">
                                 <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-opacity="0.3" fill="currentColor" d="M2 12.947v-1.771c0-1.047.85-1.913 1.899-1.913 1.81 0 2.549-1.288 1.64-2.868a1.919 1.919 0 0 1 .699-2.607l1.729-.996c.79-.474 1.81-.192 2.279.603l.11.192c.9 1.58 2.379 1.58 3.288 0l.11-.192c.47-.795 1.49-1.077 2.279-.603l1.73.996a1.92 1.92 0 0 1 .699 2.607c-.91 1.58-.17 2.868 1.639 2.868 1.04 0 1.899.856 1.899 1.912v1.772c0 1.047-.85 1.912-1.9 1.912-1.808 0-2.548 1.288-1.638 2.869.52.915.21 2.083-.7 2.606l-1.729.997c-.79.473-1.81.191-2.279-.604l-.11-.191c-.9-1.58-2.379-1.58-3.288 0l-.11.19c-.47.796-1.49 1.078-2.279.605l-1.73-.997a1.919 1.919 0 0 1-.699-2.606c.91-1.58.17-2.869-1.639-2.869A1.911 1.911 0 0 1 2 12.947Z"/>
                                     <path fill="currentColor" d="M11.995 15.332c1.794 0 3.248-1.464 3.248-3.27 0-1.807-1.454-3.272-3.248-3.272-1.794 0-3.248 1.465-3.248 3.271 0 1.807 1.454 3.271 3.248 3.271Z"/>
                                 </svg>
-                            </a>
+                            </a> -->
 
                             <!-- Profile -->
                             <div x-data="usePopper({placement:'right-end',offset:12})" @click.outside="isShowPopper && (isShowPopper = false)" class="flex">
@@ -258,7 +259,7 @@ global $APPLICATION;
                                             </div>
                                         </div>
                                         <div class="flex flex-col pt-2 pb-5">
-                                            <a href="#" class="group flex items-center space-x-3 py-2 px-4 tracking-wide outline-none transition-all hover:bg-slate-100 focus:bg-slate-100 dark:hover:bg-navy-600 dark:focus:bg-navy-600">
+                                            <!-- <a href="#" class="group flex items-center space-x-3 py-2 px-4 tracking-wide outline-none transition-all hover:bg-slate-100 focus:bg-slate-100 dark:hover:bg-navy-600 dark:focus:bg-navy-600">
                                                 <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-warning text-white">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
@@ -273,14 +274,14 @@ global $APPLICATION;
                                                         Личный кабинет пользователя
                                                     </div>
                                                 </div>
-                                            </a>
+                                            </a> -->
                                             <div class="mt-3 px-4">
-                                                <a href="" class="btn h-9 w-full space-x-2 bg-primary text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
+                                                <!-- <a href="" class="btn h-9 w-full space-x-2 bg-primary text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                                                     </svg>
                                                     <span>Выйти</span>
-                                                </a>
+                                                </a> -->
                                             </div>
                                         </div>
                                     </div>
@@ -302,16 +303,16 @@ global $APPLICATION;
             </div>
             <main class="main-content w-full px-[var(--margin-x)] pb-8">
                 <?$APPLICATION->IncludeComponent(
-	"bitrix:breadcrumb", 
-	"companyBook", 
-	array(
-		"PATH" => "",
-		"SITE_ID" => "s1",
-		"START_FROM" => "0",
-		"COMPONENT_TEMPLATE" => "companyBook"
-	),
-	false
-);?>
+                    "bitrix:breadcrumb", 
+                    "companyBook", 
+                    array(
+                        "PATH" => "",
+                        "SITE_ID" => "s1",
+                        "START_FROM" => "0",
+                        "COMPONENT_TEMPLATE" => "companyBook"
+                    ),
+                    false
+                );?>
         <?php elseif(!$USER->IsAuthorized()): ?>
                 <main class="grid w-full grow grid-cols-1 place-items-center">
                     <?if($APPLICATION->GetCurPage(false) != "/auth/"){

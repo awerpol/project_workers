@@ -18,7 +18,7 @@ class Carma
         $userId = intval($userId);
 
         // элементы инфоблока KARMA_ACT для данного пользователя
-        $filter         = ["IBLOCK_ID" => $iblockId, "PROPERTY_ID_WORKER" =>  $userId];
+        $filter   = ["IBLOCK_ID" => $iblockId, "PROPERTY_ID_WORKER" =>  $userId];
         $arSelect = ["ID", "IBLOCK_ID", "NAME", "PROPERTY_ACT_SIGN", "PROPERTY_ID_WORKER"];
 
         // Получаем инфоблоки (элементы) Кармы по юзеру

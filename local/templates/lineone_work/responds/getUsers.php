@@ -22,7 +22,7 @@ if ($oRequest->isAjaxRequest()) {
 
     if ($oRequest->getPost('getUser') === 'Y') {
         
-        $shiftID = $oRequest->getPost('shiftID');                // для черного списка
+        $shiftID = $oRequest->getPost('shiftID');                // фиксируем номер текущей смены
         $clientID = ShiftInfo::getPropValue($shiftID, 'CLIENT'); // ID клиента черного списка
         
         // массив тех, кого НЕ включаем в правую таблицу
@@ -32,7 +32,7 @@ if ($oRequest->isAjaxRequest()) {
             Helper::getPropValue('CLIENTS', $clientID, 'BLACK_LIST_CLIENT') // кто в черном списке заказчика
         ));
 
-        $filter = ['UF_RULES' => '1',  '!=ID' => $exclude, 'PERSONAL_GENDER' => [], 'UF_BUSY' => 0 ];
+        $filter = ['UF_RULES' => '1',  '!=ID' => $exclude, 'PERSONAL_GENDER' => [], 'UF_BUSY' => 0 ]; //БУДЕТ убрано ,'UF_BUSY' => 0, т.к. теперь по-другому проверяем
         // если еще нужны М
         if ($oRequest->getPost('needM') == 'true') {
             $filter['PERSONAL_GENDER'][] = 'M';
@@ -46,13 +46,51 @@ if ($oRequest->isAjaxRequest()) {
             $filter['PERSONAL_GENDER'] = '';
         }
 
-        $select = ['ID', 'NAME', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHONE', 'UF_RULES', 'UF_RATING', 'UF_CARMA_SUMM'];
+        $select = ['ID', 'NAME', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHONE', 'UF_RULES', 'UF_RATING', 'UF_CARMA_SUMM', 'UF_WHERE_ENGAGED'];
         $res = UserTable::getList(['select' => $select, 'filter' => $filter]);
         $users = $res->fetchAll();
         $arResultUsers = [];
 
+        // получить время начала и конца текущей смены в формате timestamp
+        $thisShiftTimes = Helper::getShiftTimes($shiftID);
+        $thisShiftStart = $thisShiftTimes["$shiftID"][ 'start' ];
+        $thisShiftEnd   = $thisShiftTimes["$shiftID"][ 'end' ];
+
+        $anotherShiftsTimes = []; // времена начала и конца смен, в которых работники заняты
+
         $m=$f=0;
-        foreach ($users as $key => $user) {    
+        foreach ($users as $key => $user) {   
+            /* 
+            // (НОВЫЙ ФУНКЦИОНАЛ)
+
+            $isBuzy = false;
+
+            // берем список смен, в которых юзер занят: UF_WHERE_ENGAGED
+            $userShiftsList = $user[ 'UF_WHERE_ENGAGED' ];
+
+            foreach ($userShiftsList as $anotherShiftID) {
+                // если нет такой во временном массиве, то добавить
+                if (!$anotherShiftsTimes["$anotherShiftID"]) {
+                    $tmp = Helper::getShiftTimes($anotherShiftID);
+                    $anotherShiftsTimes["$anotherShiftID"] = $tmp["$anotherShiftID"];
+                }
+                
+                // сравнить время начала и конца текущей смены с временами смены[$anotherShiftID]
+                if ($thisShiftStart <= $anotherShiftsTimes["$anotherShiftID"][ 'end' ] 
+                   && $thisShiftEnd >= $anotherShiftsTimes["$anotherShiftID"][ 'start' ]) {
+
+                    // если условие сработало, то работник занят и не может участвовать в текущей смене
+                    $isBuzy = true;
+                }
+            }            
+
+            if ($isBuzy) {
+                continue; // пропускаем занятого работника
+            }
+            
+            */
+
+            // считаем кол-во м и ж
             if ($user[ 'PERSONAL_GENDER' ] == "M") {
                 $m++;
             } elseif ($user[ 'PERSONAL_GENDER' ] == "F") {
@@ -60,6 +98,7 @@ if ($oRequest->isAjaxRequest()) {
                 $user[ 'PERSONAL_GENDER' ] = "Ж";
             } 
 
+            // здесь добавляем пользователя в результат
             $arResultUsers[ 'USERS' ][] = [
                 'ID'     => $user[ 'ID' ],
                 'NAME'   => $user[ 'LAST_NAME' ].' '.$user[ 'NAME' ],

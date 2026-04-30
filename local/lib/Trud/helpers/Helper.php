@@ -9,9 +9,17 @@ use Bitrix\Main\Type\DateTime;
 
 use Trud\IBlock\InfoIblock;
 use Trud\Shifts\ShiftEdit;
+use Trud\TgBot\MessageBuilder;
+use Trud\TgBot\Notifier;
 
 class Helper
 {
+    // администраторы/модераторы (кому отправлять алярмы о работниках)
+    public static function whoModerators () {
+//        return [3, 2]; // хардкод. 3 - "Маша", 2 - (я, для дебага)
+		 return [3]; // хардкод. 3 - "Маша", 2 - (я, для дебага)
+    }
+
     // получаем значение пользовательского поля (одиночное или множ.)
     public static function getPropValue($iblockCode, $elementId, $field)
     {
@@ -33,20 +41,47 @@ class Helper
     }
 
     // подобрать пользователей (одного пола) с учетом исключений
-    public static function pickUpUsers($needed, $gender, $arException) 
+    public static function pickUpUsers($needed, $gender, $arException, $shiftID = null) 
     {
         $arResultUsers = [];
 
         if ($needed > 0) {
             // доступные=1, кроме тех кто в левой таблице, Мужчины
             $filter = ['UF_RULES' => '1',  '!=ID' => $arException, 'PERSONAL_GENDER' => [$gender] ];
-            $select = ['ID', 'NAME', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHONE', 'UF_RULES', 'UF_RATING', 'UF_BUSY'];
+            $select = ['ID', 'NAME', 'LAST_NAME', 'PERSONAL_GENDER', 'PERSONAL_PHONE', 'UF_RULES', 'UF_RATING', 'UF_BUSY', 'UF_WHERE_ENGAGED'];
     
             $res = UserTable::getList(['select' => $select, 'filter' => $filter, 'order' => ['UF_RATING' => 'DESC'] ]);
             $users = $res->fetchAll();
+
+            // получить время начала и конца текущей смены в формате timestamp
+            $thisShiftTimes = self::getShiftTimes($shiftID);
+            $thisShiftStart = $thisShiftTimes["$shiftID"][ 'start' ];
+            $thisShiftEnd   = $thisShiftTimes["$shiftID"][ 'end' ];
     
+            $anotherShiftsTimes = []; // времена начала и конца смен, в которых работники заняты
+
             foreach ($users as $key => $user) {    
-                if ($user['UF_BUSY'] != 1) { // TODO если он свободен && если он не в черном списке смены
+                $isBuzy = false;
+                $userShiftsList = $user[ 'UF_WHERE_ENGAGED' ];
+
+                foreach ($userShiftsList as $anotherShiftID) {
+                    // если нет такой во временном массиве, то добавить
+                    if (!$anotherShiftsTimes["$anotherShiftID"]) {
+                        $tmp = self::getShiftTimes($anotherShiftID);
+                        $anotherShiftsTimes["$anotherShiftID"] = $tmp["$anotherShiftID"];
+                        // $anotherShiftsTimes[] = Helper::getShiftTimes($anotherShiftID);
+                    }
+                    
+                    // сравнить время начала и конца текущей смены с временами смены[$anotherShiftID]
+                    if ($thisShiftStart <= $anotherShiftsTimes["$anotherShiftID"][ 'end' ] 
+                       && $thisShiftEnd >= $anotherShiftsTimes["$anotherShiftID"][ 'start' ]) {
+                        // если условие сработало, то работник занят 
+                        $isBuzy = true;
+                    }
+                } 
+
+                // если работник не занят, то добавить его в результирующий массив
+                if (!$isBuzy) { // TODO если он свободен 
                     $arResultUsers[] = $user[ 'ID' ];
                 }
 
@@ -59,9 +94,50 @@ class Helper
         return $arResultUsers;
     }
 
+    // получить массив времен смен
+    public static function getShiftTimes($shifts)
+    {
+        Loader::includeModule('main');
+        Loader::includeModule('iblock');
+
+        $iblockId = InfoIblock::getIdByCode('SHIFT_BEING_FORMED');
+
+        // берем все нужные смены
+        $filter   = ["IBLOCK_ID" => $iblockId, "ID" => $shifts];
+        $arSelect = ["ID", "NAME", "PROPERTY_SHIFT_START", "PROPERTY_SHIFT_END"];
+
+        // Получаем инфоблоки (элементы)
+        $dbItems = \CIBlockElement::GetList(
+            [],
+            $filter,
+            false,
+            false,
+            $arSelect 
+        );
+
+        $result = [];
+        while ($item = $dbItems->fetch()) {
+            // $id = $item['ID'] . "_";
+            $id = $item['ID'];
+            $startTime = new DateTime($item['PROPERTY_SHIFT_START_VALUE']);
+            $startTime = $startTime->getTimestamp();
+            // $startTime = $startTime->format('d.m.Y H:i:s');
+
+            $endTime = new DateTime($item['PROPERTY_SHIFT_END_VALUE']);
+            $endTime = $endTime->getTimestamp();
+
+            $result["$id"]["start"] = $startTime; 
+            $result["$id"]["end"]   = $endTime;
+        }
+
+        return $result;
+    }
+
     // при наступлении времени меняем стадию смены
     public static function shiftsChangeStageByCron()
     {
+        // self::logCronEvent("проверка смен кроном начата");
+
         Loader::includeModule('main');
         Loader::includeModule('iblock');
       
@@ -73,7 +149,7 @@ class Helper
 
         // смены в работе и в архиве
         $filter   = ["IBLOCK_ID" => $iblockId, "PROPERTY_SHIFT_STAGE" => [$stageFormingId, $stageInWorkId]];
-        $arSelect = ["ID", "NAME", "PROPERTY_SHIFT_START", "PROPERTY_SHIFT_END", "PROPERTY_SHIFT_STAGE"];
+        $arSelect = ["ID", "NAME", "PROPERTY_SHIFT_START", "PROPERTY_SHIFT_END", "PROPERTY_SHIFT_STAGE", "PROPERTY_NOTIFY_STAGE"];
 
         // Получаем инфоблоки (элементы)
         $dbItems = \CIBlockElement::GetList(
@@ -86,28 +162,92 @@ class Helper
 
         // timestamp
         $currentTime = new DateTime();
+// var_dump($currentTime);
+
         $currentTime = $currentTime->getTimestamp();
 
-        // тут меняем их стадию
+        // тут меняем их стадию и отправляем уведомления
         while ($item = $dbItems->fetch()) {
+            $shiftId = $item['ID'];
             $stageNow = $item['PROPERTY_SHIFT_STAGE_ENUM_ID'];
 
             $startTime = new DateTime($item['PROPERTY_SHIFT_START_VALUE']);
-            
+// var_dump($startTime);
             $startTime = $startTime->getTimestamp();
 
             $endTime = new DateTime($item['PROPERTY_SHIFT_END_VALUE']);
             $endTime = $endTime->getTimestamp();
 
+            $notificationStatus = $item['PROPERTY_NOTIFY_STAGE_VALUE'];
+
+            /* уведомления - за 2 ч до смены */
+            $nontifyTime2h = $startTime - (60*60*2);
+            if (($stageNow == $stageFormingId) && 
+                ($notificationStatus < 1) && 
+                ($currentTime >= $nontifyTime2h) &&
+                ($currentTime <= $nontifyTime2h + 60*9) // 9 минут
+               ) {
+                //отправить уведомление
+                $logEvent = "Выслано напоминание за 2ч.";
+                $message = MessageBuilder::notification2h($name, $shiftId);
+                Notifier::remindThemShift ($shiftId, $message, 'reminded_2h', $logEvent);
+
+                // сменить "статус уведомлений" в смене
+                ShiftEdit::updateNotificationStage($shiftId, 1);
+                self::logCronEvent("По смене $shiftId отправлено reminded_2h");
+            }
+
+            /* уведомления - за 1,5 ч до смены - только администратору */
+            $nontifyTime90m = $startTime - (60*90);
+            if (($stageNow == $stageFormingId) && 
+                ($notificationStatus < 2) && 
+                ($currentTime >= $nontifyTime90m) &&
+                ($currentTime <= $nontifyTime90m + 60*9) // 9 минут
+                ) {
+                //отправить уведомление
+                $message = MessageBuilder::notification90m($name, $shiftId);
+                $moderators = self::whoModerators();
+                Notifier::informModerator ($shiftId, $message, 'reminded_90m', $moderators);
+
+                // сменить "статус уведомлений" в смене
+                ShiftEdit::updateNotificationStage($shiftId, 2);
+                self::logCronEvent("По смене $shiftId отправлено reminded_90m");
+            }
+
+
+            /* изменение стадий */
+
+            // добавляем 2ч для стадии "в работе"
+            $transferTime = $startTime + 2 * 60 * 60;
+
+// echo "<pre>" ;            
+// var_dump($notificationStatus);
+// var_dump($startTime);
+// var_dump($nontifyTime2h);
+// var_dump($currentTime+(60*60*2));
+// var_dump($transferTime);
+// var_dump($startTime);
+// var_dump($endTime);
+// echo "</pre>" ;
+
             // формируются и началась -> в работу
-            if (($stageNow == $stageFormingId) && ($currentTime >= $startTime)) {
-                ShiftEdit::updateStage($item['ID'], 'IN_WORK');
+            if (($stageNow == $stageFormingId) && ($currentTime >= $transferTime)) {
+                ShiftEdit::updateStage($shiftId, 'IN_WORK');
+                self::logCronEvent("Смена $shiftId переведена в работу");
             } 
             
             // закончилась -> в архив
             if ($currentTime >= $endTime) {
-                ShiftEdit::updateStage($item['ID'], 'ARCHIVE');
+                ShiftEdit::updateStage($shiftId, 'ARCHIVE');
+                self::logCronEvent("Смена $shiftId переведена в архив");
             } 
         }
+        self::logCronEvent("проверка смен кроном завершена");
+    }
+
+    public static function logCronEvent ($message) {
+        $logsFile    = $_SERVER['DOCUMENT_ROOT'] . '/local/logs/cronEvents.log';
+        $logData     = date('d.m.Y H:i:s') . ' ' . $message;
+        file_put_contents($logsFile, $logData . PHP_EOL, FILE_APPEND);
     }
 }

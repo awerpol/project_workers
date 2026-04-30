@@ -1,4 +1,6 @@
 bitrix/
 upload/
+local/lib/Trud/tgBot/botConfig.php
+local/logs/
 
 .DS_Store

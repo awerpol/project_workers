@@ -12,6 +12,16 @@ use Trud\Users\Lists;
 
 class ShiftEdit
 {
+    // изменяем статус уведомлений
+    public static function updateNotificationStage($shiftId, $newStatus) 
+    {
+        Loader::includeModule('iblock');
+
+        $fields = [ 'NOTIFY_STAGE' => $newStatus ];
+// var_dump($newStatus);
+        CIBlockElement::SetPropertyValuesEx($shiftId, false, $fields);
+    }
+
     // изменяем стадию смены
     public static function updateStage($shiftId, $newStage) 
     {
@@ -35,6 +45,7 @@ class ShiftEdit
         $workers = ShiftInfo::getPropValue($shiftId, 'WORKERS');
 
         Lists::makeThemFree($workers); 
+        // TODO: заменить на новый функционал (работа с UF_WHERE_ENGAGED)
     }
 
     // дополняем "черный список" смены
